@@ -1,0 +1,20 @@
+{
+  "name": "t-minus",
+  "version": "0.0.1",
+  "description": "Lightweight Javascript timer with count up/down directions and custom function handling",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/nickpalenchar/tminus"
+  },
+  "keywords": [
+    "timer",
+    "lightweight",
+    "countdown"
+  ],
+  "author": "Nick Palenchar",
+  "license": "MIT"
+}
