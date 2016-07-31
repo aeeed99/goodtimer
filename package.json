@@ -1,6 +1,6 @@
 {
   "name": "t-minus",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Lightweight Javascript timer with count up/down directions and custom function handling",
   "main": "index.js",
   "scripts": {
