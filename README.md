@@ -31,6 +31,7 @@ var timerWithUI = new Timer("1:05" // automatically detects 1 minute and 5 secon
 T-minus has built-in pause functionality.
 ```
 var pauseBtn = document.getElementById('pauseBtn');
+
 pauseBtn.addEventListener('click', function(){
   timer.togglePause();
   this.innerHTML = timer.isPaused ? "PLAY" : "PAUSE";
@@ -47,7 +48,7 @@ var Timer = require('t-minus');
 ```
 In the browser, link to `t-minus/lib/tMinus.js`
 
-You'll get the `Timer` object (on the window if using in the browser).
+You'll get the `Timer` object (on the window if using in the browser). Yay! 😁
  
 ## Syntax
 T-minus Timers take the following signature;
@@ -61,13 +62,13 @@ Where:
   + **timerUpFn** \<function> - a function to invoke when the timer reaches 0.
   + **intervalFn** \<function> - a function to invoke on _every_ tick of the timer.
 
-**function params and `this`** - The functions passed into `timerUpFn` and `intervalFn` are called with the timer object bound to `this`. This means you can call any method or get any property that you could when creating a timer (see methods below)
+**function params and `this`** - The functions passed into `timerUpFn` and `intervalFn` are called with the timer object bound to `this`. You can call any method or get any property on `this` that you could when creating a timer (see methods below)
 
 **end of a timer** - when a timer reaches :00 (0:00:00:00), two main things happen _in order_:
    1. The timer is paused (`isPaused = true`)
    2. the `timerUpFn` is invoked once.
 
-The timer will remain paused until further action is taken upon it. Note that because of the order, logic can be written into the `timerUpFn`, such as calling `this.restart()` within it. 
+The timer will remain paused until further action is taken upon it. Note that because of the order, logic can be written into the `timerUpFn` to unpause the timer, such as calling `this.restart()` within it. 
 
 ⚠️ Writting something like `this.resume()` in the `timerUpFn` will simply keep invoking the same function every second, with the timer always at `:00`.
 
