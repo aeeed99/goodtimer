@@ -1,7 +1,7 @@
 {
   "name": "t-minus",
-  "version": "0.0.0",
-  "description": "Lightweight Javascript timer with count up/down directions and custom function handling",
+  "version": "0.0.1",
+  "description": "Lightweight Javascript timer with built in pausing and custom function handling",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
