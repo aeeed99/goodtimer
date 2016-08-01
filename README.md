@@ -1,4 +1,4 @@
-# T-minus
+# T-minus 🕚 🚀
 #### A lightweight JavaScript timer with count up/down directionality and custom function handling
 
 `setInterval`/`setTimeout`s can be annoying. T-minus provides abstraction for various countdown features, both for logical uses and UI purposes.
@@ -28,6 +28,15 @@ var timerWithUI = new Timer("1:05" // automatically detects 1 minute and 5 secon
                             );
 ```
 
+T-minus has built-in pause functionality.
+```
+var pauseBtn = document.getElementById('pauseBtn');
+pauseBtn.addEventListener('click', function(){
+  timer.togglePause();
+  this.innerHTML = timer.isPaused ? "PLAY" : "PAUSE";
+});
+```
+
 ## Install
 ```
 $ npm install t-minus
@@ -46,13 +55,21 @@ T-minus Timers take the following signature;
 new Timer(<time>,[<timerUpFn>[,<intervalFn>]]);
 ```
 Where:
-  + **time** _(required)_ \<string|array> - represents a time in DD:HH:MM:SS format. Eg. `40` for 40 seconds, `1:03` for 1 minute, 3 seconds, `1:00:00`, for ` hour`
-      + Note: The units in the time string can be seperated by any character that is not a digit. And values do not have to be padded. The above examples can also work as `":40"`, `"1m3s"`, and `"1 0 0"`, among many others. 
+  + **time** _(required)_ \<string|array> - As a string, represents a time in DD:HH:MM:SS format. Eg. `40` for 40 seconds, `1:03` for 1 minute, 3 seconds, `1:00:00`, for ` hour`
+      + Note: The units in the time string can be seperated by any character that is not a digit. And values do not have to be padded. The above examples can also work as `":40"`, `"1&3"`, and `"1 0 0"`, among many others. 
       + As an Array, the signature is represented in [DD,HH,MM,SS] format. Eg `[40]`, `[1,3]`, `[1,0,0]` for the above times.
   + **timerUpFn** \<function> - a function to invoke when the timer reaches 0.
   + **intervalFn** \<function> - a function to invoke on _every_ tick of the timer.
 
 **function params and `this`** - The functions passed into `timerUpFn` and `intervalFn` are called with the timer object bound to `this`. This means you can call any method or get any property that you could when creating a timer (see methods below)
+
+**end of a timer** - when a timer reaches :00 (0:00:00:00), two main things happen _in order_:
+   1. The timer is paused (`isPaused = true`)
+   2. the `timerUpFn` is invoked once.
+
+The timer will remain paused until further action is taken upon it. Note that because of the order, logic can be written into the `timerUpFn`, such as calling `this.restart()` within it. 
+
+⚠️ Writting something like `this.resume()` in the `timerUpFn` will simply keep invoking the same function every second, with the timer always at `:00`.
 
 ## `Timer` properties
 
@@ -119,4 +136,4 @@ timer.getTotal() -> 109470
 + More data-comparison specific getters.
 + Support for milliseconds
 
-If you have any other suggestions, feel free to add a pull request or submit an issue. Please give this a star if you find it useful!
+If you have any other suggestions, feel free to add a pull request or submit an issue. Please give this a ⭐️ if you find it useful!
