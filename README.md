@@ -1,4 +1,4 @@
-# T-minus 🕚 🚀 [![npm](https://img.shields.io/npm/dm/t-minus.svg?maxAge=2592000)]() [![npm](https://img.shields.io/npm/l/t-minus.svg?maxAge=2592000)]()
+# T-minus 🕚 🚀 [![npm](https://img.shields.io/npm/v/t-minus.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/t-minus.svg?maxAge=2592000)]()
 #### A lightweight JavaScript timer with count up/down directionality and custom function handling
 
 `setInterval`/`setTimeout`s can be annoying. T-minus provides abstraction for various countdown features, both for logical uses and UI purposes.
