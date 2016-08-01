@@ -1,6 +1,6 @@
 {
   "name": "t-minus",
-  "version": "0.0.11",
+  "version": "0.0.15",
   "description": "Lightweight Javascript timer with built in pausing and custom function handling",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,7 @@
     "lightweight",
     "countdown"
   ],
+  "tonicExample": "example.js",
   "author": "Nick Palenchar",
   "license": "MIT"
 }
