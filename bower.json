@@ -1,0 +1,15 @@
+{
+  "name": "t-minus",
+  "description": "Lightweight Javascript timer with built in pausing and custom function handling",
+  "main": "lib/tMinus.js",
+  "authors": [
+    "Nick Palenchar"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "timer",
+    "lightweight",
+    "countdown"
+  ],
+  "homepage": "https://github.com/nickpalenchar/tminus"
+}
