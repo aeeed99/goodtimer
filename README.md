@@ -57,7 +57,7 @@ new Timer(<time>,[<timerUpFn>[,<intervalFn>]]);
 ```
 Where:
   + **time** _(required)_ \<string|array> - As a string, represents a time in DD:HH:MM:SS format. Eg. `40` for 40 seconds, `1:03` for 1 minute, 3 seconds, `1:00:00`, for ` hour`
-      + Note: The units in the time string can be seperated by any character that is not a digit. And values do not have to be padded. The above examples can also work as `":40"`, `"1&3"`, and `"1 0 0"`, among many others. 
+      + Note: The units in the time string can be seperated by any character that is not a digit. And values do not have to be padded. The above examples can also work as `":40"`, `"1m03s"`, and `"1 0 0"`, among many others. 
       + As an Array, the signature is represented in [DD,HH,MM,SS] format. Eg `[40]`, `[1,3]`, `[1,0,0]` for the above times.
   + **timerUpFn** \<function> - a function to invoke when the timer reaches 0.
   + **intervalFn** \<function> - a function to invoke on _every_ tick of the timer.
