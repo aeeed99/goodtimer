@@ -1,4 +1,4 @@
-# T-minus
+# T-minus 🕚 🚀
 #### A lightweight JavaScript timer with count up/down directionality and custom function handling
 
 `setInterval`/`setTimeout`s can be annoying. T-minus provides abstraction for various countdown features, both for logical uses and UI purposes.
