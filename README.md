@@ -1,4 +1,4 @@
-# T-minus 🕚 🚀
+# T-minus 🕚 🚀 [![npm](https://img.shields.io/npm/v/t-minus.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/t-minus.svg?maxAge=2592000)]()
 #### A lightweight JavaScript timer with count up/down directionality and custom function handling
 
 `setInterval`/`setTimeout`s can be annoying. T-minus provides abstraction for various countdown features, both for logical uses and UI purposes.
@@ -8,7 +8,7 @@
 Alert the user in 5 seconds:
 
 ```
-var alertMe = new Timer(":05",function(){ alert("5 seconds up!")
+var alertMe = new Timer(":05",function(){ alert("5 seconds up!") });
 ```
 
 Alert the user _every_ 5 seconds:
@@ -23,9 +23,9 @@ Update the innerHTML of your view on each passing second, so that the user can a
 ```
 var timerView = document.getElementById("timerView");
 var timerWithUI = new Timer("1:05" // automatically detects 1 minute and 5 seconds.
-                            ,function() {alert("timer done."}
-                            ,function() {timerView.innerHTML = this.getTimerUI()} // the 3rd argument is a funtion invoked every second.
-                            );
+        , function() {alert("timer done."}
+        , function() {timerView.innerHTML = this.getTimerUI()} // the 3rd argument is a funtion invoked every second.
+        );
 ```
 
 T-minus has built-in pause functionality.
