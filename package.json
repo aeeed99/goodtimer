@@ -13,7 +13,8 @@
   "keywords": [
     "timer",
     "lightweight",
-    "countdown"
+    "countdown",
+    "setTimeout"
   ],
   "tonicExample": "example.js",
   "author": "Nick Palenchar",
