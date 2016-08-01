@@ -16,7 +16,7 @@
     "countdown",
     "setTimeout"
   ],
-  "tonicExample": "example.js",
+  "tonicExampleFilename": "example.js",
   "author": "Nick Palenchar",
   "license": "MIT"
 }
