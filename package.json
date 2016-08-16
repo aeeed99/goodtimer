@@ -1,6 +1,6 @@
 {
   "name": "t-minus",
-  "version": "0.0.3",
+  "version": "0.0.31",
   "description": "Lightweight Javascript timer with built in pausing and custom function handling",
   "main": "index.js",
   "scripts": {
