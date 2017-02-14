@@ -109,9 +109,11 @@ when `setInterval` is cleared via `.clearTimer()`, the timer will not work until
 ## UI Methods
 These might be useful if you need to display the timer in a human friendly form.
 
-### `.getTimerUI()`
-Returns a string representing the timer in human readable form. Each unit is seperated by a colon, and usually has a zero in the tens digit when only a single digit exists (except for `days`)
+### `.getTimerUI([separator:string|function])`
+Returns a string representing the timer in human readable form. Each unit is separated by a colon, and usually has a zero in the tens digit when only a single digit exists (except for `days`)
 Example: "20:00", "19:59", and "3:32:50:09" might be returned.
+
+Can accept a string or a function that returns a string which will be used to seperate each unit instead of a colon.
 
 ### `.getDaysUI()|.getHoursUI()|.getMinutesUI()|.getSecondsUI()`
 Returns a string representing the respective unit. Hours, Minutes, and Seconds gets a zero-padding, and always without a colon.
