@@ -90,6 +90,36 @@ The timer will remain paused until further action is taken upon it. Note that be
 ⚠️ Writing something like `this.resume()` in the `timerUpFn` will simply keep invoking the same function every second, with the timer always at `:00`.
 If using advanced syntax, you can also just set `repeat` to `Infinity` in the options object.
 
+### Stopwatch Functionality
+Want the timer to count up instead of down? Omit the `<time>` argument in either syntax to begin counting up from 0.
+
+```
+new Timer([intervalFn]]);
+```
+
+Or using advanced syntax
+
+```
+new Timer(<options>);
+```
+
+#### Stopwatch examples
+
+```
+// count up from zero.
+new Timer();
+
+// count up from 1 minute
+new Timer("1m");
+
+// count up from 0 and alert when 1 minute is reached
+new Timer({ endTime: "1m", onTimeout: function(){ alert("1 minute reached"); });
+
+// count up from 5 minutes and always reset after hitting 10 minutes
+new Timer({ startTime: "5m", endTime: "10m", repeat: Infinity });
+```
+
+
 # `Timer` properties
 
 ### `isPaused`
@@ -160,6 +190,9 @@ Many aspects of a timer instance can be customized when using [advanced syntax](
 + **divider** \<string> _default_ `":"` - the characters used to seperate each unit of time when returning from `getTimerUI`
 + **immediateInterval** \<bool> _default_ `true` - when an `onInterval` function is used, will be invoked immediately at time of instantiation. Set to false to invoke only after the first second passes.
 + **repeat** - \<number> _default_ `0` - amount of times for timer to automatically reset after ending. Can be set to `Infinity` to always repeat.
++ "Stopwatch-only" options:
+    + **startTime** - \<timeUnit> _default_ `"0"` - The time to start counting up from. Given as a time string or Array.
+    + **endTime** - \<timeUnit> - The time the stopwatch ends, invoking the `onTimeout` function if passed.
 
 
 ## Timer Defaults
