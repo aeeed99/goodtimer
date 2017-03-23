@@ -109,9 +109,6 @@ new Timer(<options>);
 // count up from zero.
 new Timer();
 
-// count up from 1 minute
-new Timer("1m");
-
 // count up from 0 and alert when 1 minute is reached
 new Timer({ endTime: "1m", onTimeout: function(){ alert("1 minute reached"); });
 
