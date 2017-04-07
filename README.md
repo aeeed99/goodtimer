@@ -73,6 +73,8 @@ Where:
 
 **function params and `this`** - The functions passed into `timerUpFn` and `intervalFn` are called with the timer object bound to `this`. You can call any method or get any property on `this` that you could when creating a timer (see methods below)
 
+> WARNING!!: If using `this` to access the bound timer, do not use fat arrow functions. 
+
 #### Advanced Syntax.
 Alternatively, you can set a time with an options object:
 
