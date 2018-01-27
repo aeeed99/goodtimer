@@ -7,12 +7,12 @@
 
 Alert the user in 5 seconds:
 
-```
+```javascript
 var alertMe = new Timer(":05",function(){ alert("5 seconds up!") });
 ```
 
 Alert the user _every_ 5 seconds:
-```
+```javascript
 var annoyMe = new Timer("5",function(){
     alert("This is the function that neeevvverr ennddds...");
     this.restart();
@@ -20,14 +20,14 @@ var annoyMe = new Timer("5",function(){
 ```
 
 Or
-```
+```javascript
 function annoy() { alert("This function is used within the optoins object") }
 
 var annoyMe = new Timer("5" { onTimeout: annoy, repeat: Infinity });
 ```
 
 Update the innerHTML of your view on each passing second, so that the user can anticipate when you are about to annoy them.
-```
+```javascript
 var timerView = document.getElementById("timerView");
 var timerWithUI = new Timer("1:05" // automatically detects 1 minute and 5 seconds.
         , function() {alert("timer done."}
@@ -36,7 +36,7 @@ var timerWithUI = new Timer("1:05" // automatically detects 1 minute and 5 secon
 ```
 
 T-minus has built-in pause functionality.
-```
+```javascript
 var pauseBtn = document.getElementById('pauseBtn');
 
 pauseBtn.addEventListener('click', function(){
@@ -46,11 +46,11 @@ pauseBtn.addEventListener('click', function(){
 ```
 
 ## Install
-```
+```shell
 $ npm install t-minus
 ```
 For Node:
-```
+```javascript
 var Timer = require('t-minus');
 ```
 In the browser, link to `t-minus/lib/tMinus.js`
@@ -107,7 +107,7 @@ new Timer(<options>);
 
 #### Stopwatch examples
 
-```
+```javascript
 // count up from zero.
 new Timer();
 
@@ -164,7 +164,7 @@ Can accept a string or a function that returns a string which will be used to se
 
 ### `.getDaysUI()|.getHoursUI()|.getMinutesUI()|.getSecondsUI()`
 Returns a string representing the respective unit. Hours, Minutes, and Seconds gets a zero-padding, and always without a colon.
-```
+```javascript
 var timer = new Timer("1:23:4:30");
 
 timer.getDaysUI() // -> "1"
@@ -175,7 +175,7 @@ timer.getSecondsUI() // -> "30
 
 ### `.getTotal`
 Returns a _number_ representing the amount left in the timer, _in seconds_
-```
+```javascript
 //ex. continued from above
 timer.getTotal() -> 109470
 ```
@@ -197,7 +197,7 @@ Many aspects of a timer instance can be customized when using [advanced syntax](
 ## Timer Defaults
 
 While options can be set on each instance, you may want to change the defaults all together. Each option exists the `Timer.options` class which can be set manually.
-```
+```javascript
 // eg
 Timer.options.divider = "-";
 // all timers created after this will return HH-MM-SS when calling getTimerUI by default.
