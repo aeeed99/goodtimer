@@ -11,7 +11,7 @@ interface TimerOptions {
     repeat?: number; // default 0
 }
 
-class Timer {
+export class Timer {
 
     secs: number[];
     mins: number[];
@@ -50,18 +50,19 @@ class Timer {
                         aac(this.secs, 59, seconds)))))
     }
 
-    private adjustAndCarry(num: number[], resetValue: number, interval: number): number {
+    adjustAndCarry(num: number[], resetValue: number, interval: number): number {
         if (!interval) {
             return 0;
         }
         let val: number = num[0] + interval;
         let carry: number = 0;
+
         while (val < 0) {
-            val += resetValue;
+            val += (resetValue + 1);
             carry -= 1;
         }
         while (val > resetValue) {
-            val -= resetValue;
+            val -= (resetValue + 1);
             carry += 1;
         }
         num[0] = val;
