@@ -18,5 +18,9 @@
   ],
   "tonicExampleFilename": "example.js",
   "author": "Nick Palenchar",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^25.3.0"
+  }
 }
