@@ -1,5 +1,4 @@
 let { Timer } = require('../build/tMinus');
-console.log(Timer, 'hhh')
 
 var self = {}
 
