@@ -6,6 +6,7 @@ interface Config {
 interface TimerOptions {
     divider?: string; // default ":"
     immediateInterval?: boolean; // default true
+    interval: number
     onTimeout?: Function;
     onInterval?: Function;
     repeat?: number; // default 0
@@ -22,8 +23,11 @@ export class Timer {
     options: TimerOptions = {
         divider: ":",
         repeat: 0,
-        immediateInterval: true
+        immediateInterval: true,
+        interval: 1
     };
+    isPaused: boolean = false;
+    private _startMarker: number = -1;
 
     constructor(time: string, onTimeout?: Function, onInterval?: Function);
     constructor(time: string, options: TimerOptions)
@@ -47,6 +51,26 @@ export class Timer {
             this.options = {...this.options, ...fnOrOptions};
         }
 
+    }
+
+    tick() {
+        // Edge Case: timer with interval > 1 may pass "timesUp" (all 0's) rather than land on it.
+        // When only seconds remain and the interval is greater, adjust to be the interval exactly to get to 0.
+        if(!this.years[0] && !this.days[0] && !this.hours[0] && !this.mins[0] && this.secs[0] < this.options.interval) {
+            this.secs[0] = this.options.interval;
+        }
+
+        this.adjustTime(-this.options.interval);
+
+        if(!this.years[0] && !this.days[0] && !this.hours[0] && !this.mins[0] && !this.secs[0]) {
+            //TODO: Will there ever be milliseconsd remaning? Should a timeout be set here in that case?
+            // or will mills always be 0 (and the case is handled on a resume)
+            this.options.onTimeout && this.options.onTimeout();
+            this.isPaused = true;
+        }
+        else {
+            this.options.onInterval && this.options.onInterval();
+        }
     }
 
     parse(time: string): number[] {
