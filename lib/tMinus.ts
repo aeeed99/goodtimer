@@ -13,6 +13,7 @@ interface TimerOptions {
 
 export class Timer {
 
+    mills: number[];
     secs: number[];
     mins: number[];
     hours: number[];
@@ -22,19 +23,33 @@ export class Timer {
         divider: ":",
         repeat: 0,
         immediateInterval: true
-    }
+    };
 
-    constructor(time: string, timeUpFn?: Function, intervalFn?: Function);
+    constructor(time: string, onTimeout?: Function, onInterval?: Function);
     constructor(time: string, options: TimerOptions)
     constructor(time: string, fnOrOptions: Function | TimerOptions) {
+        this.mills = [0];
         this.secs = [0];
         this.mins = [0];
         this.hours = [0];
         this.days = [0];
         this.years = [0];
+        this.setFromString(time);
+        this.adjustTime(0);
+
+        // time, onTimeout, onInterval sig
+        if (typeof fnOrOptions === 'function') {
+            this.options.onTimeout = fnOrOptions;
+            this.options.onInterval = arguments[2];
+            return this;
+        }
+        if (typeof fnOrOptions === 'object') {
+            this.options = {...this.options, ...fnOrOptions};
+        }
+
     }
 
-    static parse(time: string): number[] {
+    parse(time: string): number[] {
         if (/[dsmy]+/.test(time)) {
 
             const valuesAtIndex = ['y', 'd', 'h', 'm', 's', 'ms'];
@@ -62,10 +77,8 @@ export class Timer {
                 else {
                     throw new SyntaxError("Unexpected token " + time[i]);
                 }
-
             }
             return parsedTime.map(i => isNaN(parseInt(i)) ? 0 : parseInt(i))
-
         }
         if (/(?:\d+:){0,4}\d+/.test(time)) {
             // colon separated syntax
@@ -86,7 +99,7 @@ export class Timer {
     }
 
     setFromString(time: string): void {
-
+        [this.years, this.days, this.hours, this.mins, this.secs, this.mills] = this.parse(time).map(i => [i])
     }
 
     adjustTime(seconds: number = -1) {
@@ -94,17 +107,15 @@ export class Timer {
          */
         const {adjustAndCarry: aac} = this;
 
-        aac(this.years, 364,
-            aac(this.days, 23,
-                aac(this.hours, 59,
+        aac(this.years, Infinity,
+            aac(this.days, 364,
+                aac(this.hours, 23,
                     aac(this.mins, 59,
                         aac(this.secs, 59, seconds)))))
     }
 
     adjustAndCarry(num: number[], resetValue: number, interval: number): number {
-        if (!interval) {
-            return 0;
-        }
+
         let val: number = num[0] + interval;
         let carry: number = 0;
 
