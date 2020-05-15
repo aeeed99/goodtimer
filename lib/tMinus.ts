@@ -212,13 +212,20 @@ export class Timer {
         // @ts-ignore
         return "0".repeat(Math.max(zeros - value.length, 0)) + value;
     }
-
-    getSecondsUI(padding) {
+    getSecondsUI(padding: number = 2) {
         return this._addPadding(this.secs[0], padding);
     }
-
+    getMinutesUI(padding) {
+        return this._addPadding(this.mins[0], padding);
+    }
+    getHoursUI(padding) {
+        return this._addPadding(this.hours[0], padding);
+    }
     getDaysUI(padding) {
         return this._addPadding(this.days[0], padding);
+    }
+    getYearsUI(padding) {
+        return this._addPadding(this.years[0], padding);
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////
