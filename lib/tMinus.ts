@@ -27,6 +27,9 @@ export class Timer {
         interval: 1
     };
     isPaused: boolean = false;
+    remainingSec: number; // when pausing, the amount of milliseconds remaining before the next tick.
+    intervalId: number; // id of the main loop for running this.tick
+    lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
     private _startMarker: number = -1;
 
     constructor(time: string, onTimeout?: Function, onInterval?: Function);
@@ -42,20 +45,28 @@ export class Timer {
         this.adjustTime(0);
 
         // time, onTimeout, onInterval sig
-        if (typeof fnOrOptions === 'function') {
+        if (typeof fnOrOptions === 'function' || typeof arguments[2] === 'function') {
+            // @ts-ignore
             this.options.onTimeout = fnOrOptions;
             this.options.onInterval = arguments[2];
-            return this;
         }
-        if (typeof fnOrOptions === 'object') {
+        else if (typeof fnOrOptions === 'object') {
             this.options = {...this.options, ...fnOrOptions};
         }
 
+        this._startIntervalLoop();
     }
 
     tick() {
+        // if an interval triggers a tick that was supposed to stop (due to quickly pausing again), it's ignored completely;
+        // the same tick will rerun when the timer correctly resumes
+        if(this.isPaused) {
+            return;
+        }
+
+        this.lastTick = Date.now();
         // Edge Case: timer with interval > 1 may pass "timesUp" (all 0's) rather than land on it.
-        // When only seconds remain and the interval is greater, adjust to be the interval exactly to get to 0.
+        // When only seconds remain and are less than interval, adjust to be the interval exactly to get to 0.
         if(!this.years[0] && !this.days[0] && !this.hours[0] && !this.mins[0] && this.secs[0] < this.options.interval) {
             this.secs[0] = this.options.interval;
         }
@@ -63,7 +74,7 @@ export class Timer {
         this.adjustTime(-this.options.interval);
 
         if(!this.years[0] && !this.days[0] && !this.hours[0] && !this.mins[0] && !this.secs[0]) {
-            //TODO: Will there ever be milliseconsd remaning? Should a timeout be set here in that case?
+            //TODO: Will there ever be millisecond remaining? Should a timeout be set here in that case?
             // or will mills always be 0 (and the case is handled on a resume)
             this.options.onTimeout && this.options.onTimeout();
             this.isPaused = true;
@@ -71,6 +82,46 @@ export class Timer {
         else {
             this.options.onInterval && this.options.onInterval();
         }
+    }
+
+    togglePause() {
+        if (this.isPaused) {
+            return this.unpause();
+        }
+        else {
+            return this.pause();
+        }
+    }
+
+    pause() {
+        if(this.isPaused) {
+            return;
+        }
+        let timePaused = Date.now();
+        this.isPaused = true;
+        this.remainingSec = timePaused - this.lastTick;
+        clearInterval(this.intervalId);
+        return this.isPaused;
+    }
+
+    unpause() {
+        if(!this.isPaused) {
+            return;
+        }
+        this.isPaused = false;
+        this.lastTick = Date.now(); // brings us back to current time since we last paused.
+        setTimeout(function(){this._startIntervalLoop(true)}.bind(this), this.remainingSec);
+        return this.isPaused;
+    }
+
+    _startIntervalLoop(initialTick?: boolean) {
+        // the timer *can* be paused before a second passes, so it must be checked.
+        if(this.isPaused) {
+            return;
+        }
+        initialTick && this.tick();
+        this.lastTick = Date.now();
+        this.intervalId = setInterval(this.tick.bind(this), this.options.interval * 1000);
     }
 
     parse(time: string): number[] {
@@ -153,6 +204,31 @@ export class Timer {
         }
         num[0] = val;
         return carry;
+    }
+
+    //// UI-Functions ////
+    _addPadding(number: number, zeros: number): string {
+        let value = String(number);
+        // @ts-ignore
+        return "0".repeat(Math.max(zeros - value.length, 0)) + value;
+    }
+
+    getSecondsUI(padding) {
+        return this._addPadding(this.secs[0], padding);
+    }
+
+    getDaysUI(padding) {
+        return this._addPadding(this.days[0], padding);
+    }
+
+    //// Functions for backwards compatibility with t-minus 1.0 ////
+
+    resume = this.unpause;
+    play = this.unpause;
+    clearTimer() {
+        console.info("Deprecation Notice: t-minus 2.0 always clears the set interval on pause." +
+            " you can achieve the same effect by calling pause()");
+        this.pause();
     }
 
 }
