@@ -59,6 +59,8 @@ export class Timer {
     }
 
     tick() {
+        /** The main loop on the timer. **/
+
         // if an interval triggers a tick that was supposed to stop (due to quickly pausing again), it's ignored completely;
         // the same tick will rerun when the timer correctly resumes
         if(this.isPaused) {
@@ -213,6 +215,12 @@ export class Timer {
         // @ts-ignore
         return "0".repeat(Math.max(zeros - value.length, 0)) + value;
     }
+    _timeAsArray(): number[] {
+        return [this.years[0], this.days[0], this.hours[0], this.mins[0], this.secs[0], this.mills[0]];
+    }
+    getMillisecondsUI(padding) {
+        return this._addPadding(Date.now() - this.lastTick + this.mills[0], padding);
+    }
     getSecondsUI(padding: number = 2) {
         return this._addPadding(this.secs[0], padding);
     }
@@ -227,6 +235,38 @@ export class Timer {
     }
     getYearsUI(padding) {
         return this._addPadding(this.years[0], padding);
+    }
+    getFullTimeUI(includeMilliseconds = false) {
+        let started = false;
+        let result = [];
+        let pad = this._addPadding;
+
+        if (this.years[0]) {
+            started = true;
+            result.push(this.years[0])
+        }
+        if (this.days[0] || started) {
+            started = true;
+            result.push(this.days[0]);
+        }
+        if (this.hours[0] || started) {
+            started = true;
+            result.push(pad(this.hours[0], 2));
+        }
+        if (this.mins[0] || started) {
+            started = true;
+            result.push(pad(this.mins[0], 2));
+        }
+        result.push(pad(this.secs[0],2));
+
+        if(includeMilliseconds) {
+            result.push(pad(this.mills[0], 2));
+        }
+        return result.join(this.options.divider);
+    }
+    
+    fmtTime(fmt: string) {
+        // TODO
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////
