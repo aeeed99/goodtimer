@@ -34,7 +34,7 @@ export class Timer {
 
     constructor(time: string, onTimeout?: Function, onInterval?: Function);
     constructor(time: string, options: TimerOptions)
-    constructor(time: string, fnOrOptions: Function | TimerOptions) {
+    constructor(time: string, fnOrOptions?: Function | TimerOptions, onInterval?) {
         this.mills = [0];
         this.secs = [0];
         this.mins = [0];
@@ -45,10 +45,11 @@ export class Timer {
         this.adjustTime(0);
 
         // time, onTimeout, onInterval sig
-        if (typeof fnOrOptions === 'function' || typeof arguments[2] === 'function') {
+        //TODO remove arguments object
+        if (typeof fnOrOptions === 'function' || onInterval) {
             // @ts-ignore
             this.options.onTimeout = fnOrOptions;
-            this.options.onInterval = arguments[2];
+            this.options.onInterval = onInterval;
         }
         else if (typeof fnOrOptions === 'object') {
             this.options = {...this.options, ...fnOrOptions};
@@ -115,7 +116,7 @@ export class Timer {
     }
 
     _startIntervalLoop(initialTick?: boolean) {
-        // the timer *can* be paused before a second passes, so it must be checked.
+        // the timer *can* be paused before 1 second passes, so it must be checked.
         if(this.isPaused) {
             return;
         }
@@ -233,7 +234,7 @@ export class Timer {
     resume = this.unpause;
     play = this.unpause;
     clearTimer() {
-        console.info("Deprecation Notice: t-minus 2.0 always clears the set interval on pause." +
+        console.warn("Deprecation Notice: t-minus 2.0 always clears the set interval on pause." +
             " you can achieve the same effect by calling pause()");
         this.pause();
     }
