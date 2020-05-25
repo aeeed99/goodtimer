@@ -23,6 +23,7 @@
     "@jest/globals": "^25.5.2"
   },
   "devDependencies": {
+    "@types/jest": "^25.2.3",
     "jest": "^25.3.0"
   }
 }

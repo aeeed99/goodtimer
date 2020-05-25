@@ -36,3 +36,41 @@ describe('creating a Timer instance (constructor fn)', () => {
         expect(t.options.onInterval.name).toEqual('onInterval');
     })
 });
+
+describe('Timer options', () => {
+
+    it('delays tick if immediateInterval is false', () => {
+        const timerDelay = new Timer('10', { immediateInterval: false });
+        const timerStandard = new Timer('10');
+        const spyDelay = jest.spyOn(timerDelay, 'tick');
+        const spyStandard = jest.spyOn(timerStandard, 'tick')
+        timerDelay.pause();
+
+        expect(spyDelay).not.toHaveBeenCalled();
+        expect(spyStandard).toHaveBeenCalled();
+    });
+
+    it('Repeats with repeat option', () => {
+        let callTimes = 0;
+        const timesUp = () => callTimes++;
+        const timer = new Timer('3');
+        timer.pause();
+        timer.tick(); timer.tick(); timer.tick();
+        expect(callTimes).toEqual(1);
+        expect(timer.secs[0]).toEqual(3);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

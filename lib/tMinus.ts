@@ -10,6 +10,7 @@ interface TimerOptions {
     onTimeout?: Function;
     onInterval?: Function;
     repeat?: number; // default 0
+    startPaused?: boolean;
 }
 
 export class Timer {
@@ -54,16 +55,16 @@ export class Timer {
         else if (typeof fnOrOptions === 'object') {
             this.options = {...this.options, ...fnOrOptions};
         }
-
+        this.isPaused = this.options.startPaused;
         this._startIntervalLoop();
     }
 
-    tick() {
+    tick(force: boolean = false) {
         /** The main loop on the timer. **/
 
         // if an interval triggers a tick that was supposed to stop (due to quickly pausing again), it's ignored completely;
         // the same tick will rerun when the timer correctly resumes
-        if(this.isPaused) {
+        if(this.isPaused && !force) {
             return;
         }
 
@@ -266,15 +267,21 @@ export class Timer {
     }
     
     fmtTime(fmt: string) {
-        // TODO
+        // %Y - year
+        // %D - Day
+        // %H - hour
+        // %M - minute
+        // %S - second
+        // %m - millisecond
+        // %n - where n is number, next format token to be padded with n zeros.
+        // %% - literal percent
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////
-
     resume = this.unpause;
     play = this.unpause;
     clearTimer() {
-        console.warn("Deprecation Notice: t-minus 2.0 always clears the set interval on pause." +
+        console.warn("Deprecation Notice: t-minus 2.0 always clears the setInterval on pause." +
             " you can achieve the same effect by calling pause()");
         this.pause();
     }
