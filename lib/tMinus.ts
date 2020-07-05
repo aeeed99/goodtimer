@@ -220,7 +220,8 @@ export class Timer {
         return [this.years[0], this.days[0], this.hours[0], this.mins[0], this.secs[0], this.mills[0]];
     }
     getMillisecondsUI(padding) {
-        return this._addPadding(Date.now() - this.lastTick + this.mills[0], padding);
+        const dateOffset = this.lastTick ? Date.now() - this.lastTick : 0;
+        return this._addPadding(dateOffset + this.mills[0], padding);
     }
     getSecondsUI(padding: number = 2) {
         return this._addPadding(this.secs[0], padding);
