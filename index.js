@@ -1,2 +1,2 @@
-var Timer = require('./lib/tMinus');
+var Timer = require('./lib/latest/tMinus');
 module.exports = Timer
