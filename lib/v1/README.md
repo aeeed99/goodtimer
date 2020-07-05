@@ -23,7 +23,7 @@ Or
 ```javascript
 function annoy() { alert("This function is used within the optoins object") }
 
-var annoyMe = new Timer("5" { onTimeout: annoy, repeat: Infinity });
+var annoyMe = new Timer("5", { onTimeout: annoy, repeat: Infinity });
 ```
 
 Update the innerHTML of your view on each passing second, so that the user can anticipate when you are about to annoy them.
