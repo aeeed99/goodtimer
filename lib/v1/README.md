@@ -180,20 +180,6 @@ Returns a _number_ representing the amount left in the timer, _in seconds_
 timer.getTotal() -> 109470
 ```
 
-### `.fmtTime`
-
-Method for creating custom time formats. Given a string with metacharacters denoted by `%`, replaces them with a specific time value.
-The different replacers are listed below:
-
-* `%Y` - Years
-* `%D` - Days
-* `%H` - Hours
-* `%M` - Minutes
-* `%S` - Seconds
-* `%m` - Milliseconds
-* `%%` - A literal `%` character.
-* `%n` - where `n` is a number 0-9 and is followed by a replacer, adds `n` zero-padding to the value of the replacer. e.g (`%3%S Seconds left` -> `"003 Seconds left")
-
 # Timer Options
 
 Many aspects of a timer instance can be customized when using [advanced syntax](#). The options you can set in the object are as follows:

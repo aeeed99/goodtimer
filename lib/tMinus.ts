@@ -5,7 +5,7 @@ interface Config {
 
 interface TimerOptions {
     divider?: string; // default ":"
-    immediateInterval?: boolean; // default true
+    immediateInterval?: boolean; // default false
     interval: number
     onTimeout?: Function;
     onInterval?: Function;
@@ -21,10 +21,11 @@ export class Timer {
     hours: number[];
     days: number[];
     years: number[];
+    initialTime: string;
     options: TimerOptions = {
         divider: ":",
         repeat: 0,
-        immediateInterval: true,
+        immediateInterval: false,
         interval: 1
     };
     isPaused: boolean = false;
@@ -43,11 +44,13 @@ export class Timer {
         this.days = [0];
         this.years = [0];
         this.setFromString(time);
+        this.initialTime = time;
         this.adjustTime(0);
 
         // time, onTimeout, onInterval sig
         //TODO remove arguments object
         if (typeof fnOrOptions === 'function' || onInterval) {
+            console.log('SETTING')
             // @ts-ignore
             this.options.onTimeout = fnOrOptions;
             this.options.onInterval = onInterval;
@@ -56,12 +59,11 @@ export class Timer {
             this.options = {...this.options, ...fnOrOptions};
         }
         this.isPaused = this.options.startPaused;
-        this._startIntervalLoop();
+        this._startIntervalLoop(this.options.immediateInterval);
     }
 
     tick(force: boolean = false) {
         /** The main loop on the timer. **/
-
         // if an interval triggers a tick that was supposed to stop (due to quickly pausing again), it's ignored completely;
         // the same tick will rerun when the timer correctly resumes
         if(this.isPaused && !force) {
@@ -81,10 +83,16 @@ export class Timer {
             //TODO: Will there ever be millisecond remaining? Should a timeout be set here in that case?
             // or will mills always be 0 (and the case is handled on a resume)
             this.options.onTimeout && this.options.onTimeout();
-            this.isPaused = true;
+            if (this.options.repeat) {
+                this.options.repeat--;
+                this.setFromString(this.initialTime);
+            }
+            else {
+                this.isPaused = true;
+            }
         }
         else {
-            this.options.onInterval && this.options.onInterval();
+            this.options.onInterval && this.options.onInterval.call(this);
         }
     }
 
@@ -276,6 +284,13 @@ export class Timer {
         // %m - millisecond
         // %n - where n is number, next format token to be padded with n zeros.
         // %% - literal percent
+        return fmt.replace(/%(\d)(%\w)/g, (p1, p2, p3) => this._addPadding(this.fmtTime(p3), +p2)).replace(/%Y/g, this.getYearsUI(0))
+            .replace(/%D/g, this.getDaysUI(0))
+            .replace(/%H/g, this.getHoursUI(0))
+            .replace(/%M/g, this.getMinutesUI(0))
+            .replace(/%S/g, this.getSecondsUI(0))
+            .replace(/%m/g, this.getMillisecondsUI(0))
+            .replace(/%%/g, '%');
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////

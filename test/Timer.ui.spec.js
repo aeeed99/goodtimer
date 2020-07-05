@@ -29,18 +29,18 @@ describe('UI functions', () => {
         expect(this.timer.getYearsUI(3)).toEqual('001');
         expect(this.timer.getSecondsUI(0)).toEqual('9');
         expect(this.timer.getDaysUI(2)).toEqual('145'); // same value if padding < length of digits.
-        expect(this.timer.getHoursUI(2)).toEqual('05');
+        expect(this.timer.getHoursUI(2)).toEqual('04');
     });
 
     it('getFullTimeUI', () => {
-        expect(this.getFullTimeUI()).toEqual('1:145:04:05:09');
-        expect(this.getFullTimeUI(true)).toEqual('1:145:04:05:09');
+        expect(this.timer.getFullTimeUI()).toEqual('1:145:04:05:09');
+        expect(this.timer.getFullTimeUI(true)).toEqual('1:145:04:05:09:40');
     });
 
     it('fmtTime', () => {
-        expect(this.fmtTime('%H-%M')).toEqual('4-05');
-        expect(this.fmtTime('%3%Y%%')).toEqual('001%');
-        expect(this.fmtTime('hello world %m %1%M %m dlrow ollhe')).toEqual('hello world 40 5 40 dlrow ollhe');
-        expect(this.fmtTime('hello')).toEqual('hello');
+        expect(this.timer.fmtTime('%H-%M')).toEqual('4-5');
+        expect(this.timer.fmtTime('%3%Y%%')).toEqual('001%');
+        expect(this.timer.fmtTime('hello world %m %1%M %m dlrow ollhe')).toEqual('hello world 40 5 40 dlrow ollhe');
+        expect(this.timer.fmtTime('hello')).toEqual('hello');
     });
 });
