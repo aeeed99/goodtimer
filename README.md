@@ -103,7 +103,7 @@ The options you can set in the object are as follows:
 
 ### When a Timer ends
 
-When a timer reaches :00 (0:00:00:00), two main things happen _in order_:
+When a timer reaches :00 (0:00:00:00), the following happens _in order_:
    1. The timer is paused (`isPaused = true`) if the timer is not set to repeat.
    2. the `timerUpFn` is invoked once.
    3. If the timer is set to repeat, the timer resets to its original countdown time (it is not paused).
