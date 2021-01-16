@@ -189,7 +189,7 @@ Similar to `.reset()`, resets the timer while forcing it to run, regardless of w
 This method reinstantiates the timer with the same callback functions, so calling this on a timer that previously had `.clearTimer()` called on will still work.
 
 ### ~`.clearTimer()`~ 
-**[DEPRECATED]** In v2.x.x, alias of `.pause()`. T-minus v1 did not clear `setInterval` on pauses. Starting in this version, t-misun _always_ clears the `setInterval` on pause.
+**[DEPRECATED]** In v2.x.x, alias of `.pause()`. T-minus v1 did not clear `setInterval` on pauses. Starting in this version, t-minus _always_ clears the `setInterval` on pause.
 
 when `setInterval` is cleared via `.clearTimer()`, the timer will not work until it is reinstantiated with `.restart()` or `.reset()`. 
 
