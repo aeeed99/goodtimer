@@ -105,7 +105,7 @@ The options you can set in the object are as follows:
 
 When a timer reaches :00 (0:00:00:00), the following happens _in order_:
    1. The timer is paused (`isPaused = true`) if the timer is not set to repeat.
-   2. the `timerUpFn` is invoked once.
+   2. the `onTimeout` is invoked once.
    3. If the timer is set to repeat, the timer resets to its original countdown time (it is not paused).
 
 If the timer has no repeat, it will remain paused until further action is taken. Note that because of the order, logic can be written into the `onTimeout` to unpause the timer, such as calling `this.restart()` within it.  
