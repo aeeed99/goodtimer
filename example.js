@@ -1,4 +1,4 @@
-var Timer = require("t-minus")
+var Timer = require("goodtimer")
 
 var countdown = new Timer("03"
   , function(){ console.log("time is up!")}
