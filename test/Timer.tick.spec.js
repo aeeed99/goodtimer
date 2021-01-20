@@ -1,5 +1,5 @@
 //const {jest} = require('@jest/globals')
-let {Timer} = require('../build/tMinus');
+let {Timer} = require('../build/goodtimer');
 
 describe('tick', () => {
     // tick is the function that runs on a setInterval loop. Generally, it's not invoked directly, but is useful

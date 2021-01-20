@@ -6,7 +6,7 @@
  *    test milliseconds, so the last value of each array is always 0 for them.
  **/
 
-let {Timer} = require('../build/tMinus');
+let {Timer} = require('../build/goodtimer');
 console.dir(Timer.prototype)
 var self = {};
 

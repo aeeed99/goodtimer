@@ -1,4 +1,4 @@
-let {Timer} = require('../build/tMinus');
+let {Timer} = require('../build/goodtimer');
 
 
 describe('UI functions', () => {
