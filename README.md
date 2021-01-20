@@ -73,7 +73,7 @@ Where:
   + **onTimeout** `function` - a function to invoke when the timer reaches 0.
   + **onInterval** `function` - a function to invoke on _every_ tick of the timer.
 
-**function params and `this`** - The functions passed into `timerUpFn` and `intervalFn` are called with the timer object bound to `this`. You can call any method or get any property on `this` that you could when creating a timer (see methods below)
+**function params and `this`** - The functions passed into `onTimeout` and `onInterval` are called with the timer object bound to `this`. You can call any method or get any property on `this` that you could when creating a timer (see methods below)
 
 > WARNING!!: If using `this` to access the bound timer, do not use fat arrow functions. 
 
@@ -106,7 +106,7 @@ The options you can set in the object are as follows:
 
 When a timer reaches :00 (0:00:00:00), the following happens _in order_:
    1. The timer is paused (`isPaused = true`) if the timer is not set to repeat.
-   2. the `timerUpFn` is invoked once.
+   2. the `onTimeout` is invoked once.
    3. If the timer is set to repeat, the timer resets to its original countdown time (it is not paused).
 
 If the timer has no repeat, it will remain paused until further action is taken. Note that because of the order, logic can be written into the `onTimeout` to unpause the timer, such as calling `this.restart()` within it.  
