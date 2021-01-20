@@ -1,4 +1,4 @@
-# goodtimer 🕚🍔 (previously t-minus) [![npm](https://img.shields.io/npm/dm/goodtimer.svg?maxAge=2592000)]() [![npm](https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/.svg?maxAge=2592000)]() [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)]()
+# goodtimer 🕚🍔 (previously t-minus) [![npm](https://img.shields.io/npm/dm/goodtimer.svg?maxAge=2592000)]() [![npm](https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/goodtimer.svg?maxAge=2592000)]() [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)]()
 
 #### a setTimeout for humans (and so much more)
 
