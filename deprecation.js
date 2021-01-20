@@ -1,0 +1,2 @@
+var chalk = require('chalk');
+console.warn(chalk.bgYellow(chalk.black(' Deprecation Notice ')), 't-minus is now', chalk.green('goodtimer.'),'Install the new package with `npm i goodtimer` as this one is no longer recieving updates.');
