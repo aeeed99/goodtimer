@@ -1,2 +1,2 @@
-var Timer = require('./lib/latest/tMinus');
+var Timer = require('./build/goodtimer');
 module.exports = Timer

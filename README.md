@@ -1,15 +1,16 @@
-# T-minus 🕚 🚀 [![npm](https://img.shields.io/npm/dm/t-minus.svg?maxAge=2592000)]() [![npm](https://img.shields.io/npm/v/t-minus.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/t-minus.svg?maxAge=2592000)]() [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)]()
-#### A lightweight JavaScript timer with count up/down directionality and custom function handling
+# goodtimer 🕚🍔 (previously t-minus) [![npm](https://img.shields.io/npm/dm/goodtimer.svg?maxAge=2592000)]() [![npm](https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/.svg?maxAge=2592000)]() [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)]()
 
-`setInterval`/`setTimeout`s can be annoying. T-minus provides abstraction for various countdown features, both for logical uses and UI purposes.
+#### a setTimeout for humans (and so much more)
 
-T-minus can replace a `setTimeout`.
+`setInterval`/`setTimeout`s can be annoying. goodtimer provides abstraction for various countdown features, both for logical uses and UI purposes.
+
+goodtimer can replace a `setTimeout`.
 
 ```javascript
 new Timer(':30', () => console.log('30 seconds have passed'));
 ```
 
-T-minus can display a countdown
+goodtimer can display a countdown
 
 ```javascript
 var el = document.getElementById('timer-element');
@@ -21,7 +22,7 @@ var timer = new Timer('2:00', {
 });
 ```
 
-T-minus has built-in pause functionality.
+goodtimer has built-in pause functionality.
 ```javascript
 var pauseBtn = document.getElementById('pauseBtn');
 
@@ -41,24 +42,24 @@ Best of all its super lightweight, only **3.4KB** zipped and **0** dependencies 
 
 ## Install
 ```shell
-$ npm install t-minus
+$ npm install goodtimer
 ```
 For Node/React:
 ```javascript
-const { Timer } = require('t-minus');
+const { Timer } = require('goodtimer');
 ```
 
 In the browser using vanilla JS/HTML:
 
 ```html
-<script href="path/to/t-minus/tMinus.js"></script>
+<script href="path/to/goodtimer/goodtimer.js"></script>
 <script>
-var Timer = window.tMinus.Timer;
+var Timer = window.goodtimer.Timer;
 </script>
 ```
 
 ## Syntax
-T-minus Timers have two signatures. The first for basic functionality and the second for more control:
+goodtimer Timers have two signatures. The first for basic functionality and the second for more control:
 
 ```
 new Timer(<time>,[<onTimeout>[,<onInterval>]]);
@@ -189,7 +190,7 @@ Similar to `.reset()`, resets the timer while forcing it to run, regardless of w
 This method reinstantiates the timer with the same callback functions, so calling this on a timer that previously had `.clearTimer()` called on will still work.
 
 ### ~`.clearTimer()`~ 
-**[DEPRECATED]** In v2.x.x, alias of `.pause()`. T-minus v1 did not clear `setInterval` on pauses. Starting in this version, t-minus _always_ clears the `setInterval` on pause.
+**[DEPRECATED]** In v2.x.x, alias of `.pause()`. goodtimer v1 did not clear `setInterval` on pauses. Starting in this version, t-misun _always_ clears the `setInterval` on pause.
 
 when `setInterval` is cleared via `.clearTimer()`, the timer will not work until it is reinstantiated with `.restart()` or `.reset()`. 
 

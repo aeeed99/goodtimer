@@ -1,4 +1,3 @@
-import Timeout = NodeJS.Timeout;
 
 interface Config {
     divider: string;
@@ -32,7 +31,7 @@ class Timer {
     };
     isPaused: boolean = false;
     remainingSec: number; // when pausing, the amount of milliseconds remaining before the next tick.
-    intervalId: number | Timeout; // id of the main loop for running this.tick
+    intervalId: number | ReturnType<typeof setTimeout>; // id of the main loop for running this.tick
     lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
     private _startMarker: number = -1;
 
@@ -52,7 +51,6 @@ class Timer {
         // time, onTimeout, onInterval sig
         //TODO remove arguments object
         if (typeof fnOrOptions === 'function' || onInterval) {
-            console.log('SETTING')
             // @ts-ignore
             this.options.onTimeout = fnOrOptions;
             this.options.onInterval = onInterval;
@@ -309,7 +307,7 @@ class Timer {
     resume = this.unpause;
     play = this.unpause;
     clearTimer() {
-        console.warn("Deprecation Notice: t-minus 2.0 always clears the setInterval on pause." +
+        console.warn("Deprecation Notice: goodtimer 2.x.x always clears the setInterval on pause." +
             " you can achieve the same effect by calling pause()");
         this.pause();
     }
@@ -317,9 +315,10 @@ class Timer {
 }
 
 try {
+    // @ts-ignore
     module.exports = {Timer};
 }
 catch {
     // @ts-ignore
-    window.tMinus = {Timer}
+    window.goodtimer = {Timer}
 }

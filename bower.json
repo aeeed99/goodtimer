@@ -1,7 +1,7 @@
 {
-  "name": "t-minus",
+  "name": "goodtimer",
   "description": "Lightweight Javascript timer with built in pausing and custom function handling",
-  "main": "lib/tMinus.js",
+  "main": "index.js",
   "authors": [
     "Nick Palenchar"
   ],
