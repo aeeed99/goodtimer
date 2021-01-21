@@ -1,6 +1,8 @@
-# goodtimer 🕚🍔 (previously t-minus) [![npm](https://img.shields.io/npm/dm/goodtimer.svg?maxAge=2592000)]() [![npm](https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/goodtimer.svg?maxAge=2592000)]() [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)]()
+# goodtimer 🕚🍔 (previously t-minus) 
 
-#### a setTimeout for humans (and so much more)
+![npm](https://img.shields.io/npm/dw/t-minus) [![npm](https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/goodtimer.svg?maxAge=2592000)]() [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)]()
+
+#### A setTimeout for humans (and so much more)
 
 `setInterval`/`setTimeout`s can be annoying. goodtimer provides abstraction for various countdown features, both for logical uses and UI purposes.
 
@@ -26,8 +28,8 @@ goodtimer has built-in pause functionality.
 ```javascript
 var pauseBtn = document.getElementById('pauseBtn');
 
-pauseBtn.addEventListener('click', function(){
-  timer.togglePause();
+pauseBtn.addEventListener('click', function() {
+  this.togglePause();
   this.innerHTML = timer.isPaused ? "PLAY" : "PAUSE";
 });
 ```
