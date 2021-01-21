@@ -3,10 +3,7 @@
 
 name: Node.js Package
 
-on:
-  push:
-    branches:
-      - '*'
+on: pull_request
 
 jobs:
   build:
