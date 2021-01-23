@@ -11,6 +11,7 @@ on:
       - 'docs/**'
       - 'README.md'
       - 'example.js'
+      - '.github/**'
 
 jobs:
   build:
