@@ -36,7 +36,7 @@ class Timer {
     private _startMarker: number = -1;
 
     constructor(time: string, onTimeout?: Function, onInterval?: Function);
-    constructor(time: string, options: TimerOptions)
+    constructor(time: string, options: TimerOptions);
     constructor(time: string, fnOrOptions?: Function | TimerOptions, onInterval?) {
         this.mills = [0];
         this.secs = [0];
