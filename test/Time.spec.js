@@ -18,6 +18,16 @@ describe('Time class', () => {
         expect(time.seconds).toBe(0);
     });
 
+    it('Starts at 0 by default (no arguments passed', () => {
+        const time = new Time();
+        expect(time.milliseconds).toBe(0)
+        expect(time.seconds).toBe(0)
+        expect(time.minutes).toBe(0)
+        expect(time.hours).toBe(0)
+        expect(time.days).toBe(0)
+        expect(time.years).toBe(0)
+    })
+
     describe('in', () => {
         it('milliseconds returns total milliseconds', () => {
             const time = new Time(1000);
@@ -55,14 +65,70 @@ describe('Time class', () => {
             expect(time.mins).toBe(2);
             expect(time.seconds).toBe(1);
         })
+    });
+
+    describe('getters and setters', () => {
+        it('on milliseconds', () => {
+            const time = new Time(0);
+            expect(time.milliseconds).toBe(0);
+            time.milliseconds = 10;
+            expect(time.milliseconds).toBe(10);
+        })
+
+        it('on milliseconds carries over', () => {
+            const time = new Time(0);
+            time.milliseconds = 1000;
+            expect(time.milliseconds).toBe(0);
+            expect(time.seconds).toBe(1);
+        })
+
+        it('on seconds', () => {
+            const time = new Time(0);
+            expect(time.seconds).toBe(0)
+            time.seconds = 50;
+            expect(time.seconds).toBe(50)
+        });
+
+        it('on seconds carires over', () => {
+            const time = new Time(0);
+            time.seconds = 90;
+            expect(time.seconds).toBe(30);
+            expect(time.minutes).toBe(1);
+        })
+
+        it('on minutes carries over', () => {
+            const time = new Time(0);
+            time.minutes = 120;
+            expect(time.hours).toBe(2);
+            expect(time.minutes).toBe(0);
+        })
+
+        it('on hours carries over', () => {
+            const time = new Time(0);
+            time.hours = 47;
+            expect(time.hours).toBe(23);
+            expect(time.days).toBe(1);
+        })
+        it('on days carries over', () => {
+            const time = new Time(0);
+            time.days = 365;
+            expect(time.years).toBe(1);
+            expect(time.milliseconds).toBe(0);
+            expect(time.seconds).toBe(0);
+            expect(time.minutes).toBe(0);
+            expect(time.hours).toBe(0);
+            expect(time.days).toBe(0);
+        })
     })
 
     describe('_fromMilliSeconds returns arrays of numbers from milliseconds', () => {
         expect(Time.prototype._fromMiliseconds(1).toString()).toBe([0, 0, 0, 0, 0, 1].toString());
         expect(Time.prototype._fromMiliseconds(1000).toString()).toBe([0,0,0,0,1,0].toString());
         expect(Time.prototype._fromMiliseconds(60_000).toString()).toBe([0,0,0,1,0,0].toString());
-        expect(Time.prototype._fromMiliseconds(315_57_600_000).toString()).toBe([1,0,0,0,0,0].toString());
-        expect(Time.prototype._fromMiliseconds(315_57_661_001).toString()).toBe([1,0,0,6,1,1].toString());
+        expect(Time.prototype._fromMiliseconds(99_000).toString()).toBe([0,0,0,1,39,0].toString());
+        expect(Time.prototype._fromMiliseconds(259_299_000).toString()).toBe([0,3,0,1,39,0].toString());
+        expect(Time.prototype._fromMiliseconds(31_536_000_000).toString()).toBe([1,0,0,0,0,0].toString());
+        expect(Time.prototype._fromMiliseconds(31_536_000_005).toString()).toBe([1,0,0,0,0,5].toString());
 
     })
 })

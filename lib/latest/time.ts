@@ -11,7 +11,7 @@ class Time {
     constructor(time: number | string | Time = "0") {
         if (typeof time === 'number') {
             // @ts-ignore
-            time = time.toString();
+            time = time.toString() + 'ms';
         }
         if (typeof time === 'string') {
             this._time = parse(time).map(val => val === null ? [0] : [val]);
