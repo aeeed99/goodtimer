@@ -38,6 +38,17 @@ class Time {
         this.years = this.years + toAdd.years;
     }
 
+    subtract(time: number | string | Time): void {
+        const toSubtract = time instanceof Time ? time : new Time(time);
+
+        this.milliseconds = this.milliseconds - toSubtract.milliseconds;
+        this.seconds = this.seconds - toSubtract.seconds;
+        this.minutes = this.minutes - toSubtract.minutes;
+        this.hours = this.hours - toSubtract.hours;
+        this.days = this.days - toSubtract.days;
+        this.years = this.years - toSubtract.years;
+    }
+
     _adjustTime(milliseconds: number) {
         /** Adjusts time by a number of seconds. Pass negative number to decrement.
          */
@@ -121,6 +132,13 @@ class Time {
         this._time[5][0] = n;
         if (this._time[5][0] >= 1000) {
             [this._time[4][0], this._time[5][0]] = this._getCarryover(this._time[5][0], 1000);
+        }
+        if (this._time[5][0] < 0) {
+            if (this._time.slice(0, 5).some(el => el[0])) {
+                const [carryOver, remainingInverse] = this._getCarryover(Math.abs(this._time[5][0]), 1000);
+                this._time[5][0] = 1000 - remainingInverse;
+                this._time[4][0] = this._time[4][0] - (carryOver + 1)
+            }
         }
     }
     get ms() {

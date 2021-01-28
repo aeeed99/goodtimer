@@ -64,7 +64,18 @@ describe('Time class', () => {
             time.add(1000);
             expect(time.mins).toBe(2);
             expect(time.seconds).toBe(1);
-        })
+        });
+
+        it('can subtract from another Time instance', () => {
+            const time = new Time('10:00:01.500');
+            time.subtract(':01');
+            expect(time.seconds).toBe(0);
+            time.subtract('.600');
+            expect(time.milliseconds).toBe(900);
+            expect(time.seconds).toBe(59);
+            expect(time.minutes).toBe(59);
+            expect(time.hours).toBe(9);
+        });
     });
 
     describe('getters and setters', () => {
@@ -121,7 +132,7 @@ describe('Time class', () => {
         })
     })
 
-    describe('_fromMilliSeconds returns arrays of numbers from milliseconds', () => {
+    it('_fromMilliSeconds returns arrays of numbers from milliseconds', () => {
         expect(Time.prototype._fromMiliseconds(1).toString()).toBe([0, 0, 0, 0, 0, 1].toString());
         expect(Time.prototype._fromMiliseconds(1000).toString()).toBe([0,0,0,0,1,0].toString());
         expect(Time.prototype._fromMiliseconds(60_000).toString()).toBe([0,0,0,1,0,0].toString());
