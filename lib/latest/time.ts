@@ -122,6 +122,21 @@ class Time {
         [result[0], result[1]] = this._getCarryover(result[1], 365);
         return result
     }
+    _adjustOverflow(place: number, threshold: number) {
+        /**
+         * Sets the value at placemarker (value) to a positive number within its
+         * threshold, adding to larger places if needed.
+         *
+         * If the value is within the threshold, nothing happens.
+         */
+        if (place === 0) {
+            // the largest placement has no limit
+            return;
+        }
+        if (this._time[place][0] >= threshold) {
+            [this._time[place-1][0], this._time[place][0]] = this._getCarryover(this._time[place][0], threshold);
+        }
+    }
 
     // [years, days, hours, minutes, seconds, milliseconds]
     //  0      1     2      3        4        5
@@ -130,9 +145,7 @@ class Time {
     }
     set milliseconds(n) {
         this._time[5][0] = n;
-        if (this._time[5][0] >= 1000) {
-            [this._time[4][0], this._time[5][0]] = this._getCarryover(this._time[5][0], 1000);
-        }
+        this._adjustOverflow( 5, 1000);
         if (this._time[5][0] < 0) {
             if (this._time.slice(0, 5).some(el => el[0])) {
                 const [carryOver, remainingInverse] = this._getCarryover(Math.abs(this._time[5][0]), 1000);
@@ -154,9 +167,7 @@ class Time {
     }
     set seconds(n) {
         this._time[4][0] = n;
-        if (this._time[4][0] >= 60) {
-            [this._time[3][0], this._time[4][0]] = this._getCarryover(this._time[4][0], 60);
-        }
+        this._adjustOverflow(4, 60);
     }
     get secs() {
         /** Alias of this#seconds **/
@@ -170,9 +181,7 @@ class Time {
     }
     set minutes(n) {
         this._time[3][0] = n
-        if (this._time[3][0] >= 60) {
-            [this._time[2][0], this._time[3][0]] = this._getCarryover(this._time[3][0], 60);
-        }
+        this._adjustOverflow(3, 60);
     }
     get mins() {
         /** Alias of .minutes **/
@@ -186,18 +195,14 @@ class Time {
     }
     set hours(n) {
         this._time[2][0] = n;
-        if (this._time[2][0] >= 24) {
-            [this._time[1][0], this._time[2][0]] = this._getCarryover(this._time[2][0], 24);
-        }
+        this._adjustOverflow(2, 24);
     }
     get days() {
         return this._time[1][0];
     }
     set days(n) {
-        this._time[1][0] = n
-        if (this._time[1][0] >= 365) {
-            [this._time[0][0], this._time[1][0]] = this._getCarryover(this._time[1][0], 365);
-        }
+        this._time[1][0] = n;
+        this._adjustOverflow(1, 365);
     }
     get years() {
         return this._time[0][0];
