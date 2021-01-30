@@ -66,7 +66,7 @@ describe('Time class', () => {
             expect(time.seconds).toBe(1);
         });
 
-        xit('can subtract from another Time instance', () => {
+        it('can subtract from another Time instance', () => {
             const time = new Time('10:00:01.500');
             time.subtract(':01');
             expect(time.seconds).toBe(0);
@@ -76,6 +76,24 @@ describe('Time class', () => {
             expect(time.minutes).toBe(59);
             expect(time.hours).toBe(9);
         });
+
+        it('can handle large overflows', () => {
+            const time = new Time();
+            time.add(new Time(86400000));
+            expect(time.milliseconds).toBe(0);
+            expect(time.minutes).toBe(0);
+            expect(time.hours).toBe(0);
+            expect(time.days).toBe(1);
+        });
+
+        xit('can handle lange underflow', () => {
+            const time = new Time('1d');
+            time.subtract(86400000);
+            expect(time.days).toBe(0);
+            expect(time.hours).toBe(0);
+            expect(time.minutes).toBe(0);
+            expect(time.milliseconds).toBe(0);
+        })
     });
 
     describe('getters and setters', () => {

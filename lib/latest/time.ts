@@ -138,6 +138,17 @@ class Time {
         }
     }
 
+    _adjustUnderflow(place: number, threshold) {
+        if (this._time[place][0] < 0) {
+            if (this._time.slice(0, place).some(el => el[0])) {
+                const [carryOver, remainingInverse] = this._getCarryover(Math.abs(this._time[place][0]), threshold);
+                this._time[place][0] = threshold - remainingInverse;
+                return  -(carryOver + 1);
+            }
+        }
+        return 0;
+    }
+
     // [years, days, hours, minutes, seconds, milliseconds]
     //  0      1     2      3        4        5
     get milliseconds() {
@@ -145,14 +156,9 @@ class Time {
     }
     set milliseconds(n) {
         this._time[5][0] = n;
-        this._adjustOverflow( 5, 1000);
-        if (this._time[5][0] < 0) {
-            if (this._time.slice(0, 5).some(el => el[0])) {
-                const [carryOver, remainingInverse] = this._getCarryover(Math.abs(this._time[5][0]), 1000);
-                this._time[5][0] = 1000 - remainingInverse;
-                this._time[4][0] = this._time[4][0] - (carryOver + 1)
-            }
-        }
+        this._adjustOverflow(5, 1000);
+        const under = this._adjustUnderflow(5, 1000);
+        this.seconds = this.seconds + under;
     }
     get ms() {
         /** Alias of .milliseconds. **/
@@ -168,6 +174,8 @@ class Time {
     set seconds(n) {
         this._time[4][0] = n;
         this._adjustOverflow(4, 60);
+        const under = this._adjustUnderflow(4, 60);
+        this.minutes = this.minutes + under;
     }
     get secs() {
         /** Alias of this#seconds **/
@@ -182,6 +190,8 @@ class Time {
     set minutes(n) {
         this._time[3][0] = n
         this._adjustOverflow(3, 60);
+        const under = this._adjustUnderflow(3, 60);
+        this.hours = this.hours + under;
     }
     get mins() {
         /** Alias of .minutes **/
@@ -196,6 +206,8 @@ class Time {
     set hours(n) {
         this._time[2][0] = n;
         this._adjustOverflow(2, 24);
+        const under = this._adjustUnderflow(2, 24);
+        this.days = this.days + under;
     }
     get days() {
         return this._time[1][0];
@@ -203,6 +215,8 @@ class Time {
     set days(n) {
         this._time[1][0] = n;
         this._adjustOverflow(1, 365);
+        const under = this._adjustUnderflow(1, 365);
+        this.years = this.years + under;
     }
     get years() {
         return this._time[0][0];
