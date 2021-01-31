@@ -29,7 +29,8 @@ class Time {
 
         }
         else if (time instanceof Time) {
-            // todo
+            this._sign = time._sign;
+            this._time = time._time.map(val => [val[0]]);
         }
         else {
             throw new TypeError("Can't parse type.");
@@ -51,15 +52,61 @@ class Time {
         this.years = this.years + toAdd.years;
     }
 
+    abs(): Time {
+        const absTime = new Time(this);
+        absTime._sign *= -1;
+        return absTime;
+    }
+
+    gt(time: number | string | Time): boolean {
+        const compare = time instanceof Time ? time : new Time(time);
+
+        return this.years > compare.years ||
+            this.days > compare.days ||
+            this.hours > compare.hours ||
+            this.minutes > compare.minutes ||
+            this.seconds > compare.seconds ||
+            this.milliseconds > compare.milliseconds ||
+            false;
+    }
+
     subtract(time: number | string | Time): void {
         const toSubtract = time instanceof Time ? time : new Time(time);
 
-        this.years = this._time[0][0] + (toSubtract._time[0][0] * this._sign);
-        this.days = this._time[1][0] + (toSubtract._time[1][0] * this._sign);
-        this.hours = this._time[2][0] + (toSubtract._time[2][0] * this._sign);
-        this.minutes = this._time[3][0] + (toSubtract._time[3][0] * this._sign);
-        this.seconds = this._time[4][0] + (toSubtract._time[4][0] * this._sign);
-        this.milliseconds = this._time[5][0] + (toSubtract._time[5][0] * this._sign);
+        if (toSubtract.abs().gt(this.abs())) {
+            // TODO: replace with setTime
+            const newSubtract = new Time(this);
+
+            this.years = toSubtract.years;
+            this.hours = toSubtract.hours;
+            this.days = toSubtract.days;
+            this.minutes = toSubtract.minutes;
+            this.seconds = toSubtract.seconds;
+            this.milliseconds = toSubtract.milliseconds;
+            this._sign *= -1;
+            return this.subtract(newSubtract);
+        }
+        this.years = Math.abs(this.years) - Math.abs(toSubtract.years);
+        this.days = Math.abs(this.days) - Math.abs(toSubtract.days);
+        this.hours = Math.abs(this.hours) -Math.abs(toSubtract.hours);
+        this.minutes = Math.abs(this.minutes) - Math.abs(toSubtract.minutes);
+        this.seconds = Math.abs(this.seconds) - Math.abs(toSubtract.seconds);
+        this.milliseconds = Math.abs(this.milliseconds) - Math.abs(toSubtract.milliseconds);
+        // this.years = this.years + (toSubtract.years * this._sign);
+        // this.days = this._time[1][0] + (toSubtract._time[1][0] * this._sign);
+        // this.hours = this._time[2][0] + (toSubtract._time[2][0] * this._sign);
+        // this.minutes = this._time[3][0] + (toSubtract._time[3][0] * this._sign);
+        // this.seconds = this._time[4][0] + (toSubtract._time[4][0] * this._sign);
+        // this.milliseconds = this._time[5][0] + (toSubtract._time[5][0] * this._sign);
+    }
+
+    inMilliseconds() {
+        return this.years * 365 * 24 * 60 * 60 * 1000 +
+            this.days * 24 * 60 * 60 * 1000 +
+            this.hours * 60 * 60 * 1000 +
+            this.minutes * 60 * 1000 +
+            this.seconds * 1000 +
+            this.milliseconds;
     }
 
     _adjustTime(milliseconds: number) {

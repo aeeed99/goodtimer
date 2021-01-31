@@ -116,11 +116,11 @@ describe('Time class', () => {
             const time = new Time('364d23h59m59s999ms'); // 1ms short of 1y
             time.subtract('1y');
             expect(time.milliseconds).toBe(-1);
-            expect(time.minutes).toBe(0);
-            expect(time.seconds).toBe(0);
-            expect(time.hours).toBe(0);
-            expect(time.days).toBe(0);
-            expect(time.years).toBe(0);
+            expect(time.minutes).toBe(-0);
+            expect(time.seconds).toBe(-0);
+            expect(time.hours).toBe(-0);
+            expect(time.days).toBe(-0);
+            expect(time.years).toBe(-0);
         });
 
         it('works with add', () => {
