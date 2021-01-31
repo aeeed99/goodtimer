@@ -86,7 +86,7 @@ describe('Time class', () => {
             expect(time.days).toBe(1);
         });
 
-        xit('can handle lange underflow', () => {
+        it('can handle lange underflow', () => {
             const time = new Time('1d');
             time.subtract(86400000);
             expect(time.days).toBe(0);
@@ -95,6 +95,41 @@ describe('Time class', () => {
             expect(time.milliseconds).toBe(0);
         })
     });
+
+    describe('negative time values', () => {
+        it('can be negative', () => {
+            const time = new Time(-10);
+            expect(time.milliseconds).toBe(-10);
+        });
+        it('can be negative from string', () => {
+            const time = new Time('-10h3m');
+            expect(time.hours).toBe(-10);
+            expect(time.minutes).toBe(-3);
+        });
+        it('can go from negative to positive', () => {
+            const time = new Time('-5:00');
+            time.add('6:30');
+            expect(time.minutes).toBe(1);
+            expect(time.seconds).toBe(30);
+        });
+        it('can go from positive to negative', () => {
+            const time = new Time('364d23h59m59s999ms'); // 1ms short of 1y
+            time.subtract('1y');
+            expect(time.milliseconds).toBe(-1);
+            expect(time.minutes).toBe(0);
+            expect(time.seconds).toBe(0);
+            expect(time.hours).toBe(0);
+            expect(time.days).toBe(0);
+            expect(time.years).toBe(0);
+        });
+
+        it('works with add', () => {
+            const time = new Time('-10:44');
+            time.add(':45');
+            expect(time.minutes).toBe(-9);
+            expect(time.seconds).toBe(-59);
+        })
+    })
 
     describe('getters and setters', () => {
         it('on milliseconds', () => {
@@ -151,13 +186,13 @@ describe('Time class', () => {
     })
 
     it('_fromMilliSeconds returns arrays of numbers from milliseconds', () => {
-        expect(Time.prototype._fromMiliseconds(1).toString()).toBe([0, 0, 0, 0, 0, 1].toString());
-        expect(Time.prototype._fromMiliseconds(1000).toString()).toBe([0,0,0,0,1,0].toString());
-        expect(Time.prototype._fromMiliseconds(60_000).toString()).toBe([0,0,0,1,0,0].toString());
-        expect(Time.prototype._fromMiliseconds(99_000).toString()).toBe([0,0,0,1,39,0].toString());
-        expect(Time.prototype._fromMiliseconds(259_299_000).toString()).toBe([0,3,0,1,39,0].toString());
-        expect(Time.prototype._fromMiliseconds(31_536_000_000).toString()).toBe([1,0,0,0,0,0].toString());
-        expect(Time.prototype._fromMiliseconds(31_536_000_005).toString()).toBe([1,0,0,0,0,5].toString());
+        expect(Time.prototype._fromMilliseconds(1).toString()).toBe([0, 0, 0, 0, 0, 1].toString());
+        expect(Time.prototype._fromMilliseconds(1000).toString()).toBe([0,0,0,0,1,0].toString());
+        expect(Time.prototype._fromMilliseconds(60_000).toString()).toBe([0,0,0,1,0,0].toString());
+        expect(Time.prototype._fromMilliseconds(99_000).toString()).toBe([0,0,0,1,39,0].toString());
+        expect(Time.prototype._fromMilliseconds(259_299_000).toString()).toBe([0,3,0,1,39,0].toString());
+        expect(Time.prototype._fromMilliseconds(31_536_000_000).toString()).toBe([1,0,0,0,0,0].toString());
+        expect(Time.prototype._fromMilliseconds(31_536_000_005).toString()).toBe([1,0,0,0,0,5].toString());
 
     })
 })
