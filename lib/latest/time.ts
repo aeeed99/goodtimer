@@ -54,20 +54,39 @@ class Time {
 
     abs(): Time {
         const absTime = new Time(this);
-        absTime._sign *= -1;
+        absTime._sign = 1;
         return absTime;
     }
 
     gt(time: number | string | Time): boolean {
         const compare = time instanceof Time ? time : new Time(time);
 
-        return this.years > compare.years ||
-            this.days > compare.days ||
-            this.hours > compare.hours ||
-            this.minutes > compare.minutes ||
-            this.seconds > compare.seconds ||
-            this.milliseconds > compare.milliseconds ||
-            false;
+        if (this.years === compare.years) {
+            if (this.days === compare.days) {
+                if (this.hours === compare.hours) {
+                    if (this.minutes === compare.minutes) {
+                        if (this.seconds === compare.seconds) {
+                            if (this.milliseconds === compare.milliseconds) {
+                                return false;
+                            }
+                            return this.milliseconds > compare.milliseconds;
+                        }
+                        return this.seconds > compare.seconds;
+                    }
+                    return this.minutes > compare.minutes;
+                }
+                return this.hours > compare.hours;
+            }
+            return this.days > compare.days;
+        }
+        return this.years > compare.years;
+        // return this.years > compare.years ||
+        //     this.days > compare.days ||
+        //     this.hours > compare.hours ||
+        //     this.minutes > compare.minutes ||
+        //     this.seconds > compare.seconds ||
+        //     this.milliseconds > compare.milliseconds ||
+        //     false;
     }
 
     subtract(time: number | string | Time): void {
