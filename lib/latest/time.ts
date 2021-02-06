@@ -2,7 +2,7 @@
 import {type} from "os";
 
 const { Timer } = require('./goodtimer');
-const { parse } = Timer.prototype;
+const { _parse } = Timer.prototype;
 
 class Time {
     _sign: -1 | 1 = 1;
@@ -22,7 +22,7 @@ class Time {
                 this._sign = -1;
                 time = time.replace(/^([^\d\w]*)(-)(.*)$/, '$1$3');
             }
-            this._time = parse(time).map(val => val === null ? [0] : [val]);
+            this._time = _parse(time).map(val => val === null ? [0] : [val]);
         }
         else if (typeof time === 'number') {
 
@@ -32,16 +32,24 @@ class Time {
             this._time = time._time.map(val => [val[0]]);
         }
         else {
-            throw new TypeError("Can't parse type.");
+            throw new TypeError("Can't _parse type.");
         }
         this._adjustTime(0)
     }
 
     add(time: number | string | Time): void {
-        if (this._sign === -1) {
-            return this.subtract(time);
-        }
+        // if (this._sign === -1) {
+        //     return this.subtract(time);
+        // }
+
         const toAdd = time instanceof Time ? time : new Time(time);
+        const signTemp = this._sign;
+
+        this.abs(true)._adjustTime(toAdd.abs().inMilliseconds());
+
+        this._sign = signTemp;
+        return
+        
 
         this.milliseconds = this.milliseconds - toAdd.milliseconds;
         this.seconds = this.seconds - toAdd.seconds;
@@ -51,10 +59,23 @@ class Time {
         this.years = this.years - toAdd.years;
     }
 
-    abs(): Time {
+    abs(set: boolean=false): Time {
+        /** Returns a new Time instance that is the absolute value.
+         *  If 'set' is true, mokes this instance absolute value and
+         *  returns that instead.
+         */
+        if (set) {
+            this._sign = 1;
+            return this;
+        }
         const absTime = new Time(this);
         absTime._sign = 1;
         return absTime;
+    }
+
+    setSign(sign): Time {
+        this._sign = Math.sign(sign) || 1;
+        return this;
     }
 
     gt(time: number | string | Time): boolean {
@@ -81,14 +102,41 @@ class Time {
         return this.years > compare.years;
     }
 
-    subtract(time: number | string | Time): void {
-
-        if (this._sign === 1) {
-            return this.add(time);
-        }
+    subtract(time: number | string | Time, _ignoreSigns: boolean=false): void {
 
         const toSubtract = time instanceof Time ? time : new Time(time);
 
+        if (!_ignoreSigns) {
+            if(this._sign === 1 && toSubtract._sign === -1) {
+                this.add(toSubtract.abs());
+                return;
+            }
+            if(this._sign === -1 && toSubtract._sign === 1) {
+                const signTemp = this._sign;
+                this.abs(true).add(toSubtract);
+                this._sign *= signTemp;
+                return;
+            }
+            if (this._sign + toSubtract._sign === -2) {
+                const signTemp = this._sign;
+                this.abs(true).subtract(toSubtract, true);
+                this._sign *= signTemp;
+                return;
+            }
+        }
+
+        if(toSubtract.gt(this)) {
+            const newSubtract = new Time(this);
+            this.constructor(toSubtract);
+            this.subtract(newSubtract, _ignoreSigns);
+            this._sign *= -1;
+            // TODO set time
+        }
+
+
+        this._adjustTime(toSubtract.setSign(-1).inMilliseconds());
+        return;
+        toSubtract.setSign(1);
         this.milliseconds = this.milliseconds - toSubtract.milliseconds;
         this.seconds = this.seconds - toSubtract.seconds;
         this.minutes = this.minutes - toSubtract.minutes;

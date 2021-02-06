@@ -18,6 +18,18 @@ describe('Time class', () => {
         expect(time.seconds).toBe(0);
     });
 
+    describe('parsing with letter notation', () => {
+        it('days', () => {
+            expect(new Time('10d').days).toBe(10);
+        });
+        it('days (negative)', () => {
+            expect(new Time('-10d').days).toBe(-10);
+        });
+        it('hours (negative)', () => {
+            expect(new Time('-3h').hours).toBe(-3);
+        })
+    })
+
     it('Starts at 0 by default (no arguments passed', () => {
         const time = new Time();
         expect(time.milliseconds).toBe(0)
@@ -96,12 +108,12 @@ describe('Time class', () => {
         });
 
         it('can subtract positive from negative', () => {
-            const time = new Time('-30:15:15.555');
+            const time = new Time('-30:15:15.555'); // 1d6h15m15s555ms
             time.subtract('45:00.445');
             expect(time.milliseconds).toBe(-0);
             expect(time.seconds).toBe(-16);
-            expect(time.minutes).toBe(-15);
-            expect(time.hours).toBe(-15)
+            expect(time.minutes).toBe(-0);
+            expect(time.hours).toBe(-7)
         });
 
         it('can handle large overflows', () => {
@@ -120,6 +132,39 @@ describe('Time class', () => {
             expect(time.hours).toBe(0);
             expect(time.minutes).toBe(0);
             expect(time.milliseconds).toBe(0);
+        });
+
+        // TODO all below, compare negative, and pos/neg mix
+        it('can compare greaterThans', () => {
+            const minute = new Time('1m');
+            const hour = new Time('1h');
+            expect(minute.gt(hour)).toBe(false);
+            expect(hour.gt(minute)).toBe(true);
+            expect(hour.gt('1:00:00')).toBe(false);
+            expect(minute.gt('0.999')).toBe(true);
+        });
+        it('can compare greater-than-or-equals', () => {
+            const time = new Time(10000);
+            expect(time.gte(time)).toBe(true);
+        });
+        it('can compare less-than', () => {
+            const time = ('1y10d4h30m1s');
+            expect(time.lt('2y')).toBe(true);
+            expect(time.lt('1y9d20h30m1s')).toBe(false);
+        });
+        it('can compare less-than-equal', () => {
+            const time = new Time(600);
+            expect(time.lte(600)).toBe(true);
+            expect(time.lte(599)).toBe(false);
+        });
+        it('can compare with equal', () => {
+            const time1 = new Time('99d12h44ms');
+            const time2 = new Time('99:12:00:00.044');
+            expect(time1.equals(time2)).toBe(true);
+            expect(time2.equals(time2)).toBe(true);
+            expect(time2.equals(time2)).toBe(true);
+            expect(time1.equals(time1)).toBe(true);
+            expect(time1.equals(0)).toBe(false);
         })
     });
 
