@@ -77,6 +77,33 @@ describe('Time class', () => {
             expect(time.hours).toBe(9);
         });
 
+        it('can subtract two negatives', () => {
+            const time = new Time('-5d6h');
+            time.subtract('-7h');
+            expect(time.days).toBe(-4);
+            expect(time.hours).toBe(-23);
+        });
+
+        it('can subtract negative from positive', () => {
+            const time = new Time('1y500ms');
+            time.subtract('-500ms');
+            expect(time.milliseconds).toBe(0);
+            expect(time.seconds).toBe(1);
+            expect(time.minutes).toBe(0);
+            expect(time.hours).toBe(0);
+            expect(time.days).toBe(0);
+            expect(time.years).toBe(1)
+        });
+
+        it('can subtract positive from negative', () => {
+            const time = new Time('-30:15:15.555');
+            time.subtract('45:00.445');
+            expect(time.milliseconds).toBe(-0);
+            expect(time.seconds).toBe(-16);
+            expect(time.minutes).toBe(-15);
+            expect(time.hours).toBe(-15)
+        });
+
         it('can handle large overflows', () => {
             const time = new Time();
             time.add(new Time(86400000));

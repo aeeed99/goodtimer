@@ -4,7 +4,6 @@ import {type} from "os";
 const { Timer } = require('./goodtimer');
 const { parse } = Timer.prototype;
 
-
 class Time {
     _sign: -1 | 1 = 1;
     _time: Array<Array<number>> = [];
@@ -44,12 +43,12 @@ class Time {
         }
         const toAdd = time instanceof Time ? time : new Time(time);
 
-        this.milliseconds = this.milliseconds + toAdd.milliseconds;
-        this.seconds = this.seconds + toAdd.seconds;
-        this.minutes = this.minutes + toAdd.minutes;
-        this.hours = this.hours + toAdd.hours;
-        this.days = this.days + toAdd.days;
-        this.years = this.years + toAdd.years;
+        this.milliseconds = this.milliseconds - toAdd.milliseconds;
+        this.seconds = this.seconds - toAdd.seconds;
+        this.minutes = this.minutes - toAdd.minutes;
+        this.hours = this.hours - toAdd.hours;
+        this.days = this.days - toAdd.days;
+        this.years = this.years - toAdd.years;
     }
 
     abs(): Time {
@@ -80,17 +79,23 @@ class Time {
             return this.days > compare.days;
         }
         return this.years > compare.years;
-        // return this.years > compare.years ||
-        //     this.days > compare.days ||
-        //     this.hours > compare.hours ||
-        //     this.minutes > compare.minutes ||
-        //     this.seconds > compare.seconds ||
-        //     this.milliseconds > compare.milliseconds ||
-        //     false;
     }
 
     subtract(time: number | string | Time): void {
+
+        if (this._sign === 1) {
+            return this.add(time);
+        }
+
         const toSubtract = time instanceof Time ? time : new Time(time);
+
+        this.milliseconds = this.milliseconds - toSubtract.milliseconds;
+        this.seconds = this.seconds - toSubtract.seconds;
+        this.minutes = this.minutes - toSubtract.minutes;
+        this.hours = this.hours - toSubtract.hours;
+        this.days = this.days - toSubtract.days;
+        this.years = this.years - toSubtract.years;
+        return;
 
         if (toSubtract.abs().gt(this.abs())) {
             // TODO: replace with setTime
@@ -111,12 +116,6 @@ class Time {
         this.minutes = Math.abs(this.minutes) - Math.abs(toSubtract.minutes);
         this.seconds = Math.abs(this.seconds) - Math.abs(toSubtract.seconds);
         this.milliseconds = Math.abs(this.milliseconds) - Math.abs(toSubtract.milliseconds);
-        // this.years = this.years + (toSubtract.years * this._sign);
-        // this.days = this._time[1][0] + (toSubtract._time[1][0] * this._sign);
-        // this.hours = this._time[2][0] + (toSubtract._time[2][0] * this._sign);
-        // this.minutes = this._time[3][0] + (toSubtract._time[3][0] * this._sign);
-        // this.seconds = this._time[4][0] + (toSubtract._time[4][0] * this._sign);
-        // this.milliseconds = this._time[5][0] + (toSubtract._time[5][0] * this._sign);
     }
 
     inMilliseconds() {
