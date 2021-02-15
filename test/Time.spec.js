@@ -78,6 +78,22 @@ describe('Time class', () => {
             expect(time.seconds).toBe(1);
         });
 
+        it('can add two negatives', () => {
+            const time = new Time('-5d1m');
+            time.add('-1d4h5m');
+            expect(time.days).toBe(-6);
+            expect(time.hours).toBe(-4);
+            expect(time.minutes).toBe(-6);
+        });
+
+        it('can add negatives to positives', () => {
+            const time = new Time('5:00:00');
+            time.add('-10:2:59');
+            expect(time.seconds).toBe(-1)
+            expect(time.minutes).toBe(-57);
+            expect(time.hours).toBe(-6);
+        })
+
         it('can subtract from another Time instance', () => {
             const time = new Time('10:00:01.500');
             time.subtract(':01');

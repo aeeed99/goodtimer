@@ -4,11 +4,20 @@ import {type} from "os";
 const { Timer } = require('./goodtimer');
 const { _parse } = Timer.prototype;
 
+interface timeObject {
+    milliseconds?: number
+    seconds?: number
+    minutes?: number
+    hours?: number
+    days?: number
+    years?: number
+}
+
 class Time {
     _sign: -1 | 1 = 1;
     _time: Array<Array<number>> = [];
 
-    constructor(time: number | string | Time = "0") {
+    constructor(time: number | string | timeObject | Time = "0" ) {
         if (typeof time === 'number') {
             if (time < 0) {
                 this._sign = -1;
@@ -31,18 +40,41 @@ class Time {
             this._sign = time._sign;
             this._time = time._time.map(val => [val[0]]);
         }
+        else if (typeof time === 'object') {
+            this._time = [
+                [(time?.milliseconds || 0)],
+                [(time?.seconds || 0)],
+                [(time?.minutes || 0)],
+                [(time?.hours || 0)],
+                [(time?.days || 0)],
+                [(time?.years || 0)],
+            ]
+        }
+
         else {
             throw new TypeError("Can't _parse type.");
         }
         this._adjustTime(0)
     }
 
-    add(time: number | string | Time): void {
-        // if (this._sign === -1) {
-        //     return this.subtract(time);
-        // }
+    add(time: number | string | Time, _ignoreSigns: boolean=false): void {
 
         const toAdd = time instanceof Time ? time : new Time(time);
+
+        if (!_ignoreSigns) {
+            if (this._sign === -1 && toAdd._sign === 1) {
+                const signTemp = this._sign;
+                this.abs(true).subtract(toAdd);
+                this._sign *= signTemp;
+                return;
+            }
+            if (this._sign === 1 && toAdd._sign === -1) {
+                const signTemp = this._sign;
+                this.subtract(toAdd.abs());
+                this._sign *= signTemp;
+            }
+        }
+
         const signTemp = this._sign;
 
         this.abs(true)._adjustTime(toAdd.abs().inMilliseconds());
@@ -125,12 +157,58 @@ class Time {
             }
         }
 
+        const indexUnits = [
+            'years',
+            'days',
+            'hours',
+            'minutes',
+            'seconds',
+            'milliseconds',
+        ];
+
+        for (let i = indexUnits.length - 1; i >= 0; i--) {
+            let unit = indexUnits[i];
+            if (!toSubtract[unit]) {
+                continue;
+            }
+            if (this[unit] < toSubtract[unit]) {
+                if (i === this._largestIndex()) {
+                    [this[unit], toSubtract[unit]] = [[toSubtract[unit]], this[unit]];
+                    this._sign *= -1;
+                }
+                else {
+                    [this[unit], toSubtract[unit]] = [[toSubtract[unit]], this[unit]];
+                    const nextUnit = indexUnits[i-1];
+                    this[nextUnit] = this[nextUnit] - 1;
+                }
+            }
+
+            let signTemp = this._sign;
+            let toSubtractUnit = new Time({ [unit]: toSubtract[unit] }).setSign(-1).inMilliseconds();
+            this.abs(true)._adjustTime(toSubtractUnit);
+            this._sign = signTemp;
+        }
+        // indexUnits.forEach((unit, i) => {
+        //     if (!toSubtract[unit]) {
+        //         return
+        //     }
+        //     const largestUnitIndex = this._largestIndex();
+        //     if (i === largestUnitIndex && this[unit] < toSubtract[unit]) {
+        //         [this[unit], toSubtract[unit]] = [[toSubtract[unit]], this[unit]];
+        //         this._sign *= -1;
+        //     }
+        //     const signTemp = this._sign;
+        //     const toSubtractUnit = new Time({ [unit]: toSubtract[unit] }).setSign(-1).inMilliseconds();
+        //     this.abs(true)._adjustTime(toSubtractUnit);
+        //     this._sign = signTemp;
+        // });
+        return;
         if(toSubtract.gt(this)) {
             const newSubtract = new Time(this);
             this.constructor(toSubtract);
             this.subtract(newSubtract, _ignoreSigns);
             this._sign *= -1;
-            // TODO set time
+            return;
         }
 
 
@@ -178,6 +256,9 @@ class Time {
     _adjustTime(milliseconds: number) {
         /** Adjusts time by a number of milliseconds. Pass negative number to decrement.
          */
+        if (!milliseconds) {
+            return;
+        }
         const {_adjustAndCarry: aac} = this;
 
         aac(this._time[0], Infinity,
@@ -279,6 +360,22 @@ class Time {
             this._time[place][0] = Math.abs(this._time[place][0]);
         }
         return 0;
+    }
+
+    _largestIndex(): number {
+        /**
+         * Returns the index (from this._time) which is the largest unit of
+         * time that is non-zero.
+         *
+         * It is important to know the largest unit, because if it is subtracted
+         * by a value greater, the sign needs to be flipped.
+         */
+        for (let i = 0; i < this._time.length; i++) {
+            if (this._time[i][0]) {
+                return i;
+            }
+        }
+        return this._time.length - 1;
     }
 
     // [years, days, hours, minutes, seconds, milliseconds]
