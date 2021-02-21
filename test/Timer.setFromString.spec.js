@@ -7,7 +7,6 @@
  **/
 
 let {Timer} = require('../build/goodtimer');
-console.dir(Timer.prototype)
 var self = {};
 
 describe('Timer _parse', () => {

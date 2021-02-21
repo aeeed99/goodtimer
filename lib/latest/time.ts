@@ -15,6 +15,12 @@ interface timeObject {
     years?: number
 }
 
+type TimeExpression =
+    | number
+    | string
+    | timeObject
+    | Time;
+
 class Time {
     __sign: -1 | 1 = 1;
     _time: Array<Array<number>> = [];
@@ -32,7 +38,7 @@ class Time {
         this.__sign = val;
     }
 
-    constructor(time: number | string | timeObject | Time = "0" ) {
+    constructor(time: TimeExpression = "0") {
         if (typeof time === 'number') {
             if (time < 0) {
                 this._sign = -1;
@@ -72,7 +78,7 @@ class Time {
         this._adjustTime(0)
     }
 
-    add(time: number | string | Time, _ignoreSigns: boolean=false): void {
+    add(time: TimeExpression, _ignoreSigns: boolean=false): void {
 
         const toAdd = time instanceof Time ? time : new Time(time);
 
@@ -121,9 +127,23 @@ class Time {
     }
 
     setSign(sign): Time {
+        /**
+         * @function
+         * @ignore
+         */
         // @ts-ignore
         this._sign = Math.sign(sign) || 1;
         return this;
+    }
+
+    equals(time: timeObject) {
+        const compare: Time = time instanceof Time ? time : new Time(time);
+        return this.years === compare.years
+            && this.days === compare.days
+            && this.hours === compare.hours
+            && this.minutes === compare.minutes
+            && this.seconds === compare.seconds
+            && this.milliseconds === compare.milliseconds;
     }
 
     gt(time: number | string | Time): boolean {
@@ -199,7 +219,7 @@ class Time {
         return this.years < compare.years;
     }
 
-    lte(time: number | string | Time): boolean {
+    lte(time: timeObject): boolean {
         const compare = time instanceof Time ? time : new Time(time);
 
         if (this.years === compare.years) {
@@ -208,19 +228,19 @@ class Time {
                     if (this.minutes === compare.minutes) {
                         if (this.seconds === compare.seconds) {
                             if (this.milliseconds === compare.milliseconds) {
-                                return false;
+                                return true;
                             }
-                            return this.milliseconds > compare.milliseconds;
+                            return this.milliseconds < compare.milliseconds;
                         }
-                        return this.seconds > compare.seconds;
+                        return this.seconds < compare.seconds;
                     }
-                    return this.minutes > compare.minutes;
+                    return this.minutes < compare.minutes;
                 }
-                return this.hours > compare.hours;
+                return this.hours < compare.hours;
             }
-            return this.days > compare.days;
+            return this.days < compare.days;
         }
-        return this.years > compare.years;
+        return this.years < compare.years;
     }
 
 
@@ -246,6 +266,9 @@ class Time {
                 return;
             }
         }
+
+        this._adjustTime(-toSubtract.inMilliseconds())
+        return;
 
         this.milliseconds = this.milliseconds - toSubtract.milliseconds;
         this.seconds = this.seconds - toSubtract.seconds;
