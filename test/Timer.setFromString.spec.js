@@ -7,13 +7,12 @@
  **/
 
 let {Timer} = require('../build/goodtimer');
-console.dir(Timer.prototype)
 var self = {};
 
-describe('Timer parse', () => {
+describe('Timer _parse', () => {
 
     beforeEach(() => {
-        self.parse = new Timer('1').parse;
+        self.parse = new Timer('1')._parse;
     });
 
     it('Sets the timer from colon separated syntax', () => {

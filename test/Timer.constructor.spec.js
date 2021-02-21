@@ -34,7 +34,9 @@ describe('creating a Timer instance (constructor fn)', () => {
         expect(t.years).toStrictEqual([1]);
         expect(t.options.onTimeout.name).toEqual('onTimeout');
         expect(t.options.onInterval.name).toEqual('onInterval');
-    })
+    });
+
+
 });
 
 describe('Timer options', () => {

@@ -36,7 +36,7 @@ class Timer {
     private _startMarker: number = -1;
 
     constructor(time: string, onTimeout?: Function, onInterval?: Function);
-    constructor(time: string, options: TimerOptions)
+    constructor(time: string, options: TimerOptions);
     constructor(time: string, fnOrOptions?: Function | TimerOptions, onInterval?) {
         this.mills = [0];
         this.secs = [0];
@@ -137,8 +137,11 @@ class Timer {
         this.intervalId = setInterval(this.tick.bind(this), this.options.interval * 1000);
     }
 
-    parse(time: string): number[] {
-        if (/[dsmy]+/.test(time)) {
+    _parse(time: string): number[] {
+        // TODO: this does NOT parse negative values. That is expected to be handled
+        // by the instances _sign prop. A seperate parseTime for the client should
+        // be created, which applies the _sign as appropriate after the initial parsing.
+        if (/[dshmy]+/.test(time)) {
 
             const valuesAtIndex = ['y', 'd', 'h', 'm', 's', 'ms'];
             let parsedTime = [null, null, null, null, null, null];
@@ -182,12 +185,12 @@ class Timer {
             return parsed;
 
         } else {
-            throw TypeError("Cannot parse string as time.")
+            throw TypeError("Cannot _parse string as time.")
         }
     }
 
     setFromString(time: string): void {
-        [this.years, this.days, this.hours, this.mins, this.secs, this.mills] = this.parse(time).map(i => [i])
+        [this.years, this.days, this.hours, this.mins, this.secs, this.mills] = this._parse(time).map(i => [i])
     }
 
     adjustTime(seconds: number = -1) {
@@ -285,7 +288,7 @@ class Timer {
         return result.join(this.options.divider);
     }
     
-    fmtTime(fmt: string) {
+    fmtTime(fmt: string = "%Y:%D:%H:%M:%S.%m") {
         // %Y - year
         // %D - Day
         // %H - hour
@@ -301,6 +304,10 @@ class Timer {
             .replace(/%S/g, this.getSecondsUI(0))
             .replace(/%m/g, this.getMillisecondsUI(0))
             .replace(/%%/g, '%');
+    }
+
+    getTime() {
+        return this.fmtTime();
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////
