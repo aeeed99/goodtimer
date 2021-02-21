@@ -20,10 +20,8 @@
   "tonicExampleFilename": "example.js",
   "author": "Nick Palenchar",
   "license": "MIT",
-  "dependencies": {
-    "@jest/globals": "^25.5.2"
-  },
   "devDependencies": {
+    "@jest/globals": "^25.5.2",
     "@types/jest": "^25.2.3",
     "@types/node": "^14.0.14",
     "jest": "^25.3.0",

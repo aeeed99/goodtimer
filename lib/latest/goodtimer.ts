@@ -288,7 +288,7 @@ class Timer {
         return result.join(this.options.divider);
     }
     
-    fmtTime(fmt: string) {
+    fmtTime(fmt: string = "%Y:%D:%H:%M:%S.%m") {
         // %Y - year
         // %D - Day
         // %H - hour
@@ -304,6 +304,10 @@ class Timer {
             .replace(/%S/g, this.getSecondsUI(0))
             .replace(/%m/g, this.getMillisecondsUI(0))
             .replace(/%%/g, '%');
+    }
+
+    getTime() {
+        return this.fmtTime();
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////
