@@ -4,6 +4,8 @@ import {type} from "os";
 const { Timer } = require('./goodtimer');
 const { _parse } = Timer.prototype;
 
+const NEGATIVE_SUPPORT = false; // A later version will suport negatives
+
 interface timeObject {
     milliseconds?: number
     seconds?: number
@@ -14,8 +16,21 @@ interface timeObject {
 }
 
 class Time {
-    _sign: -1 | 1 = 1;
+    __sign: -1 | 1 = 1;
     _time: Array<Array<number>> = [];
+
+    get _sign() {
+        return this.__sign
+    }
+    set _sign(val) {
+        // TODO: Currently, negatives are not supported. Negatives use a _sign parameter set to -1
+        // For now, this setter is used to detect a negative, and throws accordingly. When negatives
+        // are supported, this setter can be removed
+        if (val === -1) {
+            throw new RangeError('negatives are not supported');
+        }
+        this.__sign = val;
+    }
 
     constructor(time: number | string | timeObject | Time = "0" ) {
         if (typeof time === 'number') {
@@ -81,7 +96,7 @@ class Time {
 
         this._sign = signTemp;
         return
-        
+
 
         this.milliseconds = this.milliseconds - toAdd.milliseconds;
         this.seconds = this.seconds - toAdd.seconds;
@@ -106,6 +121,7 @@ class Time {
     }
 
     setSign(sign): Time {
+        // @ts-ignore
         this._sign = Math.sign(sign) || 1;
         return this;
     }
@@ -134,6 +150,80 @@ class Time {
         return this.years > compare.years;
     }
 
+    gte(time: number | string | Time): boolean {
+        const compare = time instanceof Time ? time : new Time(time);
+
+        if (this.years === compare.years) {
+            if (this.days === compare.days) {
+                if (this.hours === compare.hours) {
+                    if (this.minutes === compare.minutes) {
+                        if (this.seconds === compare.seconds) {
+                            if (this.milliseconds === compare.milliseconds) {
+                                return true;
+                            }
+                            return this.milliseconds > compare.milliseconds;
+                        }
+                        return this.seconds > compare.seconds;
+                    }
+                    return this.minutes > compare.minutes;
+                }
+                return this.hours > compare.hours;
+            }
+            return this.days > compare.days;
+        }
+        return this.years > compare.years;
+    }
+
+
+    lt(time: number | string | Time): boolean {
+        const compare = time instanceof Time ? time : new Time(time);
+
+        if (this.years === compare.years) {
+            if (this.days === compare.days) {
+                if (this.hours === compare.hours) {
+                    if (this.minutes === compare.minutes) {
+                        if (this.seconds === compare.seconds) {
+                            if (this.milliseconds === compare.milliseconds) {
+                                return false;
+                            }
+                            return this.milliseconds < compare.milliseconds;
+                        }
+                        return this.seconds < compare.seconds;
+                    }
+                    return this.minutes < compare.minutes;
+                }
+                return this.hours < compare.hours;
+            }
+            return this.days < compare.days;
+        }
+        return this.years < compare.years;
+    }
+
+    lte(time: number | string | Time): boolean {
+        const compare = time instanceof Time ? time : new Time(time);
+
+        if (this.years === compare.years) {
+            if (this.days === compare.days) {
+                if (this.hours === compare.hours) {
+                    if (this.minutes === compare.minutes) {
+                        if (this.seconds === compare.seconds) {
+                            if (this.milliseconds === compare.milliseconds) {
+                                return false;
+                            }
+                            return this.milliseconds > compare.milliseconds;
+                        }
+                        return this.seconds > compare.seconds;
+                    }
+                    return this.minutes > compare.minutes;
+                }
+                return this.hours > compare.hours;
+            }
+            return this.days > compare.days;
+        }
+        return this.years > compare.years;
+    }
+
+
     subtract(time: number | string | Time, _ignoreSigns: boolean=false): void {
 
         const toSubtract = time instanceof Time ? time : new Time(time);
@@ -157,64 +247,6 @@ class Time {
             }
         }
 
-        const indexUnits = [
-            'years',
-            'days',
-            'hours',
-            'minutes',
-            'seconds',
-            'milliseconds',
-        ];
-
-        for (let i = indexUnits.length - 1; i >= 0; i--) {
-            let unit = indexUnits[i];
-            if (!toSubtract[unit]) {
-                continue;
-            }
-            if (this[unit] < toSubtract[unit]) {
-                if (i === this._largestIndex()) {
-                    [this[unit], toSubtract[unit]] = [[toSubtract[unit]], this[unit]];
-                    this._sign *= -1;
-                }
-                else {
-                    [this[unit], toSubtract[unit]] = [[toSubtract[unit]], this[unit]];
-                    const nextUnit = indexUnits[i-1];
-                    this[nextUnit] = this[nextUnit] - 1;
-                }
-            }
-
-            let signTemp = this._sign;
-            let toSubtractUnit = new Time({ [unit]: toSubtract[unit] }).setSign(-1).inMilliseconds();
-            this.abs(true)._adjustTime(toSubtractUnit);
-            this._sign = signTemp;
-        }
-        // indexUnits.forEach((unit, i) => {
-        //     if (!toSubtract[unit]) {
-        //         return
-        //     }
-        //     const largestUnitIndex = this._largestIndex();
-        //     if (i === largestUnitIndex && this[unit] < toSubtract[unit]) {
-        //         [this[unit], toSubtract[unit]] = [[toSubtract[unit]], this[unit]];
-        //         this._sign *= -1;
-        //     }
-        //     const signTemp = this._sign;
-        //     const toSubtractUnit = new Time({ [unit]: toSubtract[unit] }).setSign(-1).inMilliseconds();
-        //     this.abs(true)._adjustTime(toSubtractUnit);
-        //     this._sign = signTemp;
-        // });
-        return;
-        if(toSubtract.gt(this)) {
-            const newSubtract = new Time(this);
-            this.constructor(toSubtract);
-            this.subtract(newSubtract, _ignoreSigns);
-            this._sign *= -1;
-            return;
-        }
-
-
-        this._adjustTime(toSubtract.setSign(-1).inMilliseconds());
-        return;
-        toSubtract.setSign(1);
         this.milliseconds = this.milliseconds - toSubtract.milliseconds;
         this.seconds = this.seconds - toSubtract.seconds;
         this.minutes = this.minutes - toSubtract.minutes;
@@ -352,12 +384,17 @@ class Time {
         if (this._time[place][0] < 0) {
             if (this._time.slice(0, place).some(el => el[0])) {
                 const [carryOver, remainingInverse] = this._getCarryover(Math.abs(this._time[place][0]), threshold);
-                this._time[place][0] = threshold - remainingInverse;
-                return  -(carryOver + 1);
+                this._time[place][0] = (threshold - remainingInverse) % threshold;
+                return  -(carryOver);
             }
             // Arriving here, there are no further places to borrow from, and sign must flip
-            this._sign *= -1;
-            this._time[place][0] = Math.abs(this._time[place][0]);
+            if (NEGATIVE_SUPPORT) {
+                this._sign *= -1;
+                this._time[place][0] = Math.abs(this._time[place][0]);
+            }
+            else {
+                this._time[place][0] = 0;
+            }
         }
         return 0;
     }

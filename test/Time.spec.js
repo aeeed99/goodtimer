@@ -22,13 +22,7 @@ describe('Time class', () => {
         it('days', () => {
             expect(new Time('10d').days).toBe(10);
         });
-        it('days (negative)', () => {
-            expect(new Time('-10d').days).toBe(-10);
-        });
-        it('hours (negative)', () => {
-            expect(new Time('-3h').hours).toBe(-3);
-        })
-    })
+    });
 
     it('Starts at 0 by default (no arguments passed', () => {
         const time = new Time();
@@ -58,7 +52,55 @@ describe('Time class', () => {
             expect(time.inHours).toBe(17_520);
             expect(time.inMinutes).toBe(1_051_200);
         })
-    })
+    });
+
+    describe('no negative support', () => {
+
+        const ERROR_MSG = /negatives are not supported/
+
+        it('disallows negative Time', () => {
+            expect(() => {
+                new Time('-4:00');
+            }).toThrow(ERROR_MSG)
+        });
+
+        it('disallows negatives in addition', () => {
+            expect(() => {
+                new Time('4:00').add('-1s')
+            }).toThrow(ERROR_MSG);
+        });
+
+        it('disallows negatives in subtraction', () => {
+            expect(() => {
+                new Time('4y').subtract(-10000)
+            }).toThrow(ERROR_MSG);
+        });
+
+        it('disallows negatives in gt', () => {
+            expect(() => {
+                new Time('4y').gt('-4d5w2s')
+            }).toThrow(ERROR_MSG);
+        });
+
+        it('disallows negatives in gte', () => {
+            expect(() => {
+                new Time('4y').gte('-4d5w2s')
+            }).toThrow(ERROR_MSG);
+        });
+
+        it('disallows negatives in lt', () => {
+            expect(() => {
+                new Time('4y').lt('-10:00:00.999')
+            }).toThrow(ERROR_MSG);
+        });
+
+        it('disallows negatives in lte', () => {
+            expect(() => {
+                new Time('4y').lte('-9')
+            }).toThrow(ERROR_MSG);
+        });
+
+    });
 
     describe('math functions', () => {
         it('can add another Time instance', () => {
@@ -148,6 +190,15 @@ describe('Time class', () => {
             expect(time1.equals(time1)).toBe(true);
             expect(time1.equals(0)).toBe(false);
         })
+    });
+
+    xdescribe('negatives parsing', () => {
+        it('days (negative)', () => {
+            expect(new Time('-10d').days).toBe(-10);
+        });
+        it('hours (negative)', () => {
+            expect(new Time('-3h').hours).toBe(-3);
+        });
     });
 
     xdescribe('negative math functions', () => {
