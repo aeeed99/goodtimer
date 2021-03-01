@@ -564,6 +564,23 @@ class Time {
         }
     }
 
+    toString(): string {
+        /**
+         * Returns time in "YY:DD:hh:ss:mm:mills" format
+         */
+        let result = [];
+        let nonZeroSeen = false;
+
+        for (let i = 0; i < this._time.length -1 ; i++) {
+            let val = this._time[i][0];
+            if (val || nonZeroSeen) {
+                nonZeroSeen = true;
+                result.push(val);
+            }
+        }
+        return `${result.join(':')}.${this.milliseconds}`;
+    }
+
 }
 
 

@@ -7,11 +7,11 @@ describe('tick', () => {
 
     it('decrements the timer', () => {
         const t = new Timer(':05');
-        expect(t._secs).toStrictEqual([5]);
+        expect(t.seconds).toStrictEqual(5);
         t.tick();
-        expect(t._secs).toStrictEqual([4]);
+        expect(t.seconds).toStrictEqual(4);
         t.tick();
-        expect(t._secs).toStrictEqual([3]);
+        expect(t.seconds).toStrictEqual(3);
     });
 
     it('invokes callback functions', () => {

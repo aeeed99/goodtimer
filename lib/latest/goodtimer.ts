@@ -40,7 +40,17 @@ class Timer {
     /**
      * Starting time of the timer. Other methods, such as [[Timer.reset]] uses this as its target to reset to.
      */
-    initialTime: string;
+    _initialTime: string;
+
+    get initialTime(): string {
+        return this._initialTime
+    }
+    set initialTime(val) {
+        if (typeof val !== 'string') {
+            throw TypeError('initialTime must be a string');
+        }
+        this._initialTime = val;
+    }
     options: TimerOptions = {
         divider: ":",
         repeat: 0,
@@ -59,17 +69,19 @@ class Timer {
     protected lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
     private _startMarker: number = -1;
 
-    get milliseconds() {
+    get milliseconds(): number {
         return this.time.milliseconds;
     }
-    set milliseconds(val) {
+    set milliseconds(val: number) {
         this.time.milliseconds = val;
     }
-
-    //TODO: refactors
-    get _secs() {
-        return this.time._time[4];
+    get seconds(): number {
+        return this.time.seconds;
     }
+    set seconds(val: number) {
+        this.time.seconds = val;
+    }
+
     get _mins() {
         return this.time._time[3];
     }
@@ -82,9 +94,7 @@ class Timer {
     get _years() {
         return this.time._time[0];
     }
-    set _secs(val) {
-        this.time._time[4] = val;
-    }
+
     set _mins(val) {
         this.time._time[3] = val;
     }
@@ -110,7 +120,7 @@ class Timer {
     constructor(time: string, options: TimerOptions);
     constructor(time: string, ...args) {
         this.time = new Time(time);
-        this.initialTime = time;
+        this.initialTime = this.time.toString();
         this.adjustTime(0);
 
         // time, onTimeout, onInterval sig
@@ -136,7 +146,15 @@ class Timer {
                 ...args[0]
             };
         }
-        this.isPaused = this.options.startPaused;
+
+        // @ts-ignore
+        if (this.options.repeat === true) {
+            this.options.repeat = Infinity;
+        }
+        if (false === this.options.repeat) {
+            this.options.repeat = 0;
+        }
+        this.isPaused = !!this.options.startPaused;
         this._startIntervalLoop(this.options.immediateInterval);
     }
 
@@ -155,13 +173,13 @@ class Timer {
         this.lastTick = Date.now();
         // Edge Case: timer with interval > 1 may pass "timesUp" (all 0's) rather than land on it.
         // When only seconds remain and are less than interval, adjust to be the interval exactly to get to 0.
-        if(!this._years[0] && !this._days[0] && !this._hours[0] && !this._mins[0] && this._secs[0] < this.options.interval) {
-            this._secs[0] = this.options.interval;
+        if(!this._years[0] && !this._days[0] && !this._hours[0] && !this._mins[0] && this.seconds < this.options.interval) {
+            this.seconds = this.options.interval;
         }
 
         this.adjustTime(-this.options.interval);
 
-        if(!this._years[0] && !this._days[0] && !this._hours[0] && !this._mins[0] && !this._secs[0]) {
+        if(!this._years[0] && !this._days[0] && !this._hours[0] && !this._mins[0] && !this.seconds) {
             //TODO: Will there ever be millisecond remaining? Should a timeout be set here in that case?
             // or will _mills always be 0 (and the case is handled on a resume)
             this.options.onTimeout && this.options.onTimeout.call(this);
@@ -285,7 +303,7 @@ class Timer {
      * @param time an expression of a time.
      */
     setFromString(time: string): void {
-        [this._years, this._days, this._hours, this._mins, this._secs, this.milliseconds] = this._parse(time).map(i => [i])
+        this.time = new Time(time);
     }
 
     protected adjustTime(seconds: number = -1) {
@@ -336,7 +354,7 @@ class Timer {
         return "0".repeat(Math.max(zeros - value.length, 0)) + value;
     }
     protected _timeAsArray(): number[] {
-        return [this._years[0], this._days[0], this._hours[0], this._mins[0], this._secs[0], this.milliseconds];
+        return [this._years[0], this._days[0], this._hours[0], this._mins[0], this.seconds, this.milliseconds];
     }
 
     getMillisecondsUI(padding) {
@@ -344,7 +362,7 @@ class Timer {
         return this._addPadding(dateOffset + this.milliseconds, padding);
     }
     getSecondsUI(padding: number = 2) {
-        return this._addPadding(this._secs[0], padding);
+        return this._addPadding(this.seconds, padding);
     }
     getMinutesUI(padding) {
         return this._addPadding(this._mins[0], padding);
@@ -379,7 +397,7 @@ class Timer {
             started = true;
             result.push(pad(this._mins[0], 2));
         }
-        result.push(pad(this._secs[0],2));
+        result.push(pad(this.seconds,2));
 
         if(includeMilliseconds) {
             result.push(pad(this.milliseconds, 2));
@@ -402,6 +420,7 @@ class Timer {
      * `%m` - milliseconds
      * `%n` where n is a number,  format the following token to be padded with n zeros if all places can't be filled. E.g. a timer with 5 seconds left, the string `"%2%S"` will render as `"05"`
      */
+
     fmtTime(fmt: string = "%Y:%D:%H:%M:%S.%m") {
         // %Y - year
         // %D - Day
@@ -422,6 +441,13 @@ class Timer {
 
     getTime() {
         return this.fmtTime();
+    }
+
+    toString(): string {
+        /**
+         * Returns time in "YY:DD:hh:ss:mm:mills" format
+         */
+        return this.time.toString();
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////

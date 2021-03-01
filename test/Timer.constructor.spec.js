@@ -3,25 +3,25 @@ let {Timer} = require('../build/goodtimer');
 describe('creating a Timer instance (constructor fn)', () => {
     it('works as (time:string)', () => {
         const t = new Timer('4:30');
-        expect(t._secs).toStrictEqual([30]);
+        expect(t.seconds).toStrictEqual(30);
         expect(t._mins).toStrictEqual([4]);
 
         const t2 = new Timer('1:30:23:59:60.300');
-        expect([t2._years, t2._days, t2._hours, t2._mins, t2._secs, t2.milliseconds])
-            .toStrictEqual([[1],[31],[0],[0],[0],300]);
+        expect([t2._years, t2._days, t2._hours, t2._mins, t2.seconds, t2.milliseconds])
+            .toStrictEqual([[1],[31],[0],[0],0,300]);
     });
 
     it('works as (time: string, timeUpFn: Function', () => {
         const t = new Timer('04', function(){});
-        expect([t._years, t._days, t._hours, t._mins, t._secs, t.milliseconds])
-            .toStrictEqual([[0],[0],[0],[0],[4],0]);
+        expect([t._years, t._days, t._hours, t._mins, t.seconds, t.milliseconds])
+            .toStrictEqual([[0],[0],[0],[0],4,0]);
         expect(typeof t.options.onTimeout).toEqual('function');
     });
 
     it('works as (time: string, timeUpFn: Function, intervalFn: Function', () => {
         const t = new Timer('4h33s10ms', function(){}, function(){});
-        expect([t._years, t._days, t._hours, t._mins, t._secs, t.milliseconds])
-            .toStrictEqual([[0],[0],[4],[0],[33],10]);
+        expect([t._years, t._days, t._hours, t._mins, t.seconds, t.milliseconds])
+            .toStrictEqual([[0],[0],[4],[0],33,10]);
         expect(typeof t.options.onInterval).toEqual('function');
         expect(typeof t.options.onTimeout).toEqual('function');
     });
@@ -57,9 +57,11 @@ describe('Timer options', () => {
         const timesUp = () => callTimes++;
         const timer = new Timer('3', {onTimeout: timesUp, repeat: true });
         timer.pause();
-        timer.tick(true); timer.tick(true); timer.tick(true)
+        timer.tick(true);
+        timer.tick(true);
+        timer.tick(true)
         expect(callTimes).toEqual(1);
-        expect(timer._secs[0]).toEqual(3);
+        expect(timer.seconds).toEqual(3);
     });
 });
 
