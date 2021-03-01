@@ -1,9 +1,10 @@
 {
   "name": "goodtimer",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "a setTimeout for humans (and so much more). Previously t-minus",
   "main": "index.js",
   "scripts": {
+    "docs": "typedoc",
     "build": "tsc",
     "test": "jest test"
   },
@@ -25,6 +26,8 @@
     "@types/jest": "^25.2.3",
     "@types/node": "^14.0.14",
     "jest": "^25.3.0",
+    "typedoc": "^0.20.27",
     "typescript": "^4.1.3"
-  }
+  },
+  "dependencies": {}
 }

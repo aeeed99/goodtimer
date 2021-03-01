@@ -4,6 +4,25 @@
 
 #### A setTimeout for humans (and so much more)
 
+## 📜 About
+
+goodtimer provides a clean way to implement `setTimeout` and `setInterval`, and provides a high-level API to easy manipulate countdowns.
+
+## Simple Usage
+
+```javascript
+
+
+new Timer('1:00', logTimeDone); // replacement for setTimeout
+new Timer('1:00', logTimeDone, { repeat: true }); // replacement for setInterval
+
+
+
+function logTimeDone() {
+    console.log('Time\'s up!');
+}
+```
+
 `setInterval`/`setTimeout`s can be annoying. goodtimer provides abstraction for various countdown features, both for logical uses and UI purposes.
 
 goodtimer can replace a `setTimeout`.
@@ -37,7 +56,7 @@ pauseBtn.addEventListener('click', function() {
 **And much more features including:**
 
 * Repeatable timers.
-* Units in miliseconds, minutes, hours, days, and even years!
+* Units in miliseconds, minutes, _hours, _days, and even _years!
 * Customizable formats for displaying time.
 
 Best of all its super lightweight, only **3.4KB** zipped and **0** dependencies 🧘‍
@@ -128,7 +147,7 @@ Whether or not the timer is paused. When true, the timer doesn't count down and 
 These might be useful if you need to display the timer in a human friendly form.
 
 ### `.getTimerUI([separator:string|function])`
-Returns a string representing the timer in human readable form. Each unit is separated by a colon, and usually has a zero in the tens digit when only a single digit exists (except for `days`)
+Returns a string representing the timer in human readable form. Each unit is separated by a colon, and usually has a zero in the tens digit when only a single digit exists (except for `_days`)
 Example: "20:00", "19:59", and "3:32:50:09" might be returned.
 
 Can accept a string or a function that returns a string which will be used to seperate each unit instead of a colon.

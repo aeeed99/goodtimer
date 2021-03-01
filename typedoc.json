@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["lib/latest/goodtimer.ts"],
+  "out": "docs/api",
+  "excludePrivate": true,
+  "theme": "minimal",
+  "highlightTheme": "min-light"
+}

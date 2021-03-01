@@ -438,7 +438,7 @@ class Time {
         return this._time.length - 1;
     }
 
-    // [years, days, hours, minutes, seconds, milliseconds]
+    // [_years, _days, _hours, minutes, seconds, milliseconds]
     //  0      1     2      3        4        5
     get milliseconds() {
         return this._time[5][0] * this._sign;

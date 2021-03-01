@@ -185,10 +185,10 @@ describe('Time class', () => {
     });
 
     xdescribe('negatives parsing', () => {
-        it('days (negative)', () => {
+        it('_days (negative)', () => {
             expect(new Time('-10d').days).toBe(-10);
         });
-        it('hours (negative)', () => {
+        it('_hours (negative)', () => {
             expect(new Time('-3h').hours).toBe(-3);
         });
     });
@@ -311,13 +311,13 @@ describe('Time class', () => {
             expect(time.minutes).toBe(0);
         })
 
-        it('on hours carries over', () => {
+        it('on _hours carries over', () => {
             const time = new Time(0);
             time.hours = 47;
             expect(time.hours).toBe(23);
             expect(time.days).toBe(1);
         })
-        it('on days carries over', () => {
+        it('on _days carries over', () => {
             const time = new Time(0);
             time.days = 365;
             expect(time.years).toBe(1);
