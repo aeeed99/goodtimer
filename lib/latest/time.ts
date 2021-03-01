@@ -1,9 +1,6 @@
 /** @fileOverview a time class **/
 import {type} from "os";
 
-const { Timer } = require('./goodtimer');
-const { _parse } = Timer.prototype;
-
 const NEGATIVE_SUPPORT = false; // A later version will suport negatives
 
 interface timeObject {
@@ -52,7 +49,7 @@ class Time {
                 this._sign = -1;
                 time = time.replace(/^([^\d\w]*)(-)(.*)$/, '$1$3');
             }
-            this._time = _parse(time).map(val => val === null ? [0] : [val]);
+            this._time = this._parse(time).map(val => val === null ? [0] : [val]);
         }
         else if (typeof time === 'number') {
 
@@ -517,6 +514,59 @@ class Time {
         }
         this._time[0][0] = n;
     }
+
+    protected _parse(time: string): number[] {
+        // TODO: this does NOT parse negative values. That is expected to be handled
+        // by the instances _sign prop. A seperate parseTime for the client should
+        // be created, which applies the _sign as appropriate after the initial parsing.
+        if (/[dshmy]+/.test(time)) {
+
+            const valuesAtIndex = ['y', 'd', 'h', 'm', 's', 'ms'];
+            let parsedTime = [null, null, null, null, null, null];
+            let workingInt: string = ''
+
+            for (let i = 0; i < time.length; i++) {
+                if (/\d/.test(time[i])) {
+                    workingInt += time[i];
+                } else if (time[i] + time[i + 1] === 'ms') {
+                    if (parsedTime[5] !== null) {
+                        throw new SyntaxError("Duplicate token 'ms'");
+                    }
+                    parsedTime[5] = workingInt;
+                    workingInt = '';
+                    i++;
+                }
+                else if (/[dshmy]/.test(time[i])) {
+                    if (parsedTime[valuesAtIndex.indexOf(time[i])] !== null) {
+                        throw new SyntaxError("Duplicate token " + time[i]);
+                    }
+                    parsedTime[valuesAtIndex.indexOf(time[i])] = workingInt;
+                    workingInt = '';
+                }
+                else {
+                    throw new SyntaxError("Unexpected token " + time[i]);
+                }
+            }
+            return parsedTime.map(i => isNaN(parseInt(i)) ? 0 : parseInt(i))
+        }
+        if (/(?:\d+:){0,4}\d+/.test(time)) {
+            // colon separated syntax
+            let [others, mils] = time.split('.')
+            let parsed: any[] = others.split(/[^\d.]/).concat(mils);
+
+            parsed = parsed.map(i => isNaN(parseInt(i)) ? 0 : parseInt(i));
+
+            while (parsed.length < 6) {
+                parsed = [0].concat(parsed);
+            }
+            // TODO milliseconds
+            return parsed;
+
+        } else {
+            throw TypeError("Cannot _parse string as time.")
+        }
+    }
+
 }
 
 
