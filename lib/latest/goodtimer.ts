@@ -1,4 +1,6 @@
 
+import { Time } from './time';
+
 interface Config {
     divider: string;
     devMode: boolean;
@@ -22,6 +24,12 @@ interface TimerOptions {
     startPaused?: boolean;
 }
 
+const timerDefaults: TimerOptions = {
+    divider: ":",
+    immediateInterval: false,
+    repeat: 0
+}
+
 /**
  * The main timer class.
  *
@@ -40,6 +48,7 @@ class Timer {
     protected _hours: number[];
     protected _days: number[];
     protected _years: number[];
+    time: Time
     /**
      * Starting time of the timer. Other methods, such as [[Timer.reset]] uses this as its target to reset to.
      */
@@ -62,6 +71,44 @@ class Timer {
     protected lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
     private _startMarker: number = -1;
 
+
+    //TODO: refactors
+    get _mills() {
+        return this.time._time[5];
+    }
+    get _secs() {
+        return this.time._time[4];
+    }
+    get _mins() {
+        return this.time._time[3];
+    }
+    get _hours() {
+        return this.time._time[2];
+    }
+    get _days() {
+        return this.time._time[1];
+    }
+    get _years() {
+        return this.time._time[0];
+    }
+    set _mills(val) {
+        this.time._time[5] = val;
+    }
+    set _secs(val) {
+        this.time._time[4] = val;
+    }
+    set _mins(val) {
+        this.time._time[3] = val;
+    }
+    set _hours(val) {
+        this.time._time[2] = val;
+    }
+    set _days(val) {
+        this.time._time[1] = val;
+    }
+    set _years(val) {
+        this.time._time[0] = val;
+    }
     /**
      *
      * @param time The starting time to countdown from. Methods like [[Timer.reset]] uses this value as the inital time.
@@ -74,21 +121,14 @@ class Timer {
     constructor(time: string, onTimeout?: Function, options?: TimerOptions);
     constructor(time: string, options: TimerOptions);
     constructor(time: string, ...args) {
-        this._mills = [0];
-        this._secs = [0];
-        this._mins = [0];
-        this._hours = [0];
-        this._days = [0];
-        this._years = [0];
-        this.setFromString(time);
+        this.time = new Time(time);
         this.initialTime = time;
         this.adjustTime(0);
 
         // time, onTimeout, onInterval sig
-        //TODO remove arguments object
-        // 0 1 2
         if (typeof args[0] === 'function' && typeof args[1] === 'function') {
             this.options = {
+                ...this.options,
                 onTimeout: args[0],
                 onInterval: args[1],
                 ...(args[2] || {})
@@ -97,12 +137,16 @@ class Timer {
         else if (typeof args[0] === 'function') {
             // @ts-ignore
             this.options = {
+                ...this.options,
                 onTimeout: args[0],
                 ...(args[1] || {})
             }
         }
         else if (typeof args[0] === 'object') {
-            this.options = args[0];
+            this.options = {
+                ...this.options,
+                ...args[0]
+            };
         }
         this.isPaused = this.options.startPaused;
         this._startIntervalLoop(this.options.immediateInterval);
@@ -259,13 +303,8 @@ class Timer {
     protected adjustTime(seconds: number = -1) {
         /** Adjusts time by a number of seconds. Pass negative number to decrement.
          */
-        const {adjustAndCarry: aac} = this;
+        this.time._adjustTime(seconds * 1000);
 
-        aac(this._years, Infinity,
-            aac(this._days, 364,
-                aac(this._hours, 23,
-                    aac(this._mins, 59,
-                        aac(this._secs, 59, seconds)))))
     }
 
     protected adjustAndCarry(num: number[], resetValue: number, interval: number): number {

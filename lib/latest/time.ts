@@ -308,9 +308,6 @@ class Time {
     _adjustTime(milliseconds: number) {
         /** Adjusts time by a number of milliseconds. Pass negative number to decrement.
          */
-        if (!milliseconds) {
-            return;
-        }
         const {_adjustAndCarry: aac} = this;
 
         aac(this._time[0], Infinity,
