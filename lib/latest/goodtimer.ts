@@ -24,11 +24,6 @@ interface TimerOptions {
     startPaused?: boolean;
 }
 
-const timerDefaults: TimerOptions = {
-    divider: ":",
-    immediateInterval: false,
-    repeat: 0
-}
 
 /**
  * The main timer class.
@@ -41,13 +36,6 @@ const timerDefaults: TimerOptions = {
  * See {@link Timer.constructor} for more uses
  */
 class Timer {
-
-    protected _mills: number[];
-    protected _secs: number[];
-    protected _mins: number[];
-    protected _hours: number[];
-    protected _days: number[];
-    protected _years: number[];
     time: Time
     /**
      * Starting time of the timer. Other methods, such as [[Timer.reset]] uses this as its target to reset to.
@@ -71,11 +59,14 @@ class Timer {
     protected lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
     private _startMarker: number = -1;
 
+    get milliseconds() {
+        return this.time.milliseconds;
+    }
+    set milliseconds(val) {
+        this.time.milliseconds = val;
+    }
 
     //TODO: refactors
-    get _mills() {
-        return this.time._time[5];
-    }
     get _secs() {
         return this.time._time[4];
     }
@@ -90,9 +81,6 @@ class Timer {
     }
     get _years() {
         return this.time._time[0];
-    }
-    set _mills(val) {
-        this.time._time[5] = val;
     }
     set _secs(val) {
         this.time._time[4] = val;
@@ -297,7 +285,7 @@ class Timer {
      * @param time an expression of a time.
      */
     setFromString(time: string): void {
-        [this._years, this._days, this._hours, this._mins, this._secs, this._mills] = this._parse(time).map(i => [i])
+        [this._years, this._days, this._hours, this._mins, this._secs, this.milliseconds] = this._parse(time).map(i => [i])
     }
 
     protected adjustTime(seconds: number = -1) {
@@ -348,12 +336,12 @@ class Timer {
         return "0".repeat(Math.max(zeros - value.length, 0)) + value;
     }
     protected _timeAsArray(): number[] {
-        return [this._years[0], this._days[0], this._hours[0], this._mins[0], this._secs[0], this._mills[0]];
+        return [this._years[0], this._days[0], this._hours[0], this._mins[0], this._secs[0], this.milliseconds];
     }
 
     getMillisecondsUI(padding) {
         const dateOffset = this.lastTick ? Date.now() - this.lastTick : 0;
-        return this._addPadding(dateOffset + this._mills[0], padding);
+        return this._addPadding(dateOffset + this.milliseconds, padding);
     }
     getSecondsUI(padding: number = 2) {
         return this._addPadding(this._secs[0], padding);
@@ -394,7 +382,7 @@ class Timer {
         result.push(pad(this._secs[0],2));
 
         if(includeMilliseconds) {
-            result.push(pad(this._mills[0], 2));
+            result.push(pad(this.milliseconds, 2));
         }
         return result.join(this.options.divider);
     }
