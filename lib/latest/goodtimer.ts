@@ -36,7 +36,7 @@ interface TimerOptions {
  *
  * See {@link Timer.constructor} for more uses
  */
-class Timer {
+class Timer extends Time {
     time: Time
     /**
      * Starting time of the timer. Other methods, such as [[Timer.reset]] uses this as its target to reset to.
@@ -70,18 +70,6 @@ class Timer {
     protected lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
     private _startMarker: number = -1;
 
-    get milliseconds(): number {
-        return this.time.milliseconds;
-    }
-    set milliseconds(val: number) {
-        this.time.milliseconds = val;
-    }
-    get seconds(): number {
-        return this.time.seconds;
-    }
-    set seconds(val: number) {
-        this.time.seconds = val;
-    }
 
     get _mins() {
         return this.time._time[3];
@@ -115,16 +103,17 @@ class Timer {
      * @param onInterval function to run on every interval (by default, every 1 second). Useful for updating UI elements.
      * @param options set various beheivors on the timer. Pass as an object as the 2nd argument.
      */
-    constructor(time: string, onTimeout?: Function, onInterval?: Function, options?: TimerOptions);
-    constructor(time: string, onTimeout?: Function, onInterval?: Function);
-    constructor(time: string, onTimeout?: Function, options?: TimerOptions);
-    constructor(time: string, options: TimerOptions);
-    constructor(time: string, ...args) {
-        this.time = new Time(time);
+    constructor(timeExpression: string, onTimeout?: Function, onInterval?: Function, options?: TimerOptions);
+    constructor(timeExpression: string, onTimeout?: Function, onInterval?: Function);
+    constructor(timeExpression: string, onTimeout?: Function, options?: TimerOptions);
+    constructor(timeExpression: string, options: TimerOptions);
+    constructor(timeExpression: string, ...args) {
+        super(timeExpression);
+        this.time = new Time(timeExpression);
         this.initialTime = this.time.toString();
         this.adjustTime(0);
 
-        // time, onTimeout, onInterval sig
+        // timeExpression, onTimeout, onInterval sig
         if (typeof args[0] === 'function' && typeof args[1] === 'function') {
             this.options = {
                 ...this.options,
@@ -152,7 +141,8 @@ class Timer {
         if (this.options.repeat === true) {
             this.options.repeat = Infinity;
         }
-        if (false === this.options.repeat) {
+        // @ts-ignore
+        if (this.options.repeat === false) {
             this.options.repeat = 0;
         }
         this.isPaused = !!this.options.startPaused;
@@ -300,17 +290,19 @@ class Timer {
     }
 
     /**
+     * @deprecated use [[Timer.set]] instead
      * Change the timer to a given string.
      * @param time an expression of a time.
      */
     setFromString(time: string): void {
-        this.time = new Time(time);
+        super.set(time)
+        // this.time = new Time(time);
     }
 
     protected adjustTime(seconds: number = -1) {
         /** Adjusts time by a number of seconds. Pass negative number to decrement.
          */
-        this.time._adjustTime(seconds * 1000);
+        super._adjustTime(seconds * 1000)
 
     }
 
@@ -441,13 +433,6 @@ class Timer {
     protected getTime() {
         // TODO replace usage with toString
         return this.fmtTime();
-    }
-
-    toString(): string {
-        /**
-         * Returns time in "YY:DD:hh:ss:mm:mills" format
-         */
-        return this.time.toString();
     }
 
     //// Functions for backwards compatibility with t-minus 1.0 ////

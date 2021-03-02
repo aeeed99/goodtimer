@@ -35,53 +35,60 @@ class Time {
         this.__sign = val;
     }
 
-    constructor(time: TimeExpression = "0") {
-        if (typeof time === 'number') {
-            if (time < 0) {
+    constructor(timeExpression: TimeExpression = "0") {
+        this.set(timeExpression);
+    }
+
+    set(timeExpression: TimeExpression) {
+        /**
+         * Immediately changes the instances time to the given argument.
+         */
+        if (typeof timeExpression === 'number') {
+            if (timeExpression < 0) {
                 this._sign = -1;
-                time = Math.abs(time);
+                timeExpression = Math.abs(timeExpression);
             }
             // @ts-ignore
-            time = time.toString() + 'ms';
+            timeExpression = timeExpression.toString() + 'ms';
         }
-        if (typeof time === 'string') {
-            if (/^[^\d\w]*-/.test(time)) {
+        if (typeof timeExpression === 'string') {
+            if (/^[^\d\w]*-/.test(timeExpression)) {
                 this._sign = -1;
-                time = time.replace(/^([^\d\w]*)(-)(.*)$/, '$1$3');
+                timeExpression = timeExpression.replace(/^([^\d\w]*)(-)(.*)$/, '$1$3');
             }
             // match regex ending with dot
-            const matchArray = time.match(/\.(.*)$/);
+            const matchArray = timeExpression.match(/\.(.*)$/);
             if (matchArray) {
                 const mills = matchArray[1];
                 if (mills.length === 2) {
-                    time += '0';
+                    timeExpression += '0';
                 }
                 if (mills.length === 1) {
-                    time += '00';
+                    timeExpression += '00';
                 }
             }
-            this._time = this._parse(time).map(val => val === null ? [0] : [val]);
+            this._time = this._parse(timeExpression).map(val => val === null ? [0] : [val]);
         }
-        else if (typeof time === 'number') {
+        else if (typeof timeExpression === 'number') {
 
         }
-        else if (time instanceof Time) {
-            this._sign = time._sign;
-            this._time = time._time.map(val => [val[0]]);
+        else if (timeExpression instanceof Time) {
+            this._sign = timeExpression._sign;
+            this._time = timeExpression._time.map(val => [val[0]]);
         }
-        else if (typeof time === 'object') {
+        else if (typeof timeExpression === 'object') {
             this._time = [
-                [(time?.milliseconds || 0)],
-                [(time?.seconds || 0)],
-                [(time?.minutes || 0)],
-                [(time?.hours || 0)],
-                [(time?.days || 0)],
-                [(time?.years || 0)],
+                [(timeExpression?.milliseconds || 0)],
+                [(timeExpression?.seconds || 0)],
+                [(timeExpression?.minutes || 0)],
+                [(timeExpression?.hours || 0)],
+                [(timeExpression?.days || 0)],
+                [(timeExpression?.years || 0)],
             ]
         }
 
         else {
-            throw new TypeError("Can't _parse type.");
+            throw new TypeError("Can't parse given timeExpression.");
         }
         this._adjustTime(0)
     }
