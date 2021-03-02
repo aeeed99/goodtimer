@@ -1,5 +1,5 @@
 /** @fileOverview a time class **/
-import {type} from "os";
+import {addPadding} from "./timeutil";
 
 const NEGATIVE_SUPPORT = false; // A later version will suport negatives
 
@@ -48,6 +48,17 @@ class Time {
             if (/^[^\d\w]*-/.test(time)) {
                 this._sign = -1;
                 time = time.replace(/^([^\d\w]*)(-)(.*)$/, '$1$3');
+            }
+            // match regex ending with dot
+            const matchArray = time.match(/\.(.*)$/);
+            if (matchArray) {
+                const mills = matchArray[1];
+                if (mills.length === 2) {
+                    time += '0';
+                }
+                if (mills.length === 1) {
+                    time += '00';
+                }
             }
             this._time = this._parse(time).map(val => val === null ? [0] : [val]);
         }
@@ -571,14 +582,15 @@ class Time {
         let result = [];
         let nonZeroSeen = false;
 
-        for (let i = 0; i < this._time.length -1 ; i++) {
+        for (let i = 0; i < this._time.length - 2 ; i++) {
             let val = this._time[i][0];
             if (val || nonZeroSeen) {
                 nonZeroSeen = true;
-                result.push(val);
+                result.push(addPadding(val, 2));
             }
         }
-        return `${result.join(':')}.${this.milliseconds}`;
+        result.push(addPadding(this.seconds, 2));
+        return `${result.join(':')}.${addPadding(this.milliseconds, 3)}`;
     }
 
 }

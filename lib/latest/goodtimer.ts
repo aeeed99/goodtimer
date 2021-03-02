@@ -1,5 +1,6 @@
 
 import { Time } from './time';
+import  {addPadding}  from './timeutil';
 
 interface Config {
     divider: string;
@@ -349,9 +350,7 @@ class Timer {
 
     //// UI-Functions ////
     protected _addPadding(number: number, zeros: number): string {
-        let value = String(number);
-        // @ts-ignore
-        return "0".repeat(Math.max(zeros - value.length, 0)) + value;
+        return addPadding(number, zeros)
     }
     protected _timeAsArray(): number[] {
         return [this._years[0], this._days[0], this._hours[0], this._mins[0], this.seconds, this.milliseconds];
@@ -439,7 +438,8 @@ class Timer {
             .replace(/%%/g, '%');
     }
 
-    getTime() {
+    protected getTime() {
+        // TODO replace usage with toString
         return this.fmtTime();
     }
 

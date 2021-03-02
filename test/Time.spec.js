@@ -327,7 +327,7 @@ describe('Time class', () => {
             expect(time.hours).toBe(0);
             expect(time.days).toBe(0);
         })
-    })
+    });
 
     it('_fromMilliSeconds returns arrays of numbers from milliseconds', () => {
         expect(Time.prototype._fromMilliseconds(1).toString()).toBe([0, 0, 0, 0, 0, 1].toString());
@@ -338,6 +338,18 @@ describe('Time class', () => {
         expect(Time.prototype._fromMilliseconds(31_536_000_000).toString()).toBe([1,0,0,0,0,0].toString());
         expect(Time.prototype._fromMilliseconds(31_536_000_005).toString()).toBe([1,0,0,0,0,5].toString());
 
-    })
+    });
+
+    describe('toString', () => {
+        it('renders toString format [YY:[dd:[HH:[MM:]ss.mmm', () => {
+           expect(new Time('3').toString()).toBe('03.000');
+           expect(new Time('500ms').toString()).toBe('00.500');
+           expect(new Time('3m').toString()).toBe('03:00.000');
+           expect(new Time('4:01.05').toString()).toBe('04:01.050');
+           expect(new Time('0').toString()).toBe('00.000');
+           expect(new Time('999y').toString()).toBe('999:00:00:00:00.000');
+           expect(new Time('364d23h59m59s999ms').toString()).toBe('364:23:59:59.999');
+        });
+    });
 })
 
