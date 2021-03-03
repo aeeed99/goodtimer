@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://www.github.com/nickpalenchar/goodtimer.git"
   },
+  "homepage": "https://nickpalenchar.github.io/goodtimer",
   "keywords": [
     "timer",
     "lightweight",
