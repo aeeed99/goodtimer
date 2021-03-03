@@ -2,7 +2,7 @@
  <img src="https://img.shields.io/npm/dw/goodtimer?style=for-the-badge&color=E1AD01">
  <img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=90291d&style=for-the-badge"></div>
 
-![goodtimer logo](goodtimer.png)
+![goodtimer logo](logo/goodtimer.png)
 
 <h5 align="center">A <code>setTimeout</code> for humans (and so much more)</h5>
 
