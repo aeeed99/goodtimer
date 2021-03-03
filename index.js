@@ -1,2 +1,2 @@
-var Timer = require('./build/goodtimer');
-module.exports = Timer
+const {Timer, Time} = require('./build/goodtimer');
+module.exports = { Timer, Time }

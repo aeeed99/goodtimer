@@ -1,7 +1,7 @@
 {
   "name": "goodtimer",
-  "version": "2.2.0",
-  "description": "a setTimeout for humans (and so much more). Previously t-minus",
+  "version": "3.0.0",
+  "description": "a setTimeout for humans (and so much more)",
   "main": "index.js",
   "scripts": {
     "docs": "typedoc",
