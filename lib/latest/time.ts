@@ -1,8 +1,5 @@
 /** @fileOverview a time class **/
-import {type} from "os";
-
-const { Timer } = require('./goodtimer');
-const { _parse } = Timer.prototype;
+import {addPadding} from "./timeutil";
 
 const NEGATIVE_SUPPORT = false; // A later version will suport negatives
 
@@ -22,9 +19,12 @@ type TimeExpression =
     | Time;
 
 class Time {
-    __sign: -1 | 1 = 1;
-    _time: Array<Array<number>> = [];
+    private __sign: -1 | 1 = 1;
+    protected _time: Array<Array<number>> = [];
 
+    /**
+     * @ignore
+     */
     get _sign() {
         return this.__sign
     }
@@ -38,47 +38,65 @@ class Time {
         this.__sign = val;
     }
 
-    constructor(time: TimeExpression = "0") {
-        if (typeof time === 'number') {
-            if (time < 0) {
+    constructor(timeExpression: TimeExpression = "0") {
+        this.set(timeExpression);
+    }
+
+    public set(timeExpression: TimeExpression) {
+        /**
+         * Immediately changes the instances time to the given argument.
+         */
+        if (typeof timeExpression === 'number') {
+            if (timeExpression < 0) {
                 this._sign = -1;
-                time = Math.abs(time);
+                timeExpression = Math.abs(timeExpression);
             }
             // @ts-ignore
-            time = time.toString() + 'ms';
+            timeExpression = timeExpression.toString() + 'ms';
         }
-        if (typeof time === 'string') {
-            if (/^[^\d\w]*-/.test(time)) {
+        if (typeof timeExpression === 'string') {
+            if (/^[^\d\w]*-/.test(timeExpression)) {
                 this._sign = -1;
-                time = time.replace(/^([^\d\w]*)(-)(.*)$/, '$1$3');
+                timeExpression = timeExpression.replace(/^([^\d\w]*)(-)(.*)$/, '$1$3');
             }
-            this._time = _parse(time).map(val => val === null ? [0] : [val]);
+            // match regex ending with dot
+            const matchArray = timeExpression.match(/\.(.*)$/);
+            if (matchArray) {
+                const mills = matchArray[1];
+                if (mills.length === 2) {
+                    timeExpression += '0';
+                }
+                if (mills.length === 1) {
+                    timeExpression += '00';
+                }
+            }
+            this._time = this._parse(timeExpression).map(val => val === null ? [0] : [val]);
         }
-        else if (typeof time === 'number') {
+        else if (typeof timeExpression === 'number') {
 
         }
-        else if (time instanceof Time) {
-            this._sign = time._sign;
-            this._time = time._time.map(val => [val[0]]);
+        else if (timeExpression instanceof Time) {
+            this._sign = timeExpression._sign;
+            this._time = timeExpression._time.map(val => [val[0]]);
         }
-        else if (typeof time === 'object') {
+        else if (typeof timeExpression === 'object') {
             this._time = [
-                [(time?.milliseconds || 0)],
-                [(time?.seconds || 0)],
-                [(time?.minutes || 0)],
-                [(time?.hours || 0)],
-                [(time?.days || 0)],
-                [(time?.years || 0)],
+                [(timeExpression?.milliseconds || 0)],
+                [(timeExpression?.seconds || 0)],
+                [(timeExpression?.minutes || 0)],
+                [(timeExpression?.hours || 0)],
+                [(timeExpression?.days || 0)],
+                [(timeExpression?.years || 0)],
             ]
         }
 
         else {
-            throw new TypeError("Can't _parse type.");
+            throw new TypeError("Can't parse given timeExpression.");
         }
         this._adjustTime(0)
     }
 
-    add(time: TimeExpression, _ignoreSigns: boolean=false): void {
+    public add(time: TimeExpression, _ignoreSigns: boolean=false): void {
 
         const toAdd = time instanceof Time ? time : new Time(time);
 
@@ -112,10 +130,11 @@ class Time {
         this.years = this.years - toAdd.years;
     }
 
-    abs(set: boolean=false): Time {
+    public abs(set: boolean=false): Time {
         /** Returns a new Time instance that is the absolute value.
          *  If 'set' is true, mokes this instance absolute value and
          *  returns that instead.
+         *  @ignore - not needed until negatives are supported
          */
         if (set) {
             this._sign = 1;
@@ -128,7 +147,7 @@ class Time {
 
     setSign(sign): Time {
         /**
-         * @function
+         * Reserved for future features with negatives
          * @ignore
          */
         // @ts-ignore
@@ -308,12 +327,9 @@ class Time {
             this.milliseconds;
     }
 
-    _adjustTime(milliseconds: number) {
+    protected _adjustTime(milliseconds: number) {
         /** Adjusts time by a number of milliseconds. Pass negative number to decrement.
          */
-        if (!milliseconds) {
-            return;
-        }
         const {_adjustAndCarry: aac} = this;
 
         aac(this._time[0], Infinity,
@@ -324,7 +340,7 @@ class Time {
                             aac(this._time[5], 999, milliseconds))))));
     }
 
-    _adjustAndCarry(num: number[], resetValue: number, interval: number): number {
+    protected _adjustAndCarry(num: number[], resetValue: number, interval: number): number {
 
         let val: number = num[0] + interval;
         let carry: number = 0;
@@ -341,7 +357,7 @@ class Time {
         return carry;
     }
 
-    _getCarryover(num, threshold): [number, number] {
+    protected _getCarryover(num, threshold): [number, number] {
         /** Calculates the "carry-over", that is, how many whole units can be divided from a
          * threshold. This is used to calculate when, say, the seconds unit has more than allowed (60).
          * In that case, a number of "minutes" should be extracted from it (over the "threshold" of 60).
@@ -351,7 +367,7 @@ class Time {
         return [carryover, remaining];
     }
 
-     _fromMilliseconds(num: number) {
+     protected _fromMilliseconds(num: number) {
         let result = [0, 0, 0, 0, 0, num];
 
         if (result[5] < 1000) {
@@ -384,7 +400,7 @@ class Time {
         [result[0], result[1]] = this._getCarryover(result[1], 365);
         return result
     }
-    _adjustOverflow(place: number, threshold: number): number {
+    protected _adjustOverflow(place: number, threshold: number): number {
         /**
          * Sets the value at placemarker (value) to a positive number within its
          * threshold, adding to larger places if needed.
@@ -403,7 +419,7 @@ class Time {
         return 0;
     }
 
-    _adjustUnderflow(place: number, threshold) {
+    protected _adjustUnderflow(place: number, threshold) {
         if (this._time[place][0] < 0) {
             if (this._time.slice(0, place).some(el => el[0])) {
                 const [carryOver, remainingInverse] = this._getCarryover(Math.abs(this._time[place][0]), threshold);
@@ -422,7 +438,7 @@ class Time {
         return 0;
     }
 
-    _largestIndex(): number {
+    protected _largestIndex(): number {
         /**
          * Returns the index (from this._time) which is the largest unit of
          * time that is non-zero.
@@ -438,29 +454,33 @@ class Time {
         return this._time.length - 1;
     }
 
-    // [years, days, hours, minutes, seconds, milliseconds]
+    // [_years, _days, _hours, minutes, seconds, milliseconds]
     //  0      1     2      3        4        5
-    get milliseconds() {
+    public get milliseconds() {
         return this._time[5][0] * this._sign;
     }
-    set milliseconds(n) {
+    public set milliseconds(n) {
         this._time[5][0] = n;
         const over = this._adjustOverflow(5, 1000);
         const under = this._adjustUnderflow(5, 1000);
         this.seconds = this._time[4][0] + over + under;
     }
-    get ms() {
+
+    /**
+     * @deprecated use [[Time.milliseconds]] instead
+     */
+    public get ms() {
         /** Alias of .milliseconds. **/
         return this.milliseconds;
     }
-    set ms(n) {
+    public set ms(n) {
         this.milliseconds = n;
     }
 
-    get seconds() {
+    public get seconds() {
         return this._time[4][0] * this._sign;
     }
-    set seconds(n) {
+    public set seconds(n) {
         this._time[4][0] = n;
         const over = this._adjustOverflow(4, 60);
         const under = this._adjustUnderflow(4, 60);
@@ -471,6 +491,9 @@ class Time {
         return this.seconds;
     }
     set secs(n) {
+        /**
+         * @alias seconds
+         */
         this.seconds = n
     }
     get minutes() {
@@ -482,42 +505,114 @@ class Time {
         const under = this._adjustUnderflow(3, 60);
         this.hours = this._time[2][0] + over + under;
     }
+    /**
+     * @deprecated use [[Time.minutes]] instead
+     **/
     get mins() {
-        /** Alias of .minutes **/
         return this.minutes;
     }
     set mins(n) {
         this.minutes = n;
     }
-    get hours() {
+    public get hours() {
         return this._time[2][0] * this._sign;
     }
-    set hours(n) {
+    public set hours(n) {
         this._time[2][0] = n;
         const over = this._adjustOverflow(2, 24);
         const under = this._adjustUnderflow(2, 24);
         this.days = this._time[1][0] + over + under;
     }
-    get days() {
+    public get days() {
         return this._time[1][0] * this._sign;
     }
-    set days(n) {
+    public set days(n) {
         this._time[1][0] = n;
         const over = this._adjustOverflow(1, 365);
         const under = this._adjustUnderflow(1, 365);
         this.years = this._time[0][0] + over + under;
     }
-    get years() {
+    public get years() {
         return this._time[0][0] * this._sign;
     }
-    set years(n) {
+    public set years(n) {
         if (n < 0) {
             this._sign *= -1;
             n = Math.abs(n)
         }
         this._time[0][0] = n;
     }
+
+    protected _parse(time: string): number[] {
+        // TODO: this does NOT parse negative values. That is expected to be handled
+        // by the instances _sign prop. A seperate parseTime for the client should
+        // be created, which applies the _sign as appropriate after the initial parsing.
+        if (/[dshmy]+/.test(time)) {
+
+            const valuesAtIndex = ['y', 'd', 'h', 'm', 's', 'ms'];
+            let parsedTime = [null, null, null, null, null, null];
+            let workingInt: string = ''
+
+            for (let i = 0; i < time.length; i++) {
+                if (/\d/.test(time[i])) {
+                    workingInt += time[i];
+                } else if (time[i] + time[i + 1] === 'ms') {
+                    if (parsedTime[5] !== null) {
+                        throw new SyntaxError("Duplicate token 'ms'");
+                    }
+                    parsedTime[5] = workingInt;
+                    workingInt = '';
+                    i++;
+                }
+                else if (/[dshmy]/.test(time[i])) {
+                    if (parsedTime[valuesAtIndex.indexOf(time[i])] !== null) {
+                        throw new SyntaxError("Duplicate token " + time[i]);
+                    }
+                    parsedTime[valuesAtIndex.indexOf(time[i])] = workingInt;
+                    workingInt = '';
+                }
+                else {
+                    throw new SyntaxError("Unexpected token " + time[i]);
+                }
+            }
+            return parsedTime.map(i => isNaN(parseInt(i)) ? 0 : parseInt(i))
+        }
+        if (/(?:\d+:){0,4}\d+/.test(time)) {
+            // colon separated syntax
+            let [others, mils] = time.split('.')
+            let parsed: any[] = others.split(/[^\d.]/).concat(mils);
+
+            parsed = parsed.map(i => isNaN(parseInt(i)) ? 0 : parseInt(i));
+
+            while (parsed.length < 6) {
+                parsed = [0].concat(parsed);
+            }
+            // TODO milliseconds
+            return parsed;
+
+        } else {
+            throw TypeError("Cannot _parse string as time.")
+        }
+    }
+
+    toString(): string {
+        /**
+         * Returns time in "YY:DD:hh:ss:mm:mills" format
+         */
+        let result = [];
+        let nonZeroSeen = false;
+
+        for (let i = 0; i < this._time.length - 2 ; i++) {
+            let val = this._time[i][0];
+            if (val || nonZeroSeen) {
+                nonZeroSeen = true;
+                result.push(addPadding(val, 2));
+            }
+        }
+        result.push(addPadding(this.seconds, 2));
+        return `${result.join(':')}.${addPadding(this.milliseconds, 3)}`;
+    }
+
 }
 
-
-module.exports = {Time};
+export { Time };

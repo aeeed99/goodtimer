@@ -4,11 +4,11 @@ let {Timer} = require('../build/goodtimer');
 describe('UI functions', () => {
 
     beforeEach(() => {
-        this.timer = new Timer('1:145:4:05:9.40', {startPaused: true})
+        this.timer = new Timer('1:145:4:05:9.40', {startPaused: true}) // milliseconds becomes ".400"
     });
 
     it('getMillisecondsUI', () => {
-        expect(this.timer.getMillisecondsUI()).toEqual('40');
+        expect(this.timer.getMillisecondsUI()).toEqual('400');
     });
     it('getSecondsUI', () => {
         expect(this.timer.getSecondsUI()).toEqual('09');
@@ -34,13 +34,13 @@ describe('UI functions', () => {
 
     it('getFullTimeUI', () => {
         expect(this.timer.getFullTimeUI()).toEqual('1:145:04:05:09');
-        expect(this.timer.getFullTimeUI(true)).toEqual('1:145:04:05:09:40');
+        expect(this.timer.getFullTimeUI(true)).toEqual('1:145:04:05:09:400');
     });
 
     it('fmtTime', () => {
         expect(this.timer.fmtTime('%H-%M')).toEqual('4-5');
         expect(this.timer.fmtTime('%3%Y%%')).toEqual('001%');
-        expect(this.timer.fmtTime('hello world %m %1%M %m dlrow ollhe')).toEqual('hello world 40 5 40 dlrow ollhe');
+        expect(this.timer.fmtTime('hello world %m %1%M %m dlrow ollhe')).toEqual('hello world 400 5 400 dlrow ollhe');
         expect(this.timer.fmtTime('hello')).toEqual('hello');
     });
 });

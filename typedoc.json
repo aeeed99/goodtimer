@@ -1,0 +1,8 @@
+{
+  "entryPoints": ["lib/latest/time.ts", "lib/latest/timer.ts"],
+  "out": "docs",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "includeVersion": true,
+  "theme": "minimal"
+}

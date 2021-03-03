@@ -1,242 +1,280 @@
-# goodtimer 🕚🍔 _(previously t-minus)_
+<div align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000&style=for-the-badge&color=90291d"> 
+ <img src="https://img.shields.io/npm/dw/goodtimer?style=for-the-badge&color=E1AD01">
+ <img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=90291d&style=for-the-badge"></div>
 
-![npm](https://img.shields.io/npm/dw/goodtimer) [![npm](https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000)]()  [![npm](https://img.shields.io/npm/l/goodtimer.svg?maxAge=2592000)]() [![first-timers-only](http://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)]()
+![goodtimer logo](logo/goodtimer.png)
 
-#### A setTimeout for humans (and so much more)
+<h5 align="center">A <code>setTimeout</code> for humans (and so much more)</h5>
 
-`setInterval`/`setTimeout`s can be annoying. goodtimer provides abstraction for various countdown features, both for logical uses and UI purposes.
+---
 
-goodtimer can replace a `setTimeout`.
+## 🧐 About
+
+goodtimer provides a clean way to implement `setTimeout` and `setInterval`, and provides a high-level API to easy manipulate countdowns.
+
+goodtimer comes with a flexible `timeExpression` syntax, so you can easilly express time in a number of
+desireable ways
+
+➡️ Read the full API Docs [here](https://nickpalenchar.github.io/goodtimer/classes/timer.timer-1.html) or read below to get started quickly :bow:
+
+## ⏲ Simple Usage
 
 ```javascript
-new Timer(':30', () => console.log('30 seconds have passed'));
-```
+const yourFn = () => {};
+new Timer('1:00', yourFn); // replacement for setTimeout
+new Timer('1:00', yourFn, { repeat: true }); // replacement for setInterval
 
-goodtimer can display a countdown
 
-```javascript
-var el = document.getElementById('timer-element');
+const timer = new Timer('5:00');
+timer.pause();         // freezes timer at given time
+timer.unpause();       // resumes timer
+timer.reset();         // resests to initial value (in this case 5 minutes)
+timer.toString()       // returns in UTC-like format ("5:00.000")
+timer.fmtTime("%M minutes %s seconds") // -> "4 minutes 59 seconds" (many ways to use!) 
+timer.gt('1:00');      // "greater than" -> false
+timer.lt('60:00:00');  // "less than" -> false
+timer.equal('6:00');   // -> false
 
-var timer = new Timer('2:00', {
-    onInterval: function() {
-        el.innerHTML = this.getTimerUI()
-    }
+// or use the Time class and skip the controls
+const [minute, second] = [new Time('1m'), new Time('1s')];
+
+minute.gt(second)        // -> true
+second.equals(':01')     // -> true
+minute.equals((second))  // -> false
+second.set(minute)       // set to new value
+minute.equals(second)    // -> true
+minute.toString()        // -> "1:00.000"
+
+// `timeExpressions` are passed to Time or Timer, and can be an
+// object, number, array, or string (in multiple formats)
+// below are all the ways to write "25 minutes and 500 milliseconds"
+
+new Time('25:00.5'); // string in UTC-like syntax
+new Time('25m5ms'); // string with unit annotation
+new Time(1500500);  // number for milliseconds
+new Time({          // object with full names
+    minutes: 25, 
+    milliseconds: 500 
 });
 ```
 
-goodtimer has built-in pause functionality.
+See the [full API](https://nickpalenchar.github.io/goodtimer/api) spec for many more uses, or read on for simpler ways to get started.
+
+## 👨‍💻 Getting started with `Timer`
+
+Timer is an extension of `Time`, it inherits all methods and properties, and additionally has a "count down" loop
+and comes with many useful methods you'd expect from a timer.
+
+The `Timer`'s first argument is required, which is a `timeExpression`, all other arguments are optional. If the last
+argument is an object, it is assumed to be the `timerOptions`, which can be used to override default beheivors of
+the `Timer` instance
+
 ```javascript
-var pauseBtn = document.getElementById('pauseBtn');
+// without timerOptions
+new Timer(timeExpression);
+new Timer(timeExpression, onTimeoutFn);
+new Timer(timeExpression, onTimeoutFn, onIntervalFn);
 
-pauseBtn.addEventListener('click', function() {
-  this.togglePause();
-  this.innerHTML = timer.isPaused ? "PLAY" : "PAUSE";
-});
+// with timerOptions
+new Timer(timeExpression, timerOptionsObj);
+new Timer(timeExpression, onTimeoutFn, timerOptionsObj);
+new Timer(timeExpression, onTimeoutFn, onIntervalFn, timerOptionsObj);
 ```
 
-**And much more features including:**
+goodtimer automatically can tell which format you're trying to use based on the types of the arguments passed.
 
-* Repeatable timers.
-* Units in miliseconds, minutes, hours, days, and even years!
-* Customizable formats for displaying time.
+### Callback function with `Timer`
 
-Best of all its super lightweight, only **3.4KB** zipped and **0** dependencies 🧘‍
+It will usually be desierable to have a function called when the timer reaches zero. It might also be handy to have a
+function called on every second (or "tick") of the timer, for example when you need to update a UI element with the
+new time remaining. `onTimeoutFn` and `onIntervalFn` arguments handle this.
 
-## Install
-```shell
-$ npm install goodtimer
-```
-For Node/React:
 ```javascript
-const { Timer } = require('goodtimer');
+// onTimeout example
+
+function timesUp() {
+    // your code here
+    console.log('ding!');
+}
+
+new Timer('5:00', timesUp);
+
+// ~ 5 minutes later ~
+// "ding!
 ```
 
-In the browser using vanilla JS/HTML:
+Both call back functions can access the timer instance using `this`. It's especially useful in `onIntervalFn` arguments.
 
-```html
-<script href="path/to/goodtimer/goodtimer.js"></script>
-<script>
-var Timer = window.goodtimer.Timer;
-</script>
+```javascript
+function updateDOM() {
+    // this function updates the DOM with the time seperated by colons
+    // (not including the milliseconds (".000") at the end.
+    document.getElementById('my-timer').innerText = this.toString().slice(0, -4);
+}
+
+new Timer('5:00', timesUp, updateDOM);
 ```
 
-## Syntax
-goodtimer Timers have two signatures. The first for basic functionality and the second for more control:
+If you want to only use an `onIntervalFn`, and not an `onTimeoutFn`, you can pass `undefined` or `null` as the
+middle argument. You could alternatively use `TimerOptions` object to set these (and more)
 
-```
-new Timer(<time>,[<onTimeout>[,<onInterval>]]);
-```
-Where:
-
-  + **time** _(required)_ `string | array ` - As a string, represents a time in DD:HH:MM:SS format. Eg. `40` for 40 seconds, `1:03` for 1 minute, 3 seconds, `1:00:00`, for ` hour`.
-      + String can alternatively be labled. Eg `"40s"`, `"1m3s"`, `"1h"` for above times. See [time labels](#) for more info.
-      + Note: The units in the time string can be separated by any character that is not a digit. And values do not have to be padded. The above examples can also work as `":40"` or `"1 0 0"`, among many others. 
-      + As an Array, the signature is represented in \[DD,HH,MM,SS] format. Eg `[40]`, `[1,3]`, `[1,0,0]` for the above times.
-  + **onTimeout** `function` - a function to invoke when the timer reaches 0.
-  + **onInterval** `function` - a function to invoke on _every_ tick of the timer.
-
-**function params and `this`** - The functions passed into `onTimeout` and `onInterval` are called with the timer object bound to `this`. You can call any method or get any property on `this` that you could when creating a timer (see methods below)
-
-> WARNING!!: If using `this` to access the bound timer, do not use fat arrow functions. 
-
-## Syntax with TimerOptions.
-Alternatively, you can set a time with an options object:
-
-```
-new Timer(<time>, <options>)
+```javascript
+new Timer('5:00', null, updateDOM);
+new Timer('5:00', {onInterval: updateDOM});
 ```
 
-Where
 
-* **options** - `object` - a set of `TimerOptions`, which can include the above `onTimeout`/`onInterval` functions, plus many more (see `TimerOptions` beloew)
-    
+### TimeExpressions
+
+TimeExpressions are various formats of time that goodtimer recognizes. They are passed in many places, such as the
+constructors for creating Timers and Time, as well as any place where time is being compared.
+
+#### UTC-like `string` 
+
+There are two ways represent a TimeExpression as a string. The first is UTC-like. Colons and the dot are all
+optional.
+```
+00:00:00:00:00.000 <- milliseconds
+|  |  |  |  |
+|  |  |  |  seconds
+|  |  |  minutes
+|  |  hours
+|  days
+years
+```
+
+Units of time are interpreted from right to left. `3:00` is three minutes, `3:00:00` is three hours `3:00:00:00:00` is
+three years.
+
+Milliseconds must be explicitly specified with the dot, and missing numbers places get a `0` appended. `.01` is
+`10` milliseconds (`.010`), and `.1` is `100 millseconds` (`.100`). This makes values like `:02.5` behaive like you'd
+expect, `2.500` seconds or "two and a half seconds".
+
+A string that is just a number is seconds. `'100'` is 100 seconds (represented as `1:40.000`)
+
+#### unit-notation `string`.
+
+You can specify each unit of time in a string with their abbreviation, listed below:
+
+* **`ms`** - milliseconds
+* **`s`** - seconds
+* **`m`** - minutes
+* **`h`** - hours
+* **`d`** - days
+* **`y`** - years
+
+All units are optional. While doing so would be questionable, notations can be out of order. `1d` is 1 day 
+(`01:00:00:00.000`), `1h30m` or `30m1h` is 1 hour 30 minutes, while `1h30ms` (note the s) is 1 hour 30 _milliseconds_
+
+#### milliseconds `number`
+
+Passing a number represents time in milliseconds. `350` produces the same time as thees `'350ms'` and `'.35'` string 
+counterparts.
+
+Note `350` and `'350'` are NOT the same. The number is 350 milliseconds while the string would be 350 _seconds_.
+
 ### TimerOptions
 
-The options you can set in the object are as follows:
-
-+ **onTimeout** `function` - function to invoke when timer ends. Timer methods are bound to function via `this`
-+ **onInterval** `function` - function to invoke when timer ends. Timer methods are bound to function via `this`
-+ **divider** `string` _default_ `":"` - the characters used to seperate each unit of time when returning from `getTimerUI`
-+ **immediateInterval** `bool` _default_ `true` - when an `onInterval` function is used, will be invoked immediately at time of instantiation. Set to false to invoke only after the first second passes.
-+ **repeat** - `number` _default_ `0` - amount of times for timer to automatically reset after ending. Can be set to `Infinity` to always repeat.
-+ **interval** `number` _default `1`_ - the number of seconds for each "tick". A tick decremts the timer's time by its interval, so `1` (the defaults), decrements 1 second every second. An interval of `5` decrements by 5 seconds every 5 seconds. This has implications on the `onInterval` funciton, which will only get called on the interval provided (not every second).
-    + Timers cannot be negative. If a timer had less time than the interval provided (for example, `3` seconds but the interval was `5`), the next tick would set the time to `0`, and triggering the times up sequence, calling `onTimeout` if provided and pausing if not set to repeat.
- 
-
-
-### When a Timer ends
-
-When a timer reaches :00 (0:00:00:00), the following happens _in order_:
-   1. The timer is paused (`isPaused = true`) if the timer is not set to repeat.
-   2. the `onTimeout` is invoked once.
-   3. If the timer is set to repeat, the timer resets to its original countdown time (it is not paused).
-
-If the timer has no repeat, it will remain paused until further action is taken. Note that because of the order, logic can be written into the `onTimeout` to unpause the timer, such as calling `this.restart()` within it.  
-
-⚠️ Writing something like `this.resume()` in the `timerUpFn` will simply keep invoking the same function every second, with the timer always at `:00`.
-
-If using advanced syntax, you can also just set `repeat` to `Infinity` in the options object.
-
-# `Timer` properties
-
-### `isPaused`
-Whether or not the timer is paused. When true, the timer doesn't count down and no `intervalFn` or `timerUpFn` is invoked. The time it is paused at is saved.
-
-# `Timer` methods
-
-## UI Methods
-These might be useful if you need to display the timer in a human friendly form.
-
-### `.getTimerUI([separator:string|function])`
-Returns a string representing the timer in human readable form. Each unit is separated by a colon, and usually has a zero in the tens digit when only a single digit exists (except for `days`)
-Example: "20:00", "19:59", and "3:32:50:09" might be returned.
-
-Can accept a string or a function that returns a string which will be used to seperate each unit instead of a colon.
-
-### `.getDaysUI()|.getHoursUI()|.getMinutesUI()|.getSecondsUI()`
-Returns a string representing the respective unit. Hours, Minutes, and Seconds gets a zero-padding, and always without a colon.
-```javascript
-var timer = new Timer("1:23:4:30");
-
-timer.getDaysUI() // -> "1"
-timer.getHoursUI() // -> "23"
-timer.getMinutesUI() // -> "04"
-timer.getSecondsUI() // -> "30
-```
-
-### `.getTotal`
-Returns a _number_ representing the amount left in the timer, _in seconds_
-```javascript
-//ex. continued from above
-timer.getTotal(); // -> 109470
-```
-
-### `.fmtTime`
-
-Method for creating custom time formats. Given a string with metacharacters denoted by `%`, replaces them with a specific time value.
-The different replacers are listed below:
-
-* `%Y` - Years
-* `%D` - Days
-* `%H` - Hours
-* `%M` - Minutes
-* `%S` - Seconds
-* `%m` - Milliseconds
-* `%%` - A literal `%` character.
-* `%n` - where `n` is a number 0-9 and is followed by a replacer, adds `n` zero-padding to the value of the replacer. e.g (`%3%S Seconds left` -> `"003 Seconds left")
-
-## Functional methods
-
-### `.pause()`
-Sets the timer's value of `isPaused` to `true`.
-
-### `.resume()`
-Unpauses the timer (sets the value of `isPaused` to `false`)
-
-### `.play()`
-Alias of `.resume()`
-
-### `.togglePause()`
-Toggles the paused state of the timer, pausing it if unpaused, and unpausing it if paused.
-
-**returns:** the new `isPaused` boolean.
-
-### `.reset()`
-Resets the timer to the time it was instantiated with. If the timer is paused when `.reset()` is invoked, the time will still reset, but will remain paused.
-
-This method reinstantiates the timer with the same callback functions, so calling this on a timer that previously had `.clearTimer()` called on will still work.
-
-### `.restart()`
-Similar to `.reset()`, resets the timer while forcing it to run, regardless of whether it was paused or not.
-
-This method reinstantiates the timer with the same callback functions, so calling this on a timer that previously had `.clearTimer()` called on will still work.
-
-### ~`.clearTimer()`~ 
-**[DEPRECATED]** In v2.x.x, alias of `.pause()`. goodtimer v1 did not clear `setInterval` on pauses. Starting in this version, t-misun _always_ clears the `setInterval` on pause.
-
-when `setInterval` is cleared via `.clearTimer()`, the timer will not work until it is reinstantiated with `.restart()` or `.reset()`. 
-
-## Timer Defaults
-
-While options can be set on each instance, you may want to change the defaults all together. Each option exists the `Timer.options` class which can be set manually.
-```javascript
-// eg
-Timer.options.divider = "-";
-// all timers created after this will return HH-MM-SS when calling getTimerUI by default.
-```
-
-## Examples
-
-Alert the user in 5 seconds:
+Using an object you can provide an alternative way to declare `onTimeout` and `onInterval` functions, as well as
+configuration for additional behavior. The full object properties are show below
 
 ```javascript
-var alertMe = new Timer(":05", () => console.log("Time's up!"));
+const timerOptions = {
+    onTimeout: Function, // function to call when timer hits 0.
+    onInterval: Function, // function to call on each second (or tick).
+    repeat: Boolean | Number, // repeating beheivor after timer hits 0. (see notes)
+    startPaused: Boolean, // if the timer should start counting down on creation or not (default false),
+    immediateInterval: Boolean, // if the timer should tick once right when it's created (default false)
+    interval: Number, // how many seconds before a tick (default 1, updating is uncommon)
+}
 ```
 
-Alert the user _every_ 5 seconds:
+Notes on options:
+
+* **onTimeout/onInterval** - these should replace the functions passed as their own arguments. If you use both, only the 
+  functions in TimerOptions will be honored. `new Timer('3', functionA, { onTimeout: functionB })` will result in _only_ 
+  `functionB` being called when the timer reaches zero.
+* **repeat** - Specifically, when the timer reaches zero, if it has a repeat, it will reset back to its initial value
+  and start the countdown again. Any `onTimeout` function is called before the reset.
+  * Pass a number to make it only repeat a given number of times. `{ repeat: 2 }` mean it will repeat twice, and once
+    it reaches zero again, it will stop and be paused at 0.
+  * Pass a boolean to make it never or always repeat. `{ repeat: false }` means it never repeats (this is the default),
+    `{ repeat: true }`, means it always repeats. This can also be written as `{ repeat: 0 }` or `{ repeat: Infinity }`
+    for never and always repeating respectively.
+* **startPaused** - means the timer will be created and paused at its starting time. Any `onInterval` function will not
+  be called until unpaused. You must unpause it yourself with `timer.unpause()` or `timer.togglePause()`
+* **immediateInterval** - Timer will immediately tick once when starting. `new Timer(`5:00`)`
+
+
+### Ways to Get the time
+
+`Timer`/`Time` has properties `years`, `days`, `hours`, `minutes`, `seconds` to get a sepecific unit of time. These
+are always numbers.
+
 ```javascript
-var annoyMe = new Timer("5", function(){
-    alert("This is the function that neeevvverr ennddds...");
-    this.restart();
-    });
+const time = new Time('3:35:08.035');
+
+time.milliseconds; // 35
+time.seconds; // 8
+time.minutes; // 35
+time.hours; // 3
+time.days; // 0
 ```
 
-Or
+You can also convert times to milliseconds with `.inMilliseconds()`.
+
 ```javascript
-function annoy() { alert("This function is used within the optoins object"); }
+const time = new Time('3:35:08.035');
 
-var annoyMe = new Timer("5", { onTimeout: annoy, repeat: Infinity });
+time.inMilliseconds(); // -> 12908035
 ```
 
-Update the innerHTML of your view on each passing second, so that the user can anticipate when you are about to annoy them.
+## 👨‍🔬 Getting Started with `Time`
+
+`Time` is `Timer` without the countdown or callback functionality. Technically, it is the base-class for `Timer`.
+
+⚠️ **Warning**: `Time` is primarily intended to be used by the `Timer` class, rather than in isolation. As such, it is
+not as fully functional as it should be. For example, negative values are not supported. `Time` is still accessible,
+however, as it can be used for basic time comparisons.
+
+### Creating a `Time` object
+
+`Time` can be imported from `goodtimer`. Its constructor only takes a timeExpression. i.e. `new Time(timeExpression)`
+
 ```javascript
-var timerView = document.getElementById("timerView");
-var timerWithUI = new Timer("1:05" // automatically detects 1 minute and 5 seconds.
-        , function() {alert("timer done."}
-        , function() {timerView.innerHTML = this.getTimerUI()} // the 3rd argument is a funtion invoked every second.
-        );
+const { Time } = require('goodtimer');
+
+const minute = new Time('1m');
+const hour = new Time('1h');
+
+minute.toString(); // -> "01:00.000"
+hour.toString();   // -> "01:00:00.000"  
 ```
 
-# Thanks for checking out this project!
+#### Full list of `Time` methods.
 
-If you have any other suggestions, feel free to add a pull request or submit an issue. Please give this a ⭐️ if you find it useful!
+Below is a demonstration of all `Time` methods. Remember, all of these methods are also available with `Timer`.
+
+```javascript
+const minute = new Time('1m');
+const hour = new Time('1h');
+
+minute.inMilliseconds(); // -> 60000
+minute.toString()        // -> "01:00.000"
+
+minute.gt(hour);         // -> false
+minute.gte(hour);        // -> false
+minute.lt(hour);         // -> true
+minute.lte(hour);        // -> true
+minute.equals(hour);     // -> false
+
+minute.set(hour);        // set to new time
+minute.equals(hour);     // -> true
+```
+
+## :clap: Supporters
+
+[![Stargazers repo roster for goodtimer](https://reporoster.com/stars/nickpalenchar/goodtimer)](https://github.com/nickpalenchar/goodtimer/stargazers)
+[![Forkers repo roster for goodtimer](https://reporoster.com/forks/nickpalenchar/goodtimer)](https://github.com/nickpalenchar/goodtimer/network/members)
+
+---
