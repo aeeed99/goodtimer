@@ -1,10 +1,9 @@
----
-<div align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000&style=for-the-badge&color=90291d">
-<img src="https://img.shields.io/npm/dw/goodtimer?style=for-the-badge&color=E1AD01">
-<img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=90291d&style=for-the-badge"></div>
-<div style="background: #E1AD01; padding-bottom: 1px; border-radius: 48px; margin-top: -16px">
-<h1 align="center" style="font-family: cursive; color: #90291d">goodtimer</h1>
-</div>
+<div align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?maxAge=2592000&style=for-the-badge&color=90291d"> 
+ <img src="https://img.shields.io/npm/dw/goodtimer?style=for-the-badge&color=E1AD01">
+ <img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=90291d&style=for-the-badge"></div>
+
+![goodtimer logo](goodtimer.png)
+
 <h5 align="center">A <code>setTimeout</code> for humans (and so much more)</h5>
 
 ---
