@@ -19,9 +19,12 @@ type TimeExpression =
     | Time;
 
 class Time {
-    __sign: -1 | 1 = 1;
-    _time: Array<Array<number>> = [];
+    private __sign: -1 | 1 = 1;
+    protected _time: Array<Array<number>> = [];
 
+    /**
+     * @ignore
+     */
     get _sign() {
         return this.__sign
     }
@@ -39,7 +42,7 @@ class Time {
         this.set(timeExpression);
     }
 
-    set(timeExpression: TimeExpression) {
+    public set(timeExpression: TimeExpression) {
         /**
          * Immediately changes the instances time to the given argument.
          */
@@ -93,7 +96,7 @@ class Time {
         this._adjustTime(0)
     }
 
-    add(time: TimeExpression, _ignoreSigns: boolean=false): void {
+    public add(time: TimeExpression, _ignoreSigns: boolean=false): void {
 
         const toAdd = time instanceof Time ? time : new Time(time);
 
@@ -127,10 +130,11 @@ class Time {
         this.years = this.years - toAdd.years;
     }
 
-    abs(set: boolean=false): Time {
+    public abs(set: boolean=false): Time {
         /** Returns a new Time instance that is the absolute value.
          *  If 'set' is true, mokes this instance absolute value and
          *  returns that instead.
+         *  @ignore - not needed until negatives are supported
          */
         if (set) {
             this._sign = 1;
@@ -143,7 +147,7 @@ class Time {
 
     setSign(sign): Time {
         /**
-         * @function
+         * Reserved for future features with negatives
          * @ignore
          */
         // @ts-ignore
@@ -323,7 +327,7 @@ class Time {
             this.milliseconds;
     }
 
-    _adjustTime(milliseconds: number) {
+    protected _adjustTime(milliseconds: number) {
         /** Adjusts time by a number of milliseconds. Pass negative number to decrement.
          */
         const {_adjustAndCarry: aac} = this;
@@ -336,7 +340,7 @@ class Time {
                             aac(this._time[5], 999, milliseconds))))));
     }
 
-    _adjustAndCarry(num: number[], resetValue: number, interval: number): number {
+    protected _adjustAndCarry(num: number[], resetValue: number, interval: number): number {
 
         let val: number = num[0] + interval;
         let carry: number = 0;
@@ -353,7 +357,7 @@ class Time {
         return carry;
     }
 
-    _getCarryover(num, threshold): [number, number] {
+    protected _getCarryover(num, threshold): [number, number] {
         /** Calculates the "carry-over", that is, how many whole units can be divided from a
          * threshold. This is used to calculate when, say, the seconds unit has more than allowed (60).
          * In that case, a number of "minutes" should be extracted from it (over the "threshold" of 60).
@@ -363,7 +367,7 @@ class Time {
         return [carryover, remaining];
     }
 
-     _fromMilliseconds(num: number) {
+     protected _fromMilliseconds(num: number) {
         let result = [0, 0, 0, 0, 0, num];
 
         if (result[5] < 1000) {
@@ -396,7 +400,7 @@ class Time {
         [result[0], result[1]] = this._getCarryover(result[1], 365);
         return result
     }
-    _adjustOverflow(place: number, threshold: number): number {
+    protected _adjustOverflow(place: number, threshold: number): number {
         /**
          * Sets the value at placemarker (value) to a positive number within its
          * threshold, adding to larger places if needed.
@@ -415,7 +419,7 @@ class Time {
         return 0;
     }
 
-    _adjustUnderflow(place: number, threshold) {
+    protected _adjustUnderflow(place: number, threshold) {
         if (this._time[place][0] < 0) {
             if (this._time.slice(0, place).some(el => el[0])) {
                 const [carryOver, remainingInverse] = this._getCarryover(Math.abs(this._time[place][0]), threshold);
@@ -434,7 +438,7 @@ class Time {
         return 0;
     }
 
-    _largestIndex(): number {
+    protected _largestIndex(): number {
         /**
          * Returns the index (from this._time) which is the largest unit of
          * time that is non-zero.
@@ -452,27 +456,31 @@ class Time {
 
     // [_years, _days, _hours, minutes, seconds, milliseconds]
     //  0      1     2      3        4        5
-    get milliseconds() {
+    public get milliseconds() {
         return this._time[5][0] * this._sign;
     }
-    set milliseconds(n) {
+    public set milliseconds(n) {
         this._time[5][0] = n;
         const over = this._adjustOverflow(5, 1000);
         const under = this._adjustUnderflow(5, 1000);
         this.seconds = this._time[4][0] + over + under;
     }
-    get ms() {
+
+    /**
+     * @deprecated use [[Time.milliseconds]] instead
+     */
+    public get ms() {
         /** Alias of .milliseconds. **/
         return this.milliseconds;
     }
-    set ms(n) {
+    public set ms(n) {
         this.milliseconds = n;
     }
 
-    get seconds() {
+    public get seconds() {
         return this._time[4][0] * this._sign;
     }
-    set seconds(n) {
+    public set seconds(n) {
         this._time[4][0] = n;
         const over = this._adjustOverflow(4, 60);
         const under = this._adjustUnderflow(4, 60);
@@ -483,6 +491,9 @@ class Time {
         return this.seconds;
     }
     set secs(n) {
+        /**
+         * @alias seconds
+         */
         this.seconds = n
     }
     get minutes() {
@@ -494,35 +505,37 @@ class Time {
         const under = this._adjustUnderflow(3, 60);
         this.hours = this._time[2][0] + over + under;
     }
+    /**
+     * @deprecated use [[Time.minutes]] instead
+     **/
     get mins() {
-        /** Alias of .minutes **/
         return this.minutes;
     }
     set mins(n) {
         this.minutes = n;
     }
-    get hours() {
+    public get hours() {
         return this._time[2][0] * this._sign;
     }
-    set hours(n) {
+    public set hours(n) {
         this._time[2][0] = n;
         const over = this._adjustOverflow(2, 24);
         const under = this._adjustUnderflow(2, 24);
         this.days = this._time[1][0] + over + under;
     }
-    get days() {
+    public get days() {
         return this._time[1][0] * this._sign;
     }
-    set days(n) {
+    public set days(n) {
         this._time[1][0] = n;
         const over = this._adjustOverflow(1, 365);
         const under = this._adjustUnderflow(1, 365);
         this.years = this._time[0][0] + over + under;
     }
-    get years() {
+    public get years() {
         return this._time[0][0] * this._sign;
     }
-    set years(n) {
+    public set years(n) {
         if (n < 0) {
             this._sign *= -1;
             n = Math.abs(n)
@@ -602,5 +615,4 @@ class Time {
 
 }
 
-
-module.exports = {Time};
+export { Time };

@@ -1,7 +1,8 @@
 {
-  "entryPoints": ["lib/latest/goodtimer.ts"],
-  "out": "docs/api",
+  "entryPoints": ["lib/latest/time.ts", "lib/latest/timer.ts"],
+  "out": "docs",
   "excludePrivate": true,
-  "theme": "minimal",
-  "highlightTheme": "min-light"
+  "excludeProtected": true,
+  "includeVersion": true,
+  "theme": "minimal"
 }
