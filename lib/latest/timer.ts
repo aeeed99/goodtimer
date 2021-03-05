@@ -66,7 +66,7 @@ class Timer extends Time {
     /**
      * the id of the underlying setInterval, which controls the countdown "ticks". It's often unnessesar to use this.
      */
-    intervalId: number | ReturnType<typeof setTimeout>; // id of the main loop for running this.tick
+    _intervalId: number | ReturnType<typeof setTimeout>; // id of the main loop for running this.tick
     protected lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
     private _startMarker: number = -1;
 
@@ -123,6 +123,16 @@ class Timer extends Time {
         this._startIntervalLoop(this.options.immediateInterval);
     }
 
+    get intervalId(): number | ReturnType<typeof setTimeout> {
+        return this._intervalId;
+    }
+    set intervalId(val: number | ReturnType<typeof setTimeout>) {
+        if (this._intervalId) {
+            // @ts-ignore
+            clearInterval(this._intervalId);
+        }
+        this._intervalId = val;
+    }
     /**
      * Manually decrement the timer by its interval (by default 1 second), triggering the [[Timer.onInterval]] if defined, unless paused.
      * @param force do this even if paused (timer will still remain paused)
