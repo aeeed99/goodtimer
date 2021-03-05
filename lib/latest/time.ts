@@ -81,12 +81,12 @@ class Time {
         }
         else if (typeof timeExpression === 'object') {
             this._time = [
-                [(timeExpression?.milliseconds || 0)],
-                [(timeExpression?.seconds || 0)],
-                [(timeExpression?.minutes || 0)],
-                [(timeExpression?.hours || 0)],
-                [(timeExpression?.days || 0)],
                 [(timeExpression?.years || 0)],
+                [(timeExpression?.days || 0)],
+                [(timeExpression?.hours || 0)],
+                [(timeExpression?.minutes || 0)],
+                [(timeExpression?.seconds || 0)],
+                [(timeExpression?.milliseconds || 0)],
             ]
         }
 

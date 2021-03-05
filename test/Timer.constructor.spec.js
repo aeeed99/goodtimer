@@ -8,27 +8,32 @@ describe('creating a Timer instance (constructor fn)', () => {
 
         const t2 = new Timer('1:30:23:59:60.300');
         expect([t2.years, t2.days, t2.hours, t2.minutes, t2.seconds, t2.milliseconds])
-            .toStrictEqual([1,31,0,0,0,300]);
+            .toStrictEqual([1, 31, 0, 0, 0, 300]);
     });
 
     it('works as (time: string, timeUpFn: Function', () => {
-        const t = new Timer('04', function(){});
+        const t = new Timer('04', function () {
+        });
         expect([t.years, t.days, t.hours, t.minutes, t.seconds, t.milliseconds])
-            .toStrictEqual([0,0,0,0,4,0]);
+            .toStrictEqual([0, 0, 0, 0, 4, 0]);
         expect(typeof t.options.onTimeout).toEqual('function');
     });
 
     it('works as (time: string, timeUpFn: Function, intervalFn: Function', () => {
-        const t = new Timer('4h33s10ms', function(){}, function(){});
+        const t = new Timer('4h33s10ms', function () {
+        }, function () {
+        });
         expect([t.years, t.days, t.hours, t.minutes, t.seconds, t.milliseconds])
-            .toStrictEqual([0,0,4,0,33,10]);
+            .toStrictEqual([0, 0, 4, 0, 33, 10]);
         expect(typeof t.options.onInterval).toEqual('function');
         expect(typeof t.options.onTimeout).toEqual('function');
     });
     it('works as (time: string, options: object)', () => {
         const t = new Timer('1y', {
-            onTimeout: function onTimeout(){},
-            onInterval: function onInterval(){}
+            onTimeout: function onTimeout() {
+            },
+            onInterval: function onInterval() {
+            }
         });
 
         expect(t.years).toBe(1);
@@ -42,7 +47,7 @@ describe('creating a Timer instance (constructor fn)', () => {
 describe('Timer options', () => {
 
     it('delays tick if immediateInterval is false', () => {
-        const timerDelay = new Timer('10', { immediateInterval: false });
+        const timerDelay = new Timer('10', {immediateInterval: false});
         const timerStandard = new Timer('10');
         const spyDelay = jest.spyOn(timerDelay, 'tick');
         const spyStandard = jest.spyOn(timerStandard, 'tick')
@@ -55,12 +60,20 @@ describe('Timer options', () => {
     it('Repeats with repeat option', () => {
         let callTimes = 0;
         const timesUp = () => callTimes++;
-        const timer = new Timer('3', {onTimeout: timesUp, repeat: true });
+        const timer = new Timer('3', {onTimeout: timesUp, repeat: true});
         timer.pause();
         timer.tick(true);
         timer.tick(true);
         timer.tick(true)
         expect(callTimes).toEqual(1);
         expect(timer.seconds).toEqual(3);
+    });
+
+    describe('object notaition', () => {
+        it('works with multiple properties', () => {
+            const t = new Timer({minutes: 1, seconds: 20});
+            expect(t.minutes).toBe(1);
+            expect(t.seconds).toBe(20);
+        })
     });
 });
