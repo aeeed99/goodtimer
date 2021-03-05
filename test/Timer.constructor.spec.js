@@ -74,6 +74,23 @@ describe('Timer options', () => {
             const t = new Timer({minutes: 1, seconds: 20});
             expect(t.minutes).toBe(1);
             expect(t.seconds).toBe(20);
-        })
+        });
+
+        it('works with all properties in any order', () => {
+            const t = new Timer({
+                minutes: 3,
+                milliseconds: 444,
+                years: 2,
+                hours: 11,
+                days: 8,
+                seconds: 59
+            });
+            expect(t.years).toBe(2);
+            expect(t.minutes).toBe(3);
+            expect(t.seconds).toBe(59);
+            expect(t.milliseconds).toBe(444);
+            expect(t.hours).toBe(11);
+            expect(t.days).toBe(8);
+        });
     });
 });
