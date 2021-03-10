@@ -1,6 +1,6 @@
 {
   "name": "goodtimer",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "a setTimeout for humans (and so much more)",
   "main": "index.js",
   "scripts": {
