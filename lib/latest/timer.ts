@@ -64,7 +64,7 @@ class Timer extends Time {
     isPaused: boolean = false;
     protected  remainingSec: number; // when pausing, the amount of milliseconds remaining before the next tick.
     /**
-     * the id of the underlying setInterval, which controls the countdown "ticks". It's often unnessesar to use this.
+     * the id of the underlying setInterval, which controls the countdown "ticks". It's often unnecessary to use this.
      */
     _intervalId: number | ReturnType<typeof setTimeout>; // id of the main loop for running this.tick
     protected lastTick: number; // Date in milliseconds marking the last tick (second) of the timer
@@ -72,7 +72,7 @@ class Timer extends Time {
 
     /**
      *
-     * @param time The starting time to countdown from. Methods like [[Timer.reset]] uses this value as the inital time.
+     * @param timeExpression The starting time to countdown from. Methods like [[Timer.reset]] uses this value as the initial time.
      * @param onTimeout function to run when the time reaches 0. `this` is the timer instance, allowing the function to call methods on the timer.
      * @param onInterval function to run on every interval (by default, every 1 second). Useful for updating UI elements.
      * @param options set various beheivors on the timer. Pass as an object as the 2nd argument.
@@ -121,6 +121,16 @@ class Timer extends Time {
         }
         this.isPaused = !!this.options.startPaused;
         this._startIntervalLoop(this.options.immediateInterval);
+    }
+
+    get milliseconds(): number {
+        if (!this.isPaused) {
+            return (Date.now() - this.lastTick) % 1000;
+        }
+        return this.time["milliseconds"] % 1000;
+    }
+    set milliseconds(val: number) {
+        this.time.milliseconds = val
     }
 
     get intervalId(): number | ReturnType<typeof setTimeout> {
@@ -193,6 +203,7 @@ class Timer extends Time {
         let timePaused = Date.now();
         this.isPaused = true;
         this.remainingSec = timePaused - this.lastTick;
+        this.milliseconds = this.remainingSec;
         // @ts-ignore
         clearInterval(this.intervalId);
         return this.isPaused;

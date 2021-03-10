@@ -2,11 +2,11 @@ let {Timer} = require('../build/goodtimer');
 
 describe('creating a Timer instance (constructor fn)', () => {
     it('works as (time:string)', () => {
-        const t = new Timer('4:30');
+        const t = new Timer('4:30', {startPaused: true});
         expect(t.seconds).toBe(30);
         expect(t.minutes).toBe(4);
 
-        const t2 = new Timer('1:30:23:59:60.300');
+        const t2 = new Timer('1:30:23:59:60.300', {startPaused: true});
         expect([t2.years, t2.days, t2.hours, t2.minutes, t2.seconds, t2.milliseconds])
             .toStrictEqual([1, 31, 0, 0, 0, 300]);
     });
@@ -22,7 +22,7 @@ describe('creating a Timer instance (constructor fn)', () => {
     it('works as (time: string, timeUpFn: Function, intervalFn: Function', () => {
         const t = new Timer('4h33s10ms', function () {
         }, function () {
-        });
+        }, {startPaused: true});
         expect([t.years, t.days, t.hours, t.minutes, t.seconds, t.milliseconds])
             .toStrictEqual([0, 0, 4, 0, 33, 10]);
         expect(typeof t.options.onInterval).toEqual('function');
@@ -84,7 +84,7 @@ describe('Timer options', () => {
                 hours: 11,
                 days: 8,
                 seconds: 59
-            });
+            }, {startPaused: true});
             expect(t.years).toBe(2);
             expect(t.minutes).toBe(3);
             expect(t.seconds).toBe(59);
