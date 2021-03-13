@@ -38,15 +38,16 @@ new Timer('1:00', yourFn); // replacement for setTimeout
 new Timer('1:00', yourFn, { repeat: true }); // replacement for setInterval
 
 
-const timer = new Timer('5:00');
+const timer = new Timer('5:00'); // (Five minutes)
 timer.pause();         // freezes timer at given time
 timer.unpause();       // resumes timer
 timer.reset();         // resests to initial value (in this case 5 minutes)
 timer.toString()       // returns in UTC-like format ("5:00.000")
+// ~ 1 second later ~
 timer.fmtTime("%M minutes %s seconds") // -> "4 minutes 59 seconds" (many ways to use!) 
-timer.gt('1:00');      // "greater than" -> false
-timer.lt('60:00:00');  // "less than" -> false
-timer.equal('6:00');   // -> false
+timer.gt('1:00');      // "greater than" -> true
+timer.lt('60:00:00');  // "less than (60 hrs)" -> true
+timer.equals('6m');    // (6 minutes, alternate notation) -> false
 
 // or use the Time class and skip the controls
 const [minute, second] = [new Time('1m'), new Time('1s')];
