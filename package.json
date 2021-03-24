@@ -6,6 +6,7 @@
   "scripts": {
     "docs": "typedoc",
     "build": "tsc",
+    "webpack": "webpack",
     "test": "jest test"
   },
   "repository": {
@@ -28,7 +29,9 @@
     "@types/node": "^14.0.14",
     "jest": "^25.3.0",
     "typedoc": "^0.20.27",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "webpack": "^5.27.2",
+    "webpack-cli": "^4.5.0"
   },
   "dependencies": {}
 }
