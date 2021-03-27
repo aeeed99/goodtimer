@@ -7,7 +7,8 @@
     "docs": "typedoc",
     "build": "tsc",
     "webpack": "webpack",
-    "test": "jest test"
+    "test": "jest test",
+    "publish-cdn": "aws s3 cp build/browser/goodtimer*.js s3://npalenchar-cdn/goodtimer/"
   },
   "repository": {
     "type": "git",
