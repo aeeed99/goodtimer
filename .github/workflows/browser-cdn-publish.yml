@@ -1,0 +1,28 @@
+
+
+name: Publish client-side to CDN
+
+on:
+  push:
+    branches:
+      # always runs on main, even if no version increase. Because uploading a duplicate is not an error
+      - main
+
+jobs:
+  publish-cdn:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm run build
+      - run: npm run webpack
+      - run: npm run publish-cdn
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
