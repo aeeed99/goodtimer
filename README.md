@@ -12,7 +12,7 @@
 
 goodtimer provides a clean way to implement `setTimeout` and `setInterval`, and provides a high-level API to easy manipulate countdowns. 
 It comes with a flexible [`timeExpression`](#timeexpressions) syntax, so you can easily express time in a number of desireable ways.
-And it can be compiled with webpack or directly in the browser via [cdn](https://cdn.nickpal.to/goodtimer);
+Use in projects like react with npm, or directly in the browser via [cdn](https://cdn.nickpal.to/goodtimer);
 
 ## Installation
 
