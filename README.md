@@ -10,7 +10,9 @@
 
 ## 🧐 About
 
-goodtimer provides a clean way to implement `setTimeout` and `setInterval`, and provides a high-level API to easy manipulate countdowns. It comes with a flexible [`timeExpression`](#timeexpressions) syntax, so you can easily express time in a number of desireable ways.
+goodtimer provides a clean way to implement `setTimeout` and `setInterval`, and provides a high-level API to easy manipulate countdowns. 
+It comes with a flexible [`timeExpression`](#timeexpressions) syntax, so you can easily express time in a number of desireable ways.
+Use in projects like react with npm, or directly in the browser via [cdn](https://cdn.nickpal.to/goodtimer);
 
 ## Installation
 
@@ -27,6 +29,17 @@ const { Timer } = require('goodtimer');
 
 new Timer('1:00');
 ```
+
+#### 💝 _Browser-compatible client-side version now available!_
+
+```html
+<script src="https://cdn.nickpal.to/goodtimer/goodtimer-3.0.2.js"></script>
+<script>
+  new goodtimer.Timer('1:00');
+</script>
+```
+
+
 
 ➡️ Read the full API Docs [here](https://nickpalenchar.github.io/goodtimer/classes/timer.timer-1.html) or read below to get started quickly :bow:
 
