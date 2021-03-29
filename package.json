@@ -8,7 +8,7 @@
     "build": "tsc",
     "webpack": "webpack",
     "test": "jest test",
-    "publish-cdn": "aws s3 cp build/browser/goodtimer*.js s3://npalenchar-cdn/goodtimer/"
+    "publish-cdn": "aws s3 cp build/browser/goodtimer*.js s3://npalenchar-cdn/goodtimer/ --acl public-read"
   },
   "repository": {
     "type": "git",
