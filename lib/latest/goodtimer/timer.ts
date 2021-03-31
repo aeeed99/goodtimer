@@ -232,6 +232,7 @@ class Timer extends Time {
         return this.isPaused;
     }
 
+
     protected _startIntervalLoop(initialTick?: boolean) {
         // the timer *can* be paused before 1 second passes, so it must be checked.
         if(this.isPaused) {

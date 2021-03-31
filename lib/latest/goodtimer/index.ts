@@ -1,10 +1,11 @@
 import { Timer, TimerOptions} from "./timer";
 import { Time } from "./time";
+import * as timeutil from "./timeutil"
 
 try {
     module.exports = {Timer, Time};
 }
 catch {
     // @ts-ignore
-    window.goodtimer = {Timer, Time}
+    window.goodtimer = {Timer, Time, timeutil}
 }

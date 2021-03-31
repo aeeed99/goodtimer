@@ -1,2 +1,2 @@
-const {Timer, Time} = require('./build/goodtimer');
+const {Timer, Time} = require('./build/node');
 module.exports = { Timer, Time }

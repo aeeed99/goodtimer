@@ -3,12 +3,12 @@
     "module": "commonjs",
     "target": "es5",
     "sourceMap": true,
-    "outDir": "build"
+    "outDir": "build/node"
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
-    "lib/latest/*"
+    "lib/latest/goodtimer/*"
   ]
 }
