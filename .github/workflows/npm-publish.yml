@@ -9,6 +9,7 @@ on:
       - main
     paths:
       - 'lib/**'
+      - 'package*.json'
 
 jobs:
   build:
