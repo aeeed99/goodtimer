@@ -8,6 +8,8 @@
 
 ---
 
+![goodtimer demo](assets/example1.gif)
+
 ## 🧐 About
 
 goodtimer provides a clean way to implement `setTimeout` and `setInterval`, and provides a high-level API to easy manipulate countdowns. 
