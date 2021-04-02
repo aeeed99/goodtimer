@@ -23,6 +23,7 @@ interface TimerOptions {
     onInterval?: Function;
     repeat?: number; // default 0
     startPaused?: boolean;
+    skipFinalInterval?: boolean;
 }
 
 
@@ -167,6 +168,7 @@ class Timer extends Time {
         if(!this.years && !this.days && !this.hours && !this.minutes && !this.seconds) {
             //TODO: Will there ever be millisecond remaining? Should a timeout be set here in that case?
             // or will _mills always be 0 (and the case is handled on a resume)
+            this.options.onInterval && !this.options.skipFinalInterval && this.options.onInterval.call(this);
             this.options.onTimeout && this.options.onTimeout.call(this);
             if (this.options.repeat) {
                 this.options.repeat--;

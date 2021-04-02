@@ -216,6 +216,8 @@ const timerOptions = {
     startPaused: Boolean, // if the timer should start counting down on creation or not (default false),
     immediateInterval: Boolean, // if the timer should tick once right when it's created (default false)
     interval: Number, // how many seconds before a tick (default 1, updating is uncommon)
+    skipFinalInterval: Boolean // when timer runs out, only run onTimeout (if defined)
+                               // otherwise calls onInterval followed by onTimeout.
 }
 ```
 
