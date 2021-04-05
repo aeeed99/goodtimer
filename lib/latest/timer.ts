@@ -10,10 +10,11 @@ interface Config {
 /**
  * @param TimerOptions.divider what [[Timer.getFullTimeUI]] uses to separate each unit of time. Default ":"
  * @param TimerOptions.immediateInterval when `true`, the timer ticks down by one immediately, and the `onInterval` function runs, if passed.
- * @param TimerOptions.onInterval how often the timer ticks down. E.g. `1` means the timer will tick by one second every second, `5` means it ticks down five seconds every 5 second. This affects how often [[TimerOptions.onInterval]] runs
+ * @param TimerOptions.onInterval a function that's called on each "tick", or when the timer decrements a second
  * @param TimerOptions.repeat if `true`, resets the timer to its original time, and begins counting down again
  * @param TimerOptions.onTimeout a function that's ran when the timer reaches 0
  * @param TimerOptions.startPaused if `true`, timer will start paused at its initial time, and must be unpaused to count down.
+ * @param TimerOptions.finalInterval when true, onInterval is called when the timer reaches 0 (usually desired). Default `true`
  */
 interface TimerOptions {
     divider?: string; // default ":"
@@ -23,7 +24,7 @@ interface TimerOptions {
     onInterval?: Function;
     repeat?: number; // default 0
     startPaused?: boolean;
-    skipFinalInterval?: boolean;
+    finalInterval?: boolean;
 }
 
 
@@ -57,6 +58,7 @@ class Timer extends Time {
         divider: ":",
         repeat: 0,
         immediateInterval: false,
+        finalInterval: true,
         interval: 1
     };
     /**
@@ -168,14 +170,20 @@ class Timer extends Time {
         if(!this.years && !this.days && !this.hours && !this.minutes && !this.seconds) {
             //TODO: Will there ever be millisecond remaining? Should a timeout be set here in that case?
             // or will _mills always be 0 (and the case is handled on a resume)
-            this.options.onInterval && !this.options.skipFinalInterval && this.options.onInterval.call(this);
-            this.options.onTimeout && this.options.onTimeout.call(this);
-            if (this.options.repeat) {
-                this.options.repeat--;
-                this.setFromString(this.initialTime);
-            }
-            else {
-                this.isPaused = true;
+            let error;
+            try {
+                this.options.onInterval && this.options.finalInterval && this.options.onInterval.call(this);
+                this.options.onTimeout && this.options.onTimeout.call(this);
+            } catch (e) {
+                throw e;
+            } finally {
+                if (this.options.repeat) {
+                    this.options.repeat--;
+                    this.setFromString(this.initialTime);
+                }
+                else {
+                    this.isPaused = true;
+                }
             }
         }
         else {
