@@ -29,9 +29,33 @@ describe('tick', () => {
         expect(timeoutFn).not.toHaveBeenCalled();
         expect(intervalFn).not.toHaveBeenCalled();
         t.tick();
-        expect(intervalFn).toHaveBeenCalled();
         expect(timeoutFn).not.toHaveBeenCalled();
+        expect(intervalFn).toHaveBeenCalledTimes(1);
         t.tick();
         expect(timeoutFn).toHaveBeenCalled();
+        expect(intervalFn).toHaveBeenCalledTimes(2);
+    });
+
+    it('doesnt call onInterval at 0 if finalInterval is false', () => {
+        // the onTimeout function runs when the timer reaches 0.
+        // the onInterval function runs on every tick
+        const timerFunctions = {
+            timeout: function(){},
+            interval: function(){}
+        }
+        const timeoutFn = jest.spyOn(timerFunctions, 'timeout');
+        const intervalFn = jest.spyOn(timerFunctions, 'interval');
+
+        const t = new Timer('2s', {onTimeout: timeoutFn, onInterval: intervalFn, finalInterval: false});
+
+        expect(timeoutFn).not.toHaveBeenCalled();
+        expect(intervalFn).not.toHaveBeenCalled();
+        t.tick();
+        expect(timeoutFn).not.toHaveBeenCalled();
+        expect(intervalFn).toHaveBeenCalledTimes(1);
+        t.tick();
+        expect(timeoutFn).toHaveBeenCalled();
+        expect(intervalFn).toHaveBeenCalledTimes(1);
+
     })
-})
+});

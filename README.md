@@ -218,8 +218,13 @@ const timerOptions = {
     startPaused: Boolean, // if the timer should start counting down on creation or not (default false),
     immediateInterval: Boolean, // if the timer should tick once right when it's created (default false)
     interval: Number, // how many seconds before a tick (default 1, updating is uncommon)
+    finalInterval: Boolean // when timer runs out, only run onTimeout (if defined)
+                               // otherwise calls onInterval followed by onTimeout.
 }
 ```
+
+⚠️ **Prior to 3.1.0**, Timer never called `onInterval` when the timer reached 0. It now does the opposite by default.
+for the old behavior, use `{ finalInterval: false }`, for your timerOptions.
 
 Notes on options:
 
