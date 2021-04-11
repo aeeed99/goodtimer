@@ -2,7 +2,8 @@
   "name": "goodtimer",
   "version": "3.2.0",
   "description": "a setTimeout for humans (and so much more)",
-  "main": "index.js",
+  "main": "build/node/index.js",
+  "bugs": "https://github.com/nickpalenchar/goodtimer/issues",
   "scripts": {
     "docs": "typedoc",
     "build": "tsc",

@@ -2,3 +2,9 @@ test
 lib
 assets
 logo
+node_modules
+tsconfig.json
+typedoc.json
+webpack.config.js
+build/browser
+examples

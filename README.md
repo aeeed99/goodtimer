@@ -39,7 +39,7 @@ new Timer('1:00');
 Or replace your drifty `setInterval`s with `setGoodInterval` ⭐️:
 
 ```javascript
-const { setGoodInterval } = require('goodtimer/timeutil');
+const { setGoodInterval } = require('goodtimer').timeutil;
 
 setGoodInterval(() => console.log("exactly 1 second!"), 1000);
 ```
