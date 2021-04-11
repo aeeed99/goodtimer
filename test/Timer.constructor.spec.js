@@ -1,4 +1,4 @@
-let {Timer} = require('../build/goodtimer');
+let {Timer} = require('../build/node');
 
 describe('creating a Timer instance (constructor fn)', () => {
     it('works as (time:string)', () => {

@@ -1,11 +1,13 @@
 
 import { Time } from './time';
-import  {addPadding}  from './timeutil';
+import  {addPadding, setGoodInterval, clearGoodInterval}  from './timeutil';
 
 interface Config {
     divider: string;
     devMode: boolean;
 }
+
+type intervalFn = (callback: Function, timeout: number) => any;
 
 /**
  * @param TimerOptions.divider what [[Timer.getFullTimeUI]] uses to separate each unit of time. Default ":"
@@ -15,6 +17,9 @@ interface Config {
  * @param TimerOptions.onTimeout a function that's ran when the timer reaches 0
  * @param TimerOptions.startPaused if `true`, timer will start paused at its initial time, and must be unpaused to count down.
  * @param TimerOptions.finalInterval when true, onInterval is called when the timer reaches 0 (usually desired). Default `true`
+ * @param TimerOptions.setInterval low-level, custom function that executes its callback every `timeout` milliseconds, must
+ *        return an identifier that can be passed to TimerOptions.loopClear to stop execution.
+ * @param TimerOptions.clearInterval low-level, custom function that can stop a custom function.
  */
 interface TimerOptions {
     divider?: string; // default ":"
@@ -25,6 +30,8 @@ interface TimerOptions {
     repeat?: number; // default 0
     startPaused?: boolean;
     finalInterval?: boolean;
+    setInterval?: intervalFn;
+    clearInterval?: (id: any) => void;
 }
 
 
@@ -59,7 +66,9 @@ class Timer extends Time {
         repeat: 0,
         immediateInterval: false,
         finalInterval: true,
-        interval: 1
+        interval: 1,
+        setInterval: setGoodInterval,
+        clearInterval: clearGoodInterval
     };
     /**
      * whether or not the timer is paused.
@@ -142,7 +151,7 @@ class Timer extends Time {
     set intervalId(val: number | ReturnType<typeof setTimeout>) {
         if (this._intervalId) {
             // @ts-ignore
-            clearInterval(this._intervalId);
+            this.options.clearInterval(this._intervalId);
         }
         this._intervalId = val;
     }
@@ -240,7 +249,7 @@ class Timer extends Time {
         }
         initialTick && this.tick();
         this.lastTick = Date.now();
-        this.intervalId = setInterval(this.tick.bind(this), this.options.interval * 1000);
+        this.intervalId = this.options.setInterval(this.tick.bind(this), this.options.interval * 1000);
     }
 
     protected _parse(time: string): number[] {
@@ -447,8 +456,6 @@ class Timer extends Time {
     resume = this.unpause;
     play = this.unpause;
     clearTimer() {
-        console.warn("Deprecation Notice: goodtimer 2.x.x always clears the setInterval on pause." +
-            " you can achieve the same effect by calling pause()");
         this.pause();
     }
 

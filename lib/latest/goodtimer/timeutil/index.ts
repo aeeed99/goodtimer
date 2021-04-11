@@ -5,7 +5,7 @@ export function addPadding(number: number, zeros: number): string {
 }
 
 const goodIntervalIds: boolean[] = [];
-let nextId: number = 0;
+let nextId: number = 1;
 
 /** A self-correcting version of [[setTimeout]], which will "speed up"
  *  subsequent calls if it falls behind (as a result of being behind too many
@@ -16,30 +16,26 @@ let nextId: number = 0;
  */
 export function setGoodInterval(
     callback: Function,
-    timeout: number,
-    maxCorrection: number,
-    _id: number = null,
-    _lastCall: number = Date.now()): number {
-
+    timeout: number
+    ): number {
 
     const wrapper = function(callback: Function, timeout, _lastCall, _id: number) {
         if (!goodIntervalIds[_id]) {
             return;
         }
-        const callTime = Date.now();
         callback();
+        const callTime = Date.now();
         const adjustment = callTime - _lastCall - timeout;
         const adjustedTimeout = timeout - adjustment;
         const adjustedCallTime = callTime - adjustment;
         setTimeout(
             () => wrapper(callback, timeout, adjustedCallTime, _id),
             adjustedTimeout
-        )
+        );
     };
     const start = Date.now();
     const id = nextId++;
     goodIntervalIds[id] = true;
-
     setTimeout(
         function() { wrapper(callback, timeout, start, id) },
         timeout

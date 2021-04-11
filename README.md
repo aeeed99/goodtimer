@@ -12,11 +12,15 @@
 
 ## 🧐 About
 
-goodtimer provides a clean way to implement `setTimeout` and `setInterval`, and provides a high-level API to easy manipulate countdowns. 
-It comes with a flexible [`timeExpression`](#timeexpressions) syntax, so you can easily express time in a number of desireable ways.
-Use in projects like react with npm, or directly in the browser via [cdn](https://cdn.nickpal.to/goodtimer);
+goodtimer provides a better way implement `setTimeout` and `setInterval` by providing a high-level API to easily manipulate 
+countdowns. It does a number of ⭐️good⭐️ things:
 
-## Installation
+* It self-corrects delays from the event loop, so it's guaranteed to stay in sync with time.
+* It comes with a flexible [`timeExpression`](#timeexpressions) syntax, so you can easily express time in a number of desireable ways.
+* Provides [drop-in replacement](docs/timeutil.md) to `setInterval`. 
+* Can be used in projects like react with npm, or directly in the browser via [cdn](https://cdn.nickpal.to/goodtimer);
+
+## Installation & simple usage
 
 Download using [npm](https://npmjs.org/package/goodtimer)
 
@@ -32,19 +36,24 @@ const { Timer } = require('goodtimer');
 new Timer('1:00');
 ```
 
+Or replace your drifty `setInterval`s with `setGoodInterval` ⭐️:
+
+```javascript
+const { setGoodInterval } = require('goodtimer/timeutil');
+
+setGoodInterval(() => console.log("exactly 1 second!"), 1000);
+```
+
 #### 💝 _Browser-compatible client-side version now available!_
 
 ```html
-<script src="https://cdn.nickpal.to/goodtimer/goodtimer-3.0.2.js"></script>
+<script src="https://cdn.nickpal.to/goodtimer/goodtimer-3.2.0.js"></script>
 <script>
   new goodtimer.Timer('1:00');
 </script>
 ```
 
-
-
-➡️ Read the full API Docs [here](https://nickpalenchar.github.io/goodtimer/classes/timer.timer-1.html) or read below to get started quickly :bow:
-
+➡️ Read the full API Docs [here](https://nickpalenchar.github.io/goodtimer/api/classes/timer.timer-1.html) or read below to get started quickly :bow:
 
 ---
 
@@ -117,7 +126,7 @@ goodtimer automatically can tell which format you're trying to use based on the 
 
 ### Callback function with `Timer`
 
-It will usually be desierable to have a function called when the timer reaches zero. It might also be handy to have a
+It will usually be desirable to have a function called when the timer reaches zero. It might also be handy to have a
 function called on every second (or "tick") of the timer, for example when you need to update a UI element with the
 new time remaining. `onTimeoutFn` and `onIntervalFn` arguments handle this.
 
@@ -218,8 +227,12 @@ const timerOptions = {
     startPaused: Boolean, // if the timer should start counting down on creation or not (default false),
     immediateInterval: Boolean, // if the timer should tick once right when it's created (default false)
     interval: Number, // how many seconds before a tick (default 1, updating is uncommon)
-    finalInterval: Boolean // when timer runs out, only run onTimeout (if defined)
-                               // otherwise calls onInterval followed by onTimeout.
+    finalInterval: Boolean, // when timer runs out, only run onTimeout (if defined)
+                            // otherwise calls onInterval followed by onTimeout.
+  
+    /* low-level loop control (https://github.com/nickpalenchar/goodtimer/tree/main/docs/setInterval-clearInterval.md) */
+    setInterval: Function,
+    clearInterval: Function
 }
 ```
 

@@ -1,4 +1,4 @@
-let { Time } = require('../build/time');
+let { Time } = require('../build/node/time');
 
 
 describe('Time class', () => {
