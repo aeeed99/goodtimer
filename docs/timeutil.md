@@ -7,7 +7,8 @@ The only useful functions are `setGoodInterval` and `clearGoodInterval`, which a
 To use, require them in via the timeutil package and use the same way you would `setInterval`.
 
 ```javascript
-const { setGoodInterval, clearGoodInterval } = require('goodtimer/timeutil');
+
+const { setGoodInterval, clearGoodInterval } = require('goodtimer').timeutil;
 
 let countdown = 5;
 let countdownId;
