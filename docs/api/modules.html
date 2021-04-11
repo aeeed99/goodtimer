@@ -2687,19 +2687,50 @@ img {
 <div class="container container-main">
 	<div class="content-wrap">
 		<div class="tsd-panel tsd-typography">
-			<div align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?style=for-the-badge&color=90291d">
+			<div id="top" align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?style=for-the-badge&color=90291d">
 				<img src="https://img.shields.io/npm/dw/goodtimer?style=for-the-badge&color=E1AD01">
 			<img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=90291d&style=for-the-badge"></div>
 			<p><img src="logo/goodtimer.png" alt="goodtimer logo"></p>
 			<h5 align="center">A <code>setTimeout</code> for humans (and so much more)</h5>
 			<hr>
+			<p><img src="assets/example1.gif" alt="goodtimer demo"></p>
 			<a href="#🧐-about" id="🧐-about" style="color: inherit; text-decoration: none;">
 				<h2>🧐 About</h2>
 			</a>
-			<p>goodtimer provides a clean way to implement <code>setTimeout</code> and <code>setInterval</code>, and provides a high-level API to easy manipulate countdowns.</p>
-			<p>goodtimer comes with a flexible <code>timeExpression</code> syntax, so you can easilly express time in a number of
-			desireable ways</p>
-			<p>➡️ Read the full API Docs <a href="https://nickpalenchar.github.io/goodtimer/classes/timer.timer-1.html">here</a> or read below to get started quickly :bow:</p>
+			<p>goodtimer provides a better way implement <code>setTimeout</code> and <code>setInterval</code> by providing a high-level API to easily manipulate
+			countdowns. It does a number of ⭐️good⭐️ things:</p>
+			<ul>
+				<li>It self-corrects delays from the event loop, so it&#39;s guaranteed to stay in sync with time.</li>
+				<li>It comes with a flexible <a href="#timeexpressions"><code>timeExpression</code></a> syntax, so you can easily express time in a number of desireable ways.</li>
+				<li>Provides <a href="docs/timeutil.md">drop-in replacement</a> to <code>setInterval</code>. </li>
+				<li>Can be used in projects like react with npm, or directly in the browser via <a href="https://cdn.nickpal.to/goodtimer">cdn</a>;</li>
+			</ul>
+			<a href="#installation-amp-simple-usage" id="installation-amp-simple-usage" style="color: inherit; text-decoration: none;">
+				<h2>Installation &amp; simple usage</h2>
+			</a>
+			<p>Download using <a href="https://npmjs.org/package/goodtimer">npm</a></p>
+			<pre><code class="language-shell"><span style="color: #000000">npm i --save goodtimer</span>
+</code></pre>
+			<p>And use in your code!</p>
+			<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Timer</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;goodtimer&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;1:00&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+			<p>Or replace your drifty <code>setInterval</code>s with <code>setGoodInterval</code> ⭐️:</p>
+			<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">setGoodInterval</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;goodtimer/timeutil&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #795E26">setGoodInterval</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;exactly 1 second!&quot;</span><span style="color: #000000">), </span><span style="color: #098658">1000</span><span style="color: #000000">);</span>
+</code></pre>
+			<a href="#💝-browser-compatible-client-side-version-now-available" id="💝-browser-compatible-client-side-version-now-available" style="color: inherit; text-decoration: none;">
+				<h4>💝 <em>Browser-compatible client-side version now available!</em></h4>
+			</a>
+			<pre><code class="language-html"><span style="color: #800000">&lt;script</span><span style="color: #000000FF"> </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;https://cdn.nickpal.to/goodtimer/goodtimer-3.2.0.js&quot;</span><span style="color: #800000">&gt;&lt;/script&gt;</span>
+<span style="color: #800000">&lt;script&gt;</span>
+<span style="color: #000000FF">  </span><span style="color: #0000FF">new</span><span style="color: #000000FF"> </span><span style="color: #001080">goodtimer</span><span style="color: #000000FF">.</span><span style="color: #795E26">Timer</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;1:00&#039;</span><span style="color: #000000FF">);</span>
+<span style="color: #800000">&lt;/script&gt;</span>
+</code></pre>
+			<p>➡️ Read the full API Docs <a href="https://nickpalenchar.github.io/goodtimer/api/classes/timer.timer-1.html">here</a> or read below to get started quickly :bow:</p>
+			<hr>
 			<a href="#⏲-simple-usage" id="⏲-simple-usage" style="color: inherit; text-decoration: none;">
 				<h2>⏲ Simple Usage</h2>
 			</a>
@@ -2708,22 +2739,23 @@ img {
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;1:00&#039;</span><span style="color: #000000">, </span><span style="color: #001080">yourFn</span><span style="color: #000000">, { </span><span style="color: #001080">repeat:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000"> }); </span><span style="color: #008000">// replacement for setInterval</span>
 
 
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">timer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;5:00&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">timer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;5:00&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// (Five minutes)</span>
 <span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">pause</span><span style="color: #000000">();         </span><span style="color: #008000">// freezes timer at given time</span>
 <span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">unpause</span><span style="color: #000000">();       </span><span style="color: #008000">// resumes timer</span>
 <span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">reset</span><span style="color: #000000">();         </span><span style="color: #008000">// resests to initial value (in this case 5 minutes)</span>
 <span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">toString</span><span style="color: #000000">()       </span><span style="color: #008000">// returns in UTC-like format (&quot;5:00.000&quot;)</span>
+<span style="color: #008000">// ~ 1 second later ~</span>
 <span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">fmtTime</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;%M minutes %s seconds&quot;</span><span style="color: #000000">) </span><span style="color: #008000">// -&gt; &quot;4 minutes 59 seconds&quot; (many ways to use!) </span>
-<span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">gt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;1:00&#039;</span><span style="color: #000000">);      </span><span style="color: #008000">// &quot;greater than&quot; -&gt; false</span>
-<span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">lt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;60:00:00&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// &quot;less than&quot; -&gt; false</span>
-<span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">equal</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;6:00&#039;</span><span style="color: #000000">);   </span><span style="color: #008000">// -&gt; false</span>
+<span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">gt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;1:00&#039;</span><span style="color: #000000">);      </span><span style="color: #008000">// &quot;greater than&quot; -&gt; true</span>
+<span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">lt</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;60:00:00&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// &quot;less than (60 hrs)&quot; -&gt; true</span>
+<span style="color: #001080">timer</span><span style="color: #000000">.</span><span style="color: #795E26">equals</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;6m&#039;</span><span style="color: #000000">);    </span><span style="color: #008000">// (6 minutes, alternate notation) -&gt; false</span>
 
 <span style="color: #008000">// or use the Time class and skip the controls</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> [</span><span style="color: #0070C1">minute</span><span style="color: #000000">, </span><span style="color: #0070C1">second</span><span style="color: #000000">] = [</span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;1m&#039;</span><span style="color: #000000">), </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;1s&#039;</span><span style="color: #000000">)];</span>
 
 <span style="color: #001080">minute</span><span style="color: #000000">.</span><span style="color: #795E26">gt</span><span style="color: #000000">(</span><span style="color: #001080">second</span><span style="color: #000000">)        </span><span style="color: #008000">// -&gt; true</span>
 <span style="color: #001080">second</span><span style="color: #000000">.</span><span style="color: #795E26">equals</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;:01&#039;</span><span style="color: #000000">)     </span><span style="color: #008000">// -&gt; true</span>
-<span style="color: #001080">minute</span><span style="color: #000000">.</span><span style="color: #795E26">equals</span><span style="color: #000000">((</span><span style="color: #001080">second</span><span style="color: #000000">))  </span><span style="color: #008000">// -&gt; false</span>
+<span style="color: #001080">minute</span><span style="color: #000000">.</span><span style="color: #795E26">equals</span><span style="color: #000000">(</span><span style="color: #001080">second</span><span style="color: #000000">)    </span><span style="color: #008000">// -&gt; false</span>
 <span style="color: #001080">second</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #001080">minute</span><span style="color: #000000">)       </span><span style="color: #008000">// set to new value</span>
 <span style="color: #001080">minute</span><span style="color: #000000">.</span><span style="color: #795E26">equals</span><span style="color: #000000">(</span><span style="color: #001080">second</span><span style="color: #000000">)    </span><span style="color: #008000">// -&gt; true</span>
 <span style="color: #001080">minute</span><span style="color: #000000">.</span><span style="color: #795E26">toString</span><span style="color: #000000">()        </span><span style="color: #008000">// -&gt; &quot;1:00.000&quot;</span>
@@ -2744,9 +2776,9 @@ img {
 			<a href="#👨💻-getting-started-with-timer" id="👨💻-getting-started-with-timer" style="color: inherit; text-decoration: none;">
 				<h2>👨‍💻 Getting started with <code>Timer</code></h2>
 			</a>
-			<p>Timer is an extension of <code>Time</code>, it inherits all methods and properties, and additionally has a &quot;count down&quot; loop
-			and comes with many useful methods you&#39;d expect from a timer.</p>
-			<p>The <code>Timer</code>&#39;s first argument is required, which is a <code>timeExpression</code>, all other arguments are optional. If the last
+			<p><code>Timer</code> is an extension of <code>Time</code>, it inherits all methods and properties, and additionally has a &quot;count down&quot; loop
+			and comes with many useful methods you&#39;d expect from a timer. It&#39;s the main feature of goodtimer.</p>
+			<p><code>Timer</code>&#39;s first argument is required, which is a <code>timeExpression</code>, all other arguments are optional. If the last
 				argument is an object, it is assumed to be the <code>timerOptions</code>, which can be used to override default beheivors of
 			the <code>Timer</code> instance</p>
 			<pre><code class="language-javascript"><span style="color: #008000">// without timerOptions</span>
@@ -2763,7 +2795,7 @@ img {
 			<a href="#callback-function-with-timer" id="callback-function-with-timer" style="color: inherit; text-decoration: none;">
 				<h3>Callback function with <code>Timer</code></h3>
 			</a>
-			<p>It will usually be desierable to have a function called when the timer reaches zero. It might also be handy to have a
+			<p>It will usually be desirable to have a function called when the timer reaches zero. It might also be handy to have a
 				function called on every second (or &quot;tick&quot;) of the timer, for example when you need to update a UI element with the
 			new time remaining. <code>onTimeoutFn</code> and <code>onIntervalFn</code> arguments handle this.</p>
 			<pre><code class="language-javascript"><span style="color: #008000">// onTimeout example</span>
@@ -2776,7 +2808,7 @@ img {
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;5:00&#039;</span><span style="color: #000000">, </span><span style="color: #001080">timesUp</span><span style="color: #000000">);</span>
 
 <span style="color: #008000">// ~ 5 minutes later ~</span>
-<span style="color: #008000">// &quot;ding!</span>
+<span style="color: #008000">// &quot;ding!&quot;</span>
 </code></pre>
 			<p>Both call back functions can access the timer instance using <code>this</code>. It&#39;s especially useful in <code>onIntervalFn</code> arguments.</p>
 			<pre><code class="language-javascript"><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">updateDOM</span><span style="color: #000000">() {</span>
@@ -2788,15 +2820,17 @@ img {
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;5:00&#039;</span><span style="color: #000000">, </span><span style="color: #001080">timesUp</span><span style="color: #000000">, </span><span style="color: #001080">updateDOM</span><span style="color: #000000">);</span>
 </code></pre>
 			<p>If you want to only use an <code>onIntervalFn</code>, and not an <code>onTimeoutFn</code>, you can pass <code>undefined</code> or <code>null</code> as the
-			middle argument. You could alternatively use <code>TimerOptions</code> object to set these (and more)</p>
-			<pre><code class="language-javascript"><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;5:00&#039;</span><span style="color: #000000">, </span><span style="color: #0000FF">null</span><span style="color: #000000">, </span><span style="color: #001080">updateDOM</span><span style="color: #000000">);</span>
+			middle argument. You could alternatively use <code>TimerOptions</code> object to set these (and more).</p>
+			<pre><code class="language-javascript"><span style="color: #008000">// both lines have the same effect.</span>
+
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;5:00&#039;</span><span style="color: #000000">, </span><span style="color: #0000FF">null</span><span style="color: #000000">, </span><span style="color: #001080">updateDOM</span><span style="color: #000000">);</span>
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;5:00&#039;</span><span style="color: #000000">, {</span><span style="color: #001080">onInterval:</span><span style="color: #000000"> </span><span style="color: #001080">updateDOM</span><span style="color: #000000">});</span>
 </code></pre>
 			<a href="#timeexpressions" id="timeexpressions" style="color: inherit; text-decoration: none;">
 				<h3>TimeExpressions</h3>
 			</a>
 			<p>TimeExpressions are various formats of time that goodtimer recognizes. They are passed in many places, such as the
-			constructors for creating Timers and Time, as well as any place where time is being compared.</p>
+			constructors for creating Timers and Time, as well as any place where time is being compared or set.</p>
 			<a href="#utc-like-string" id="utc-like-string" style="color: inherit; text-decoration: none;">
 				<h4>UTC-like <code>string</code></h4>
 			</a>
@@ -2810,12 +2844,11 @@ img {
 <span style="color: #000000">|  </span><span style="color: #001080">days</span>
 <span style="color: #001080">years</span>
 </code></pre>
-			<p>Units of time are interpreted from right to left. <code>3:00</code> is three minutes, <code>3:00:00</code> is three hours <code>3:00:00:00:00</code> is
-			three years.</p>
+			<p>Units of time are interpreted from right to left. <code>&#39;3:00&#39;</code> is three minutes, <code>&#39;3:00:00&#39;</code> is three hours <code>&#39;3:00:00:00:00&#39;</code> is
+			three years. A number as a string (<code>&#39;3&#39;</code>) is the number of seconds, and an empty string is 0.</p>
 			<p>Milliseconds must be explicitly specified with the dot, and missing numbers places get a <code>0</code> appended. <code>.01</code> is
-				<code>10</code> milliseconds (<code>.010</code>), and <code>.1</code> is <code>100 millseconds</code> (<code>.100</code>). This makes values like <code>:02.5</code> behaive like you&#39;d
-			expect, <code>2.500</code> seconds or &quot;two and a half seconds&quot;.</p>
-			<p>A string that is just a number is seconds. <code>&#39;100&#39;</code> is 100 seconds (represented as <code>1:40.000</code>)</p>
+				<code>10</code> milliseconds (<code>.010</code>), and <code>.1</code> is <code>100 millseconds</code> (<code>.100</code>). This makes values like <code>:02.5</code> behaive the way you&#39;d
+			expect: <code>2.500</code> seconds or &quot;two and a half seconds&quot;.</p>
 			<a href="#unit-notation-string" id="unit-notation-string" style="color: inherit; text-decoration: none;">
 				<h4>unit-notation <code>string</code>.</h4>
 			</a>
@@ -2848,8 +2881,16 @@ img {
 <span style="color: #000000">    </span><span style="color: #001080">startPaused:</span><span style="color: #000000"> </span><span style="color: #267F99">Boolean</span><span style="color: #000000">, </span><span style="color: #008000">// if the timer should start counting down on creation or not (default false),</span>
 <span style="color: #000000">    </span><span style="color: #001080">immediateInterval:</span><span style="color: #000000"> </span><span style="color: #267F99">Boolean</span><span style="color: #000000">, </span><span style="color: #008000">// if the timer should tick once right when it&#039;s created (default false)</span>
 <span style="color: #000000">    </span><span style="color: #001080">interval:</span><span style="color: #000000"> </span><span style="color: #267F99">Number</span><span style="color: #000000">, </span><span style="color: #008000">// how many seconds before a tick (default 1, updating is uncommon)</span>
+<span style="color: #000000">    </span><span style="color: #001080">finalInterval:</span><span style="color: #000000"> </span><span style="color: #267F99">Boolean</span><span style="color: #000000">, </span><span style="color: #008000">// when timer runs out, only run onTimeout (if defined)</span>
+<span style="color: #000000">                            </span><span style="color: #008000">// otherwise calls onInterval followed by onTimeout.</span>
+<span style="color: #000000">  </span>
+<span style="color: #000000">    </span><span style="color: #008000">/* low-level loop control (https://github.com/nickpalenchar/goodtimer/tree/main/docs/setInterval-clearInterval.md) */</span>
+<span style="color: #000000">    </span><span style="color: #001080">setInterval:</span><span style="color: #000000"> </span><span style="color: #267F99">Function</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">clearInterval:</span><span style="color: #000000"> </span><span style="color: #267F99">Function</span>
 <span style="color: #000000">}</span>
 </code></pre>
+			<p>⚠️ <strong>Prior to 3.1.0</strong>, Timer never called <code>onInterval</code> when the timer reached 0. It now does the opposite by default.
+			for the old behavior, use <code>{ finalInterval: false }</code>, for your timerOptions.</p>
 			<p>Notes on options:</p>
 			<ul>
 				<li><strong>onTimeout/onInterval</strong> - these should replace the functions passed as their own arguments. If you use both, only the
@@ -2881,7 +2922,7 @@ img {
 <span style="color: #001080">time</span><span style="color: #000000">.</span><span style="color: #001080">hours</span><span style="color: #000000">; </span><span style="color: #008000">// 3</span>
 <span style="color: #001080">time</span><span style="color: #000000">.</span><span style="color: #001080">days</span><span style="color: #000000">; </span><span style="color: #008000">// 0</span>
 </code></pre>
-			<p>You can also convert times to milliseconds with <code>.inMilliseconds()</code>.</p>
+			<p>You can also convert full times to milliseconds with <code>.inMilliseconds()</code>.</p>
 			<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">time</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;3:35:08.035&#039;</span><span style="color: #000000">);</span>
 
 <span style="color: #001080">time</span><span style="color: #000000">.</span><span style="color: #795E26">inMilliseconds</span><span style="color: #000000">(); </span><span style="color: #008000">// -&gt; 12908035</span>
@@ -2938,8 +2979,10 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Modules</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-module"><a href="modules/index.html" class="tsd-kind-icon">index</a></li>
 							<li class="tsd-kind-module"><a href="modules/time.html" class="tsd-kind-icon">time</a></li>
 							<li class="tsd-kind-module"><a href="modules/timer.html" class="tsd-kind-icon">timer</a></li>
+							<li class="tsd-kind-module"><a href="modules/timeutil.html" class="tsd-kind-icon">timeutil</a></li>
 						</ul>
 					</section>
 				</div>
@@ -2949,6 +2992,9 @@ img {
 			<div class="container">
 				<h2>Legend</h2>
 				<div class="tsd-legend-group">
+					<ul class="tsd-legend">
+						<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+					</ul>
 					<ul class="tsd-legend">
 						<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 					</ul>

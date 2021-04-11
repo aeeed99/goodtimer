@@ -1,4 +1,4 @@
-let { Timer } = require('../build/goodtimer');
+let { Timer } = require('../build/node');
 
 var self = {}
 

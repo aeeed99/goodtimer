@@ -6,7 +6,7 @@
  *    test milliseconds, so the last value of each array is always 0 for them.
  **/
 
-let {Timer} = require('../build/goodtimer');
+let {Timer} = require('../build/node');
 var self = {};
 
 describe('Timer _parse', () => {

@@ -2689,7 +2689,13 @@ img {
 			<a href="timer.timeroptions.html" class="tsd-kind-icon">Timer<wbr>Options</a>
 			<ul>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="timer.timeroptions.html#clearinterval" class="tsd-kind-icon">clear<wbr>Interval</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="timer.timeroptions.html#divider" class="tsd-kind-icon">divider</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="timer.timeroptions.html#finalinterval" class="tsd-kind-icon">final<wbr>Interval</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="timer.timeroptions.html#immediateinterval" class="tsd-kind-icon">immediate<wbr>Interval</a>
@@ -2705,6 +2711,9 @@ img {
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="timer.timeroptions.html#repeat" class="tsd-kind-icon">repeat</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface">
+					<a href="timer.timeroptions.html#setinterval" class="tsd-kind-icon">set<wbr>Interval</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface">
 					<a href="timer.timeroptions.html#startpaused" class="tsd-kind-icon">start<wbr>Paused</a>
@@ -2730,12 +2739,15 @@ img {
 					<section class="tsd-index-section ">
 						<h3>Properties</h3>
 						<ul class="tsd-index-list">
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#clearinterval" class="tsd-kind-icon">clear<wbr>Interval</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#divider" class="tsd-kind-icon">divider</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#finalinterval" class="tsd-kind-icon">final<wbr>Interval</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#immediateinterval" class="tsd-kind-icon">immediate<wbr>Interval</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#interval" class="tsd-kind-icon">interval</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#oninterval" class="tsd-kind-icon">on<wbr>Interval</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#ontimeout" class="tsd-kind-icon">on<wbr>Timeout</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#repeat" class="tsd-kind-icon">repeat</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#setinterval" class="tsd-kind-icon">set<wbr>Interval</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="timer.timeroptions.html#startpaused" class="tsd-kind-icon">start<wbr>Paused</a></li>
 						</ul>
 					</section>
@@ -2745,16 +2757,63 @@ img {
 		<section class="tsd-panel-group tsd-member-group ">
 			<h2>Properties</h2>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="clearinterval" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> clear<wbr>Interval</h3>
+				<div class="tsd-signature tsd-kind-icon">clear<wbr>Interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L34">timer.ts:34</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<p>low-level, custom function that can stop a custom function.</p>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter-signature">
+							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+							</ul>
+							<ul class="tsd-descriptions">
+								<li class="tsd-description">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameters">
+										<li>
+											<h5>id: <span class="tsd-signature-type">any</span></h5>
+										</li>
+									</ul>
+									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 				<a name="divider" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagOptional">Optional</span> divider</h3>
 				<div class="tsd-signature tsd-kind-icon">divider<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/987f3a9/lib/latest/timer.ts#L19">timer.ts:19</a></li>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L25">timer.ts:25</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<p>what <a href="../classes/timer.timer-1.html#getfulltimeui">Timer.getFullTimeUI</a> uses to separate each unit of time. Default &quot;:&quot;</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="finalinterval" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> final<wbr>Interval</h3>
+				<div class="tsd-signature tsd-kind-icon">final<wbr>Interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L32">timer.ts:32</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<p>when true, onInterval is called when the timer reaches 0 (usually desired). Default <code>true</code></p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -2763,7 +2822,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">immediate<wbr>Interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/987f3a9/lib/latest/timer.ts#L20">timer.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L26">timer.ts:26</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2776,7 +2835,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/987f3a9/lib/latest/timer.ts#L21">timer.ts:21</a></li>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L27">timer.ts:27</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2786,11 +2845,11 @@ img {
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/987f3a9/lib/latest/timer.ts#L23">timer.ts:23</a></li>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L29">timer.ts:29</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
-					<p>how often the timer ticks down. E.g. <code>1</code> means the timer will tick by one second every second, <code>5</code> means it ticks down five seconds every 5 second. This affects how often <a href="timer.timeroptions.html#oninterval">TimerOptions.onInterval</a> runs</p>
+					<p>a function that&#39;s called on each &quot;tick&quot;, or when the timer decrements a second</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -2799,7 +2858,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">on<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/987f3a9/lib/latest/timer.ts#L22">timer.ts:22</a></li>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L28">timer.ts:28</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2812,11 +2871,25 @@ img {
 				<div class="tsd-signature tsd-kind-icon">repeat<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/987f3a9/lib/latest/timer.ts#L24">timer.ts:24</a></li>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L30">timer.ts:30</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<p>if <code>true</code>, resets the timer to its original time, and begins counting down again</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<a name="setinterval" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagOptional">Optional</span> set<wbr>Interval</h3>
+				<div class="tsd-signature tsd-kind-icon">set<wbr>Interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">intervalFn</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L33">timer.ts:33</a></li>
+					</ul>
+				</aside>
+				<div class="tsd-comment tsd-typography">
+					<p>low-level, custom function that executes its callback every <code>timeout</code> milliseconds, must
+					return an identifier that can be passed to TimerOptions.loopClear to stop execution.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -2825,7 +2898,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">start<wbr>Paused<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/987f3a9/lib/latest/timer.ts#L25">timer.ts:25</a></li>
+						<li>Defined in <a href="https://github.com/nickpalenchar/tminus/blob/ced342a/lib/latest/goodtimer/timer.ts#L31">timer.ts:31</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2840,6 +2913,9 @@ img {
 					<ul class="tsd-legend">
 						<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 						<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+					</ul>
+					<ul class="tsd-legend">
+						<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 					</ul>
 					<ul class="tsd-legend">
 						<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
