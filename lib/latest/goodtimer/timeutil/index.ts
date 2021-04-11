@@ -27,14 +27,10 @@ export function setGoodInterval(
             return;
         }
         const callTime = Date.now();
-        console.log('timeout', timeout);
         callback();
         const adjustment = callTime - _lastCall - timeout;
-        console.log('adjustment is ', adjustment)
         const adjustedTimeout = timeout - adjustment;
         const adjustedCallTime = callTime - adjustment;
-        console.log('adjusted timeout is ', adjustedTimeout);
-        console.log('>> next lastCall will be', Date.now() - start);
         setTimeout(
             () => wrapper(callback, timeout, adjustedCallTime, _id),
             adjustedTimeout
