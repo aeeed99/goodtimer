@@ -91,7 +91,7 @@ minute.toString()        // -> "1:00.000"
 // below are all the ways to write "25 minutes and 500 milliseconds"
 
 new Time('25:00.5'); // string in UTC-like syntax
-new Time('25m5ms'); // string with unit annotation
+new Time('25m500ms'); // string with unit annotation
 new Time(1500500);  // number for milliseconds
 new Time({          // object with full names
     minutes: 25, 
