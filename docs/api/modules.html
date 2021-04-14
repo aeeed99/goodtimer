@@ -2717,14 +2717,14 @@ img {
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Timer</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;1:00&#039;</span><span style="color: #000000">);</span>
 </code></pre>
 			<p>Or replace your drifty <code>setInterval</code>s with <code>setGoodInterval</code> ⭐️:</p>
-			<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">setGoodInterval</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;goodtimer/timeutil&#039;</span><span style="color: #000000">);</span>
+			<pre><code class="language-javascript"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">setGoodInterval</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;goodtimer&#039;</span><span style="color: #000000">).</span><span style="color: #001080">timeutil</span><span style="color: #000000">;</span>
 
 <span style="color: #795E26">setGoodInterval</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;exactly 1 second!&quot;</span><span style="color: #000000">), </span><span style="color: #098658">1000</span><span style="color: #000000">);</span>
 </code></pre>
 			<a href="#💝-browser-compatible-client-side-version-now-available" id="💝-browser-compatible-client-side-version-now-available" style="color: inherit; text-decoration: none;">
 				<h4>💝 <em>Browser-compatible client-side version now available!</em></h4>
 			</a>
-			<pre><code class="language-html"><span style="color: #800000">&lt;script</span><span style="color: #000000FF"> </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;https://cdn.nickpal.to/goodtimer/goodtimer-3.2.0.js&quot;</span><span style="color: #800000">&gt;&lt;/script&gt;</span>
+			<pre><code class="language-html"><span style="color: #800000">&lt;script</span><span style="color: #000000FF"> </span><span style="color: #FF0000">src</span><span style="color: #000000FF">=</span><span style="color: #0000FF">&quot;https://cdn.nickpal.to/goodtimer/goodtimer-3.3.0.js&quot;</span><span style="color: #800000">&gt;&lt;/script&gt;</span>
 <span style="color: #800000">&lt;script&gt;</span>
 <span style="color: #000000FF">  </span><span style="color: #0000FF">new</span><span style="color: #000000FF"> </span><span style="color: #001080">goodtimer</span><span style="color: #000000FF">.</span><span style="color: #795E26">Timer</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;1:00&#039;</span><span style="color: #000000FF">);</span>
 <span style="color: #800000">&lt;/script&gt;</span>
@@ -2765,7 +2765,7 @@ img {
 <span style="color: #008000">// below are all the ways to write &quot;25 minutes and 500 milliseconds&quot;</span>
 
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;25:00.5&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// string in UTC-like syntax</span>
-<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;25m5ms&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// string with unit annotation</span>
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;25m500ms&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// string with unit annotation</span>
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">(</span><span style="color: #098658">1500500</span><span style="color: #000000">);  </span><span style="color: #008000">// number for milliseconds</span>
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Time</span><span style="color: #000000">({          </span><span style="color: #008000">// object with full names</span>
 <span style="color: #000000">    </span><span style="color: #001080">minutes:</span><span style="color: #000000"> </span><span style="color: #098658">25</span><span style="color: #000000">, </span>

@@ -47,7 +47,7 @@ setGoodInterval(() => console.log("exactly 1 second!"), 1000);
 #### 💝 _Browser-compatible client-side version now available!_
 
 ```html
-<script src="https://cdn.nickpal.to/goodtimer/goodtimer-3.2.0.js"></script>
+<script src="https://cdn.nickpal.to/goodtimer/goodtimer-3.3.0.js"></script>
 <script>
   new goodtimer.Timer('1:00');
 </script>
