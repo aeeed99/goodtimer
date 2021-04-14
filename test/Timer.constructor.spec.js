@@ -14,8 +14,9 @@ describe('creating a Timer instance (constructor fn)', () => {
     it('works as (time: string, timeUpFn: Function', () => {
         const t = new Timer('04', function () {
         });
-        expect([t.years, t.days, t.hours, t.minutes, t.seconds, t.milliseconds])
-            .toStrictEqual([0, 0, 0, 0, 4, 0]);
+        expect([t.days, t.hours, t.minutes, t.seconds, t.milliseconds])
+            .toStrictEqual([0, 0, 0, 4, 0]);
+        expect(t.years).toBe(0);
         expect(typeof t.options.onTimeout).toEqual('function');
     });
 
@@ -26,7 +27,6 @@ describe('creating a Timer instance (constructor fn)', () => {
         expect([t.years, t.days, t.hours, t.minutes, t.seconds, t.milliseconds])
             .toStrictEqual([0, 0, 4, 0, 33, 10]);
         expect(typeof t.options.onInterval).toEqual('function');
-        expect(typeof t.options.onTimeout).toEqual('function');
     });
     it('works as (time: string, options: object)', () => {
         const t = new Timer('1y', {
