@@ -595,22 +595,55 @@ class Time {
         }
     }
 
-    toString(): string {
-        /**
-         * Returns time in "YY:DD:hh:ss:mm:mills" format
-         */
-        let result = [];
-        let nonZeroSeen = false;
+    /** Returns time in "YY:DD:hh:ss:mm.mills" format, optionally truncating some units.
+     *
+     *  @param minUnit - Lowest unit of time to show. Units lower than `minUnit` will not be shown. 'ms' or '' means
+     *  include every unit.
+     *  @param maxUnit Largest unit of time to show. All units of time larger than this are *added* to the maxUnit.
+     *  E.g. '01:01:01.000'.toString('', 'm') returns '61:01.000'
+     *
+     *  @returns Formatted string representing the time. If maxUnit is greater than minUnit, returns ''
+     */
+    toString(minUnit?: string|void, maxUnit: string='y'): string {
+        minUnit = minUnit || 'ms';
+        let result: string[] = [];
+        const timeUnitIndex: string[] = ['y', 'd', 'h', 'm', 's', 'ms'];
 
-        for (let i = 0; i < this._time.length - 2 ; i++) {
-            let val = this._time[i][0];
-            if (val || nonZeroSeen) {
+        if (timeUnitIndex.indexOf(minUnit) < timeUnitIndex.indexOf(maxUnit)) {
+            return '';
+        }
+
+        //HACK: If maxUnit is ms, just return from .inMilliseconds()
+        if (maxUnit === 'ms') {
+            return this.inMilliseconds().toString();
+        }
+
+        const unitDownMultiplier: number[] = [365, 24, 60, 60, 1000, 1];
+        let nonZeroSeen: boolean = false;
+
+        const firstUnit: number = timeUnitIndex.indexOf(maxUnit);
+        let carryOver: number = 0;
+        for (let i = 0; i < this._time.length - 1; i++) {
+            let val = this._time[i][0] + carryOver;
+            carryOver = 0;
+            // seconds (i=4) should always be added
+            if (val || nonZeroSeen || i === 4) {
                 nonZeroSeen = true;
-                result.push(addPadding(val, 2));
+                if (i < firstUnit) {
+                    carryOver += val * unitDownMultiplier[i];
+                }
+                else {
+                    result.push(addPadding(val, 2));
+                }
             }
         }
-        result.push(addPadding(this.seconds, 2));
-        return `${result.join(':')}.${addPadding(this.milliseconds, 3)}`;
+
+        const lastUnit: number = timeUnitIndex.indexOf(minUnit) - firstUnit;
+        let resultStr: string = result.slice(0, lastUnit+1).join(':');
+        if (!minUnit || minUnit === 'ms') {
+            resultStr += `.${addPadding(this.milliseconds, 3)}`;
+        }
+        return resultStr;
     }
 
 }

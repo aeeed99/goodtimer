@@ -350,6 +350,49 @@ describe('Time class', () => {
            expect(new Time('999y').toString()).toBe('999:00:00:00:00.000');
            expect(new Time('364d23h59m59s999ms').toString()).toBe('364:23:59:59.999');
         });
+
+        it('Takes the floor of a timeUnit based on minUnit', () => {
+            const time = new Time ('1y4d23h59m59s999ms');
+            expect(time.toString('s')).toBe('01:04:23:59:59');
+            expect(time.toString('m')).toBe('01:04:23:59');
+            expect(time.toString('h')).toBe('01:04:23');
+            expect(time.toString('d')).toBe('01:04');
+            expect(time.toString('y')).toBe('01');
+        });
+
+        it('adds units over maxUnit to maxUnit', () => {
+            const time = new Time('2y1d5h20m10s340ms');
+            expect(time.toString('', 'd')).toBe('731:05:20:10.340');
+            expect(time.toString(null, 'h')).toBe('17549:20:10.340');
+            expect(time.toString(undefined, 'm')).toBe('1052960:10.340');
+            expect(time.toString('', 's')).toBe('63177610.340');
+            expect(time.toString('', 'ms')).toBe('63177610340');
+        });
+
+        it('handles minUnit and maxUnit together', () => {
+            const time = new Time('22d10h40m23s728ms');
+            expect(time.toString('s', 'h')).toBe('538:40:23');
+            expect(time.toString('m', 'h')).toBe('538:40');
+            expect(time.toString('m', 'm')).toBe('32320');
+            expect(time.toString('h', 'h')).toBe('538');
+        });
+
+        it('returns empty string if minUnit > maxUnit', () => {
+            const time = new Time('22d10h40m23s728ms');
+            expect(time.toString('y', 'ms')).toBe('');
+            expect(time.toString('y', 'm')).toBe('');
+            expect(time.toString('y', 'h')).toBe('');
+            expect(time.toString('y', 'd')).toBe('');
+            expect(time.toString('d', 'm')).toBe('');
+            expect(time.toString('d', 's')).toBe('');
+            expect(time.toString('d', 'h')).toBe('');
+            expect(time.toString('d', 'ms')).toBe('');
+            expect(time.toString('h', 'ms')).toBe('');
+            expect(time.toString('h', 'm')).toBe('');
+            expect(time.toString('h', 's')).toBe('');
+            expect(time.toString('m', 's')).toBe('');
+            expect(time.toString('m', 'ms')).toBe('');
+        });
     });
 })
 
