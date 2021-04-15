@@ -133,7 +133,7 @@ new time remaining. `onTimeoutFn` and `onIntervalFn` arguments handle this.
 ```javascript
 // onTimeout example
 
-function timesUp() {
+const timesUp = () => {
     // your code here
     console.log('ding!');
 }
@@ -144,13 +144,14 @@ new Timer('5:00', timesUp);
 // "ding!"
 ```
 
-Both call back functions can access the timer instance using `this`. It's especially useful in `onIntervalFn` arguments.
+**In version 3.3.0 and above**, both call back functions can access get the timer instance as their first argument. 
+It's especially useful in `onIntervalFn` arguments (See [v3.2.0 docs](https://github.com/nickpalenchar/goodtimer/tree/c9d7d54d2df91f0e3aae0b000d32d88d130b0e89#callback-function-with-timer) for previous syntax).
 
 ```javascript
-function updateDOM() {
+const updateDOM = (timer) => {
     // this function updates the DOM with the time seperated by colons
-    // (not including the milliseconds (".000") at the end.
-    document.getElementById('my-timer').innerText = this.toString().slice(0, -4);
+    // with the smallest unit of time seconsd ('s'). This removes the milliseconds ('.000') at the end.
+    document.getElementById('my-timer').innerText = timer.toString('s');
 }
 
 new Timer('5:00', timesUp, updateDOM);
@@ -239,7 +240,7 @@ const timerOptions = {
 ⚠️ **Prior to 3.1.0**, Timer never called `onInterval` when the timer reached 0. It now does the opposite by default.
 for the old behavior, use `{ finalInterval: false }`, for your timerOptions.
 
-Notes on options:
+Additional notes on options:
 
 * **onTimeout/onInterval** - these should replace the functions passed as their own arguments. If you use both, only the 
   functions in TimerOptions will be honored. `new Timer('3', functionA, { onTimeout: functionB })` will result in _only_ 
@@ -258,7 +259,7 @@ Notes on options:
 
 ### Ways to Get the time
 
-`Timer`/`Time` has properties `years`, `days`, `hours`, `minutes`, `seconds` to get a sepecific unit of time. These
+`Timer`/`Time` has properties `years`, `days`, `hours`, `minutes`, `seconds` to get a specific unit of time. These
 are always numbers.
 
 ```javascript

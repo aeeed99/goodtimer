@@ -57,5 +57,23 @@ describe('tick', () => {
         expect(timeoutFn).toHaveBeenCalled();
         expect(intervalFn).toHaveBeenCalledTimes(1);
 
-    })
+    });
+
+    describe('callback functions', () => {
+        it('gets a reference to a timer on its first argument (so it can be used as an arrow function)', () => {
+            const timerFunctions = {
+                onTimeout: (t) => {},
+                onInterval: (t) => {}
+            }
+            const timeoutFn = jest.spyOn(timerFunctions, 'onTimeout');
+            const intervalFn = jest.spyOn(timerFunctions, 'onInterval');
+
+            const timer = new Timer('3s', {...timerFunctions, ...{startPaused: true}});
+            timer.tick(true);
+            timer.tick(true);
+            timer.tick(true);
+            expect(intervalFn).toHaveBeenLastCalledWith(timer);
+            expect(timeoutFn).toHaveBeenLastCalledWith(timer);
+        });
+    });
 });
