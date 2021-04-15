@@ -179,24 +179,22 @@ class Timer extends Time {
         if(!this.years && !this.days && !this.hours && !this.minutes && !this.seconds) {
             //TODO: Will there ever be millisecond remaining? Should a timeout be set here in that case?
             // or will _mills always be 0 (and the case is handled on a resume)
-            let error;
             try {
-                this.options.onInterval && this.options.finalInterval && this.options.onInterval.call(this);
-                this.options.onTimeout && this.options.onTimeout.call(this);
+                this.options.onInterval && this.options.finalInterval && this.options.onInterval.call(this, this);
+                this.pause();
+                this.options.onTimeout && this.options.onTimeout.call(this, this);
             } catch (e) {
                 throw e;
             } finally {
                 if (this.options.repeat) {
                     this.options.repeat--;
                     this.setFromString(this.initialTime);
-                }
-                else {
-                    this.isPaused = true;
+                    this.unpause();
                 }
             }
         }
         else {
-            this.options.onInterval && this.options.onInterval.call(this);
+            this.options.onInterval && this.options.onInterval.call(this, this);
         }
     }
 
