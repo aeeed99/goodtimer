@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <title>CDN timer example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .tomato-timer {
+            height: 200px;
+            width: 300px;
+            background: red;
+            color: white;
+            padding-top: 80px;
+            font-size: 42px;
+            font-family: sans-serif;
+            box-sizing: border-box;
+            text-align: center;
+            border-radius: 84px;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+<script src="https://cdn.nickpal.to/goodtimer/goodtimer-3.0.2.js"></script>
+<div class="center">
+    <div class="tomato-timer">
+        <span id="timer-time">(tomatoText)</span>
+    </div>
+</div>
+<div class="center">
+    <button id="button-reset" class="btn btn-default">Reset</button>
+</div>
+<div>
+    <pre style="font-size: 15px">
+var tomatoText = document.getElementById('timer-time');
+var resetButton = document.getElementById('button-reset');
+
+function refreshTime() {
+    tomatoText.innerText = this.fmtTime('%2%M:%2%S')
+}
+
+var timerOptions = { onInterval: refreshTime };
+    </pre>
+</div>
+<script>window.Timer = goodtimer.Timer
+var tomatoText = document.getElementById('timer-time');
+var resetButton = document.getElementById('button-reset');
+
+function refreshTime() {
+    tomatoText.innerText = this.fmtTime('%2%M:%2%S')
+}
+
+var timerOptions = { onInterval: refreshTime };
+</script>
+</body>
+</html>

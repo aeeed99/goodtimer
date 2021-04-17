@@ -5,7 +5,7 @@
   "main": "build/node/index.js",
   "bugs": "https://github.com/nickpalenchar/goodtimer/issues",
   "scripts": {
-    "docs": "typedoc",
+    "docs": "typedoc && hugo -s docslib",
     "build": "tsc",
     "webpack": "webpack",
     "test": "jest test",

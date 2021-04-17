@@ -1,74 +1,35 @@
-<div id="top" align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?style=for-the-badge&color=90291d"> 
- <img src="https://img.shields.io/npm/dw/goodtimer?style=for-the-badge&color=E1AD01">
- <img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=90291d&style=for-the-badge"></div>
+![goodtimer logo](https://raw.githubusercontent.com/nickpalenchar/goodtimer/main/logo/goodtimer.png)
 
-![goodtimer logo](logo/goodtimer.png)
-
-<h5 align="center">The JavaScript Timer of your Dreams</h5>
+### _The JavaScript Timer of your Dreams_
 
 ---
 
-![goodtimer demo](assets/example1.gif)
-
-## 🧐 About
+![goodtimer demo](https://raw.githubusercontent.com/nickpalenchar/goodtimer/main/assets/example1.gif)
 
 Goodtimer provides an accurate-to-milliseconds way of implementing `setTimeout` and `setInterval`. It's the timer of your
 dreams, providing a high-level API to easily manipulate countdowns. Here's a few things that make Goodtimer so good:
 
 * It self-corrects delays from the event loop, so it's guaranteed to stay in sync with time.
 * It comes with a flexible [`timeExpression`](#timeexpressions) syntax, so you can easily express time in a number of desirable ways.
-* Provides [drop-in replacement](docs/timeutil.md) to `setInterval`. 
+* Provides [drop-in replacement](docs/timeutil.md) to `setInterval`.
 * Can be used in projects like react with npm, or directly in the browser via [cdn](https://cdn.nickpal.to/goodtimer);
-
-## Installation & simple usage
-
-Download using [npm](https://npmjs.org/package/goodtimer)
-
-```shell
-npm i --save goodtimer
-```
-
-And use in your code!
-
-```javascript
-const { Timer } = require('goodtimer');
-
-new Timer('1:00');
-```
-
-Or replace your drifty `setInterval`s with `setGoodInterval` ⭐️:
-
-```javascript
-const { setGoodInterval } = require('goodtimer').timeutil;
-
-setGoodInterval(() => console.log("exactly 1 second!"), 1000);
-```
-
-#### 💝 _Browser-compatible client-side version now available!_
-
-```html
-<script src="https://cdn.nickpal.to/goodtimer/goodtimer-3.3.0.js"></script>
-<script>
-  new goodtimer.Timer('1:00');
-</script>
-```
-
-➡️ Jump into the full docs site [here](https://nickpalenchar.github.io/goodtimer) or read below for a few more quick examples :bow:
 
 ---
 
-## ⏲ Simple Usage
+## Simple Usage
 
 ```javascript
 const yourFn = () => {};
 new Timer('1:00', yourFn); // replacement for setTimeout
 new Timer('1:00', yourFn, { repeat: true }); // replacement for setInterval
 
+
 const timer = new Timer('5:00'); // (Five minutes)
 timer.pause();         // freezes timer at given time
 timer.unpause();       // resumes timer
 timer.reset();         // resests to initial value (in this case 5 minutes)
 timer.toString()       // returns in UTC-like format ("5:00.000")
+
 // ~ 1 second later ~
 timer.fmtTime("%M minutes %s seconds") // -> "4 minutes 59 seconds" (many ways to use!) 
 timer.gt('1:00');      // "greater than" -> true
@@ -98,11 +59,9 @@ new Time({          // object with full names
 });
 ```
 
-Ready to jump in? See the [full Documentation site](https://nickpalenchar.github.io/goodtimer) spec for many more uses and tutorials!
+See the [full API](https://nickpalenchar.github.io/goodtimer/api) spec for many more uses, or read on for simpler ways to get started.
 
-## :clap: Supporters
+## Supporters
 
 [![Stargazers repo roster for goodtimer](https://reporoster.com/stars/nickpalenchar/goodtimer)](https://github.com/nickpalenchar/goodtimer/stargazers)
 [![Forkers repo roster for goodtimer](https://reporoster.com/forks/nickpalenchar/goodtimer)](https://github.com/nickpalenchar/goodtimer/network/members)
-
----

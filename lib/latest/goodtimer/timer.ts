@@ -424,7 +424,7 @@ class Timer extends Time {
      * `%M` - minutes
      * `%S` - seconds
      * `%m` - milliseconds
-     * `%n` where n is a number,  format the following token to be padded with n zeros if all places can't be filled. E.g. a timer with 5 seconds left, the string `"%2%S"` will render as `"05"`
+     * `%n` where n is a number,  format the following token to be p    added with n zeros if all places can't be filled. E.g. a timer with 5 seconds left, the string `"%2%S"` will render as `"05"`
      */
 
     fmtTime(fmt: string = "%Y:%D:%H:%M:%S.%m") {

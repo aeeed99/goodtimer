@@ -1,0 +1,6 @@
+[submodule "docslib/themes/docsy"]
+	path = docslib/themes/docsy
+	url = https://github.com/google/docsy.git
+[submodule "docslib/themes/hugo-theme-learn"]
+	path = docslib/themes/hugo-theme-learn
+	url = https://github.com/matcornic/hugo-theme-learn.git
