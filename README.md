@@ -53,7 +53,7 @@ setGoodInterval(() => console.log("exactly 1 second!"), 1000);
 </script>
 ```
 
-➡️ Jump into the full docs site [here](https://nickpalenchar.github.io/goodtimer) or read below for a few more quick examples :bow:
+➡️ Jump into the full docs site [here](https://goodtimer.dev) or read below for a few more quick examples :bow:
 
 ---
 
@@ -98,7 +98,7 @@ new Time({          // object with full names
 });
 ```
 
-Ready to jump in? See the [full Documentation site](https://nickpalenchar.github.io/goodtimer) spec for many more uses and tutorials!
+Ready to jump in? See the [full Documentation site](https://goodtimer.dev) spec for many more uses and tutorials!
 
 ## :clap: Supporters
 
