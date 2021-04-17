@@ -13,12 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
-      - run: npm run docs
-      - run: |
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.80.0'
+          extended: true
+
+      - name: install
+        run: |
+        npm ci
+        run docs
+
+      - name: commit
+        run: |
           git config user.name "Github Actions Bot"
           git config user.email "<>"
           git add docs
