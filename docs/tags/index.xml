@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Goodtimer</title>
-    <link>/tags/</link>
+    <link>https://goodtimer.dev/tags/</link>
     <description>Recent content in Tags on Goodtimer</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://goodtimer.dev/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
