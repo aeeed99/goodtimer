@@ -1,10 +1,14 @@
-![goodtimer logo](https://raw.githubusercontent.com/nickpalenchar/goodtimer/main/logo/goodtimer.png)
+---
+---
+{{< shields >}}
 
-### _The JavaScript Timer of your Dreams_
+## {{< logo align="center">}}
+
+
+### _{{< center "The JavaScript Timer of your Dreams" >}}_
 
 ---
 
-![goodtimer demo](https://raw.githubusercontent.com/nickpalenchar/goodtimer/main/assets/example1.gif)
 
 Goodtimer provides an accurate-to-milliseconds way of implementing `setTimeout` and `setInterval`. It's the timer of your
 dreams, providing a high-level API to easily manipulate countdowns. Here's a few things that make Goodtimer so good:
