@@ -3,67 +3,67 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/goodtimer/quickstart/</loc>
+    <loc>/quickstart/</loc>
     <lastmod>2021-04-17T08:51:56-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/timer-class/</loc>
+    <loc>/timer-class/</loc>
     <lastmod>2021-04-17T10:35:28-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/timer-class/time-expressions/</loc>
+    <loc>/timer-class/time-expressions/</loc>
     <lastmod>2021-04-17T10:53:08-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/timer-class/timer-options/</loc>
+    <loc>/timer-class/timer-options/</loc>
     <lastmod>2021-04-17T10:57:43-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/time-class/</loc>
+    <loc>/time-class/</loc>
     <lastmod>2021-04-17T11:27:51-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/timer-class/getting-time/</loc>
+    <loc>/timer-class/getting-time/</loc>
     <lastmod>2021-04-17T11:05:43-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/timeutils/</loc>
+    <loc>/timeutils/</loc>
     <lastmod>2021-03-17T09:03:11-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/time-class/time-usage/</loc>
+    <loc>/time-class/time-usage/</loc>
     <lastmod>2021-04-17T11:25:06-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/</loc>
+    <loc>/</loc>
     <lastmod>2021-04-17T11:53:40-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/goodtimer/timeutils/clear-good-interval/</loc>
+    <loc>/timeutils/clear-good-interval/</loc>
     <lastmod>2021-04-17T11:53:40-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/timeutils/set-good-interval/</loc>
+    <loc>/timeutils/set-good-interval/</loc>
     <lastmod>2021-04-17T09:07:35-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/goodtimer/categories/</loc>
+    <loc>/categories/</loc>
   </url>
   
   <url>
-    <loc>/goodtimer/tags/</loc>
+    <loc>/tags/</loc>
   </url>
   
 </urlset>

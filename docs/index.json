@@ -1,90 +1,90 @@
 [
 {
-	"uri": "/goodtimer/quickstart/",
+	"uri": "/quickstart/",
 	"title": "Quickstart",
 	"tags": [],
 	"description": "",
 	"content": "Goodtimer is installed via npm for use in NodeJS projects. It is also available for client-side JavaScript via CDN.\nNode/npm Browser  Run the install command in your shell\nnpm i -S goodtimer   Paste the following into your HTML:\n\u0026lt;script src=\u0026#34;https://cdn.nickpal.to/goodtimer/goodtimer-3.4.0.js\u0026#34;\u0026gt;\u0026lt;/script\u0026gt;     And use in your code! You generally want to deconstruct one of the exported classes.\nNode/npm Browser  Access via require\nconst { Timer } = require(\u0026#39;goodtimer\u0026#39;); const myFirstTimer = new Timer( \u0026#39;1m\u0026#39;, (t) =\u0026gt; console.log(t.toString()), () =\u0026gt; console.log(\u0026#39;Time\\\u0026#39;s up!\u0026#39;) );   const { Timer } = window.goodtimer; const myFirstTimer = new Timer( \u0026#39;1m\u0026#39;, (t) =\u0026gt; console.log(t.toString()), () =\u0026gt; console.log(\u0026#39;Time\\\u0026#39;s up!\u0026#39;) );     Using timeutils.\nIf you only want utility functions, such as setGoodInterval, you can access them on timeutil.\nNode/npm Browser  const { setGoodInterval, clearGoodInterval } = require(\u0026#39;goodtimer\u0026#39;).timeutil;   const { setGoodInterval, clearGoodInterval } = window.goodtimer.timeutil;     "
 },
 {
-	"uri": "/goodtimer/timer-class/",
+	"uri": "/timer-class/",
 	"title": "The Timer Class",
 	"tags": [],
 	"description": "",
 	"content": "Timer is an extension of Time, it inherits all methods and properties, and additionally has a \u0026ldquo;count down\u0026rdquo; loop and comes with many useful methods you\u0026rsquo;d expect from a timer. It\u0026rsquo;s the main feature of goodtimer.\nTimer\u0026rsquo;s first argument is required, which is a timeExpression, all other arguments are optional. If the last argument is an object, it is assumed to be the timerOptions, which can be used to override default behaviors of the Timer instance\n// without timerOptions new Timer(timeExpression); new Timer(timeExpression, onTimeoutFn); new Timer(timeExpression, onTimeoutFn, onIntervalFn); // with timerOptions new Timer(timeExpression, timerOptionsObj); new Timer(timeExpression, onTimeoutFn, timerOptionsObj); new Timer(timeExpression, onTimeoutFn, onIntervalFn, timerOptionsObj); goodtimer automatically can tell which format you\u0026rsquo;re trying to use based on the types of the arguments passed.\nCallback function with Timer It will usually be desirable to have a function called when the timer reaches zero. It might also be handy to have a function called on every second (or \u0026ldquo;tick\u0026rdquo;) of the timer, for example when you need to update a UI element with the new time remaining. onTimeoutFn and onIntervalFn arguments handle this.\n// onTimeout example  const timesUp = () =\u0026gt; { // your code here  console.log(\u0026#39;ding!\u0026#39;); } new Timer(\u0026#39;5:00\u0026#39;, timesUp); // ~ 5 minutes later ~ // \u0026#34;ding!\u0026#34;  In version 3.3.0 and above, both callback functions can access the timer instance as their first argument. It\u0026rsquo;s especially useful in onIntervalFn arguments (See v3.2.0 docs for previous syntax).\n const updateDOM = (timer) =\u0026gt; { // this function updates the DOM with the time seperated by colons  // with the smallest unit of time seconsd (\u0026#39;s\u0026#39;). This removes the milliseconds (\u0026#39;.000\u0026#39;) at the end.  document.getElementById(\u0026#39;my-timer\u0026#39;).innerText = timer.toString(\u0026#39;s\u0026#39;); } new Timer(\u0026#39;5:00\u0026#39;, timesUp, updateDOM); If you want to only use an onIntervalFn, and not an onTimeoutFn, you can pass undefined or null as the middle argument. You could alternatively use TimerOptions object to set these (and more).\n// both lines have the same effect.  new Timer(\u0026#39;5:00\u0026#39;, null, updateDOM); new Timer(\u0026#39;5:00\u0026#39;, {onInterval: updateDOM}); See More:  TimeExpressions   TimerOptions   Ways to Get Time   "
 },
 {
-	"uri": "/goodtimer/timer-class/time-expressions/",
+	"uri": "/timer-class/time-expressions/",
 	"title": "TimeExpressions",
 	"tags": [],
 	"description": "",
 	"content": "TimeExpressions are various formats of time that goodtimer recognizes. They are passed in many places, such as the constructors for creating Timers and Time, as well as any place where time is being compared or set.\nUTC-like string There are two ways represent a TimeExpression as a string. The first is UTC-like. Colons and the dot are all optional.\n00:00:00:00:00.000 \u0026lt;- milliseconds | | | | | | | | | seconds | | | minutes | | hours | days years Units of time are interpreted from right to left. '3:00' is three minutes, '3:00:00' is three hours '3:00:00:00:00' is three years. A number as a string ('3') is the number of seconds, and an empty string is 0.\nMilliseconds must be explicitly specified with the dot, and missing numbers places get a 0 appended. .01 is 10 milliseconds (.010), and .1 is 100 millseconds (.100). This makes values like :02.5 behaive the way you\u0026rsquo;d expect: 2.500 seconds or \u0026ldquo;two and a half seconds\u0026rdquo;.\nunit-notation string. You can specify each unit of time in a string with their abbreviation, listed below:\n ms - milliseconds s - seconds m - minutes h - hours d - days y - years  All units are optional. While doing so would be questionable, notations can be out of order. 1d is 1 day (01:00:00:00.000), 1h30m or 30m1h is 1 hour 30 minutes, while 1h30ms (note the s) is 1 hour 30 milliseconds\nmilliseconds number Passing a number represents time in milliseconds. 350 produces the same time as thees '350ms' and '.35' string counterparts.\nNote 350 and '350' are NOT the same. The number is 350 milliseconds while the string would be 350 seconds.\n"
 },
 {
-	"uri": "/goodtimer/timer-class/timer-options/",
+	"uri": "/timer-class/timer-options/",
 	"title": "TimerOptions",
 	"tags": [],
 	"description": "",
 	"content": "Using an object you can provide an alternative way to declare onTimeout and onInterval functions, as well as configuration for additional behavior. The full object properties are show below\nconst timerOptions = { onTimeout: Function, // function to call when timer hits 0.  onInterval: Function, // function to call on each second (or tick).  repeat: Boolean | Number, // repeating beheivor after timer hits 0. (see notes)  startPaused: Boolean, // if the timer should start counting down on creation or not (default false),  immediateInterval: Boolean, // if the timer should tick once right when it\u0026#39;s created (default false)  interval: Number, // how many seconds before a tick (default 1, updating is uncommon)  finalInterval: Boolean, // when timer runs out, only run onTimeout (if defined)  // otherwise calls onInterval followed by onTimeout.  /* low-level loop control (https://github.com/nickpalenchar/goodtimer/tree/main/docs/setInterval-clearInterval.md) */ setInterval: Function, clearInterval: Function }  Prior to v3.1.0, Timer never called onInterval when the timer reached 0. It now does the opposite by default. for the old behavior, use { finalInterval: false }, for your timerOptions.\n Additional notes on options:  onTimeout/onInterval - these should replace the functions passed as their own arguments. If you use both, only the functions in TimerOptions will be honored. new Timer('3', functionA, { onTimeout: functionB }) will result in only functionB being called when the timer reaches zero. repeat - Specifically, when the timer reaches zero, if it has a repeat, it will reset back to its initial value and start the countdown again. Any onTimeout function is called before the reset.  Pass a number to make it only repeat a given number of times. { repeat: 2 } mean it will repeat twice, and once it reaches zero again, it will stop and be paused at 0. Pass a boolean to make it never or always repeat. { repeat: false } means it never repeats (this is the default), { repeat: true }, means it always repeats. This can also be written as { repeat: 0 } or { repeat: Infinity } for never and always repeating respectively.   startPaused - means the timer will be created and paused at its starting time. Any onInterval function will not be called until unpaused. You must unpause it yourself with timer.unpause() or timer.togglePause() immediateInterval - Timer will immediately tick once when starting. new Timer(5:00)  "
 },
 {
-	"uri": "/goodtimer/time-class/",
+	"uri": "/time-class/",
 	"title": "The Time Class",
 	"tags": [],
 	"description": "",
 	"content": " Time is primarily intended to be used by the Timer class, rather than in isolation. As such, it is not as fully functional as it should be. For example, negative values are not supported. Time is still accessible, however, as it can be used for basic time comparisons.\n Getting Started with Time Time is Timer without the countdown or callback functionality. Technically, it is the base-class for Timer.\nCreating a Time object Time can be imported from goodtimer. Its constructor only takes a timeExpression. i.e. new Time(timeExpression)\nconst { Time } = require(\u0026#39;goodtimer\u0026#39;); const minute = new Time(\u0026#39;1m\u0026#39;); const hour = new Time(\u0026#39;1h\u0026#39;); minute.toString(); // -\u0026gt; \u0026#34;01:00.000\u0026#34; hour.toString(); // -\u0026gt; \u0026#34;01:00:00.000\u0026#34; Other Time methods. Below is a demonstration of all Time methods. Remember, all of these methods are also available with Timer.\nconst minute = new Time(\u0026#39;1m\u0026#39;); const hour = new Time(\u0026#39;1h\u0026#39;); minute.inMilliseconds(); // -\u0026gt; 60000 minute.toString() // -\u0026gt; \u0026#34;01:00.000\u0026#34;  minute.gt(hour); // -\u0026gt; false minute.gte(hour); // -\u0026gt; false minute.lt(hour); // -\u0026gt; true minute.lte(hour); // -\u0026gt; true minute.equals(hour); // -\u0026gt; false  minute.set(hour); // set to new time minute.equals(hour); // -\u0026gt; true "
 },
 {
-	"uri": "/goodtimer/timer-class/getting-time/",
+	"uri": "/timer-class/getting-time/",
 	"title": "Ways to Get Time",
 	"tags": [],
 	"description": "",
 	"content": "Timer/Time has properties years, days, hours, minutes, seconds, milliseconds to get a specific unit of time. These are always numbers.\nconst time = new Time(\u0026#39;3:35:08.035\u0026#39;); time.milliseconds; // 35 time.seconds; // 8 time.minutes; // 35 time.hours; // 3 time.days; // 0 You can also convert full times to milliseconds with .inMilliseconds().\nconst time = new Time(\u0026#39;3:35:08.035\u0026#39;); time.inMilliseconds(); // -\u0026gt; 12908035 UI friendly methods Two handy methods exist to get the time in a human-friendly format: .toString() and .fmtTime()\n.toString() By default, this returns the current time in UTC-like syntax (YY:DD:HH:MM:SS.mmm). The highest non-zero unit of time is displayed, and higher ones are left off.\nYou can also specify the smallest unit to display in the first argument. For example, passing 's' (for seconds) leaves off the smaller millisecond unit of time.\nconst time = new Time(\u0026#39;3:33.444\u0026#39;); time.toString(); // =\u0026gt; \u0026#39;3:33.444\u0026#39;; time.toString(\u0026#39;s\u0026#39;); // \u0026#39;3:33\u0026#39; fmtTime() A function designed to provide granular modification of the string, this takes a string with template characters and replaces them with time values of various formats.\nTemplate characters are prefixed with %. Available template characters are:\n   character description     %Y replaced with the timer\u0026rsquo;s current years   %D replaced with the timer\u0026rsquo;s current days   %H replaced with the timer\u0026rsquo;s current hours   %M replaced with the timer\u0026rsquo;s current minutes   %S replaced with the timer\u0026rsquo;s current seconds   %m replaced with the timer\u0026rsquo;s current milliseconds   %\u0026lt;n\u0026gt;%\u0026lt;y\u0026gt; Pads the following template character with n zero\u0026rsquo;s, if the value\u0026rsquo;s character length is less than n. i.e. '%2%s' on a timer with 4 seconds returns '04'. the same value on a timer with 15 seconds returns '15'    "
 },
 {
-	"uri": "/goodtimer/timeutils/",
+	"uri": "/timeutils/",
 	"title": "timeutil",
 	"tags": [],
 	"description": "",
 	"content": "timeutil The timeutil exports provide convenient functions for dealing with time outside of goodtimer.Timer. These are imported like so:\nconst { timeutil } = require(\u0026#39;goodtimer\u0026#39;); Or require in a specific function\nconst { setGoodInterval } = require(\u0026#39;goodtimer\u0026#39;).timeutil;  Available functions:  clearGoodInterval   setGoodInterval   "
 },
 {
-	"uri": "/goodtimer/time-class/time-usage/",
+	"uri": "/time-class/time-usage/",
 	"title": "Time Usage",
 	"tags": [],
 	"description": "",
 	"content": ""
 },
 {
-	"uri": "/goodtimer/",
+	"uri": "/",
 	"title": "",
 	"tags": [],
 	"description": "",
 	"content": "The JavaScript Timer of your Dreams  Goodtimer provides an accurate-to-milliseconds way of implementing setTimeout and setInterval. It\u0026rsquo;s the timer of your dreams, providing a high-level API to easily manipulate countdowns. Here\u0026rsquo;s a few things that make Goodtimer so good:\n It self-corrects delays from the event loop, so it\u0026rsquo;s guaranteed to stay in sync with time. It comes with a flexible timeExpression syntax, so you can easily express time in a number of desirable ways. Provides drop-in replacement to setInterval. Can be used in projects like react with npm, or directly in the browser via cdn;   Simple Usage const yourFn = () =\u0026gt; {}; new Timer(\u0026#39;1:00\u0026#39;, yourFn); // replacement for setTimeout new Timer(\u0026#39;1:00\u0026#39;, yourFn, { repeat: true }); // replacement for setInterval  const timer = new Timer(\u0026#39;5:00\u0026#39;); // (Five minutes) timer.pause(); // freezes timer at given time timer.unpause(); // resumes timer timer.reset(); // resests to initial value (in this case 5 minutes) timer.toString() // returns in UTC-like format (\u0026#34;5:00.000\u0026#34;)  // ~ 1 second later ~ timer.fmtTime(\u0026#34;%M minutes %s seconds\u0026#34;) // -\u0026gt; \u0026#34;4 minutes 59 seconds\u0026#34; (many ways to use!) timer.gt(\u0026#39;1:00\u0026#39;); // \u0026#34;greater than\u0026#34; -\u0026gt; true timer.lt(\u0026#39;60:00:00\u0026#39;); // \u0026#34;less than (60 hrs)\u0026#34; -\u0026gt; true timer.equals(\u0026#39;6m\u0026#39;); // (6 minutes, alternate notation) -\u0026gt; false  // or use the Time class and skip the controls const [minute, second] = [new Time(\u0026#39;1m\u0026#39;), new Time(\u0026#39;1s\u0026#39;)]; minute.gt(second) // -\u0026gt; true second.equals(\u0026#39;:01\u0026#39;) // -\u0026gt; true minute.equals(second) // -\u0026gt; false second.set(minute) // set to new value minute.equals(second) // -\u0026gt; true minute.toString() // -\u0026gt; \u0026#34;1:00.000\u0026#34;  // `timeExpressions` are passed to Time or Timer, and can be an // object, number, array, or string (in multiple formats) // below are all the ways to write \u0026#34;25 minutes and 500 milliseconds\u0026#34;  new Time(\u0026#39;25:00.5\u0026#39;); // string in UTC-like syntax new Time(\u0026#39;25m500ms\u0026#39;); // string with unit annotation new Time(1500500); // number for milliseconds new Time({ // object with full names  minutes: 25, milliseconds: 500 }); See the full API spec for many more uses, or read on for simpler ways to get started.\nSupporters  \n"
 },
 {
-	"uri": "/goodtimer/timeutils/clear-good-interval/",
+	"uri": "/timeutils/clear-good-interval/",
 	"title": "clearGoodInterval",
 	"tags": [],
 	"description": "",
 	"content": "clearGoodInterval Immediately stop an interval set by setGoodInterval\nstopGoodInterval(id: number) Params  id - An id from setGoodInterval  "
 },
 {
-	"uri": "/goodtimer/timeutils/set-good-interval/",
+	"uri": "/timeutils/set-good-interval/",
 	"title": "setGoodInterval",
 	"tags": [],
 	"description": "",
 	"content": "setGoodInterval A smart replacement for setInterval\nUsage setGoodInterval(callback: Function, timeout: number): number Params  callback - A function that is invoked at each interval. timeout - Time (in milliseconds) to wait before calling the callback each time.  Returns goodIntervalId - An id of the interval that can be used to clear via clearGoodInterval\n"
 },
 {
-	"uri": "/goodtimer/categories/",
+	"uri": "/categories/",
 	"title": "Categories",
 	"tags": [],
 	"description": "",
 	"content": ""
 },
 {
-	"uri": "/goodtimer/tags/",
+	"uri": "/tags/",
 	"title": "Tags",
 	"tags": [],
 	"description": "",
