@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>The Time Class on My New Hugo Site</title>
-    <link>/time-class/</link>
-    <description>Recent content in The Time Class on My New Hugo Site</description>
+    <title>The Time Class on Goodtimer</title>
+    <link>/goodtimer/time-class/</link>
+    <description>Recent content in The Time Class on Goodtimer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Apr 2021 11:27:51 -0400</lastBuildDate><atom:link href="/time-class/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Apr 2021 11:27:51 -0400</lastBuildDate><atom:link href="/goodtimer/time-class/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Time Usage</title>
-      <link>/time-class/time-usage/</link>
+      <link>/goodtimer/time-class/time-usage/</link>
       <pubDate>Sat, 17 Apr 2021 11:25:06 -0400</pubDate>
       
-      <guid>/time-class/time-usage/</guid>
+      <guid>/goodtimer/time-class/time-usage/</guid>
       <description></description>
     </item>
     

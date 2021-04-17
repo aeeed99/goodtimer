@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>timeutil on My New Hugo Site</title>
-    <link>/timeutils/</link>
-    <description>Recent content in timeutil on My New Hugo Site</description>
+    <title>timeutil on Goodtimer</title>
+    <link>/goodtimer/timeutils/</link>
+    <description>Recent content in timeutil on Goodtimer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Mar 2021 09:03:11 -0400</lastBuildDate><atom:link href="/timeutils/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Mar 2021 09:03:11 -0400</lastBuildDate><atom:link href="/goodtimer/timeutils/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>clearGoodInterval</title>
-      <link>/timeutils/clear-good-interval/</link>
+      <link>/goodtimer/timeutils/clear-good-interval/</link>
       <pubDate>Sat, 17 Apr 2021 11:53:40 -0400</pubDate>
       
-      <guid>/timeutils/clear-good-interval/</guid>
+      <guid>/goodtimer/timeutils/clear-good-interval/</guid>
       <description>clearGoodInterval Immediately stop an interval set by setGoodInterval
 stopGoodInterval(id: number) Params  id - An id from setGoodInterval  </description>
     </item>
     
     <item>
       <title>setGoodInterval</title>
-      <link>/timeutils/set-good-interval/</link>
+      <link>/goodtimer/timeutils/set-good-interval/</link>
       <pubDate>Sat, 17 Apr 2021 09:07:35 -0400</pubDate>
       
-      <guid>/timeutils/set-good-interval/</guid>
+      <guid>/goodtimer/timeutils/set-good-interval/</guid>
       <description>setGoodInterval A smart replacement for setInterval
 Usage setGoodInterval(callback: Function, timeout: number): number Params  callback - A function that is invoked at each interval. timeout - Time (in milliseconds) to wait before calling the callback each time.  Returns goodIntervalId - An id of the interval that can be used to clear via clearGoodInterval</description>
     </item>
