@@ -3,67 +3,66 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/quickstart/</loc>
+    <loc>https://goodtimer.dev/quickstart/</loc>
     <lastmod>2021-04-17T08:51:56-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/timer-class/</loc>
+    <loc>https://goodtimer.dev/timer-class/</loc>
     <lastmod>2021-04-17T10:35:28-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/timer-class/time-expressions/</loc>
+    <loc>https://goodtimer.dev/timer-class/time-expressions/</loc>
     <lastmod>2021-04-17T10:53:08-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/timer-class/timer-options/</loc>
+    <loc>https://goodtimer.dev/timer-class/timer-options/</loc>
     <lastmod>2021-04-17T10:57:43-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/time-class/</loc>
+    <loc>https://goodtimer.dev/time-class/</loc>
     <lastmod>2021-04-17T11:27:51-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/timer-class/getting-time/</loc>
+    <loc>https://goodtimer.dev/timer-class/getting-time/</loc>
     <lastmod>2021-04-17T11:05:43-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/timeutils/</loc>
+    <loc>https://goodtimer.dev/timeutils/</loc>
     <lastmod>2021-03-17T09:03:11-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/time-class/time-usage/</loc>
+    <loc>https://goodtimer.dev/time-class/time-usage/</loc>
     <lastmod>2021-04-17T11:25:06-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2021-04-17T11:53:40-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/timeutils/clear-good-interval/</loc>
+    <loc>https://goodtimer.dev/</loc>
     <lastmod>2021-04-17T11:53:40-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/timeutils/set-good-interval/</loc>
+    <loc>https://goodtimer.dev/timeutils/clear-good-interval/</loc>
+    <lastmod>2021-04-17T11:53:40-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://goodtimer.dev/timeutils/set-good-interval/</loc>
     <lastmod>2021-04-17T09:07:35-04:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://goodtimer.dev/categories/</loc>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://goodtimer.dev/tags/</loc>
   </url>
   
 </urlset>

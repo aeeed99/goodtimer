@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>The Timer Class on Goodtimer</title>
-    <link>/timer-class/</link>
+    <link>https://goodtimer.dev/timer-class/</link>
     <description>Recent content in The Timer Class on Goodtimer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Apr 2021 10:35:28 -0400</lastBuildDate><atom:link href="/timer-class/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Apr 2021 10:35:28 -0400</lastBuildDate><atom:link href="https://goodtimer.dev/timer-class/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TimeExpressions</title>
-      <link>/timer-class/time-expressions/</link>
+      <link>https://goodtimer.dev/timer-class/time-expressions/</link>
       <pubDate>Sat, 17 Apr 2021 10:53:08 -0400</pubDate>
       
-      <guid>/timer-class/time-expressions/</guid>
+      <guid>https://goodtimer.dev/timer-class/time-expressions/</guid>
       <description>TimeExpressions are various formats of time that goodtimer recognizes. They are passed in many places, such as the constructors for creating Timers and Time, as well as any place where time is being compared or set.
 UTC-like string There are two ways represent a TimeExpression as a string. The first is UTC-like. Colons and the dot are all optional.
 00:00:00:00:00.000 &amp;lt;- milliseconds | | | | | | | | | seconds | | | minutes | | hours | days years Units of time are interpreted from right to left.</description>
@@ -20,20 +20,20 @@ UTC-like string There are two ways represent a TimeExpression as a string. The f
     
     <item>
       <title>TimerOptions</title>
-      <link>/timer-class/timer-options/</link>
+      <link>https://goodtimer.dev/timer-class/timer-options/</link>
       <pubDate>Sat, 17 Apr 2021 10:57:43 -0400</pubDate>
       
-      <guid>/timer-class/timer-options/</guid>
+      <guid>https://goodtimer.dev/timer-class/timer-options/</guid>
       <description>Using an object you can provide an alternative way to declare onTimeout and onInterval functions, as well as configuration for additional behavior. The full object properties are show below
 const timerOptions = { onTimeout: Function, // function to call when timer hits 0.  onInterval: Function, // function to call on each second (or tick).  repeat: Boolean | Number, // repeating beheivor after timer hits 0. (see notes)  startPaused: Boolean, // if the timer should start counting down on creation or not (default false),  immediateInterval: Boolean, // if the timer should tick once right when it&amp;#39;s created (default false)  interval: Number, // how many seconds before a tick (default 1, updating is uncommon)  finalInterval: Boolean, // when timer runs out, only run onTimeout (if defined)  // otherwise calls onInterval followed by onTimeout.</description>
     </item>
     
     <item>
       <title>Ways to Get Time</title>
-      <link>/timer-class/getting-time/</link>
+      <link>https://goodtimer.dev/timer-class/getting-time/</link>
       <pubDate>Sat, 17 Apr 2021 11:05:43 -0400</pubDate>
       
-      <guid>/timer-class/getting-time/</guid>
+      <guid>https://goodtimer.dev/timer-class/getting-time/</guid>
       <description>Timer/Time has properties years, days, hours, minutes, seconds, milliseconds to get a specific unit of time. These are always numbers.
 const time = new Time(&amp;#39;3:35:08.035&amp;#39;); time.milliseconds; // 35 time.seconds; // 8 time.minutes; // 35 time.hours; // 3 time.days; // 0 You can also convert full times to milliseconds with .inMilliseconds().
 const time = new Time(&amp;#39;3:35:08.035&amp;#39;); time.inMilliseconds(); // -&amp;gt; 12908035 UI friendly methods Two handy methods exist to get the time in a human-friendly format: .</description>
