@@ -1,0 +1,25 @@
+
+name: build documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docslib/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm run docs
+      - run: |
+          git config user.name "Github Actions Bot"
+          git config user.email "<>"
+          git add docs
+          git commit -m "Auto build docs"
