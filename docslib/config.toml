@@ -1,5 +1,5 @@
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Goodtimer"
 publishDir = "../docs"
 theme = "hugo-theme-learn"
 
