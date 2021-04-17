@@ -1,0 +1,24 @@
+languageCode = "en-us"
+title = "My New Hugo Site"
+publishDir = "../docs"
+theme = "hugo-theme-learn"
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[params]
+showVisitedLinks = false
+disableInlineCopyToClipboard = true
+themeVariant = "red"
+
+[[menu.shortcuts]]
+name = "<i class='fa fa-code'></i>  Source code"
+url = "https://github.com/nickpalenchar/goodtimer"
+
+[[menu.shortcuts]]
+name = "<i class='fa fa-box'></i>  NPM"
+url = "https://npmjs.org/package/goodtimer"
+
+[[menu.shortcuts]]
+name = "<i class='fa fa-book'></i>  Full API"
+url = "/docs/index.html"

@@ -1,6 +1,6 @@
 {
   "entryPoints": ["lib/latest/goodtimer"],
-  "out": "docs/api",
+  "out": "docslib/static/docs",
   "excludePrivate": true,
   "excludeProtected": true,
   "theme": "minimal"
