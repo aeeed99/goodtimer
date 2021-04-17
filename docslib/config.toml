@@ -2,6 +2,7 @@ languageCode = "en-us"
 title = "Goodtimer"
 publishDir = "../docs"
 theme = "hugo-theme-learn"
+baseURL = "https://goodtimer.dev"
 
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
@@ -9,7 +10,6 @@ home = [ "HTML", "RSS", "JSON"]
 [params]
 showVisitedLinks = false
 disableInlineCopyToClipboard = true
-themeVariant = "red"
 
 [[menu.shortcuts]]
 name = "<i class='fa fa-code'></i>  Source code"
