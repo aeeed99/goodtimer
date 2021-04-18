@@ -32,7 +32,7 @@ const timer = new Timer('5:00'); // (Five minutes)
 timer.pause();         // freezes timer at given time
 timer.unpause();       // resumes timer
 timer.reset();         // resests to initial value (in this case 5 minutes)
-timer.toString()       // returns in UTC-like format ("5:00.000")
+timer.toString();      // returns in UTC-like format ("5:00.000")
 
 // ~ 1 second later ~
 timer.fmtTime("%M minutes %s seconds") // -> "4 minutes 59 seconds" (many ways to use!) 
@@ -43,12 +43,12 @@ timer.equals('6m');    // (6 minutes, alternate notation) -> false
 // or use the Time class and skip the controls
 const [minute, second] = [new Time('1m'), new Time('1s')];
 
-minute.gt(second)        // -> true
-second.equals(':01')     // -> true
-minute.equals(second)    // -> false
-second.set(minute)       // set to new value
-minute.equals(second)    // -> true
-minute.toString()        // -> "1:00.000"
+minute.gt(second);       // -> true
+second.equals(':01');    // -> true
+minute.equals(second);   // -> false
+second.set(minute);      // set to new value
+minute.equals(second);   // -> true
+minute.toString();       // -> "1:00.000"
 
 // `timeExpressions` are passed to Time or Timer, and can be an
 // object, number, array, or string (in multiple formats)

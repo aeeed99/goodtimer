@@ -12,20 +12,20 @@
     <title> :: Goodtimer</title>
 
     
-    <link href="/css/nucleus.css?1618704470" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1618704470" rel="stylesheet">
-    <link href="/css/hybrid.css?1618704470" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1618704470" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1618704470" rel="stylesheet">
-    <link href="/css/auto-complete.css?1618704470" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1618704470" rel="stylesheet">
-    <link href="/css/theme.css?1618704470" rel="stylesheet">
-    <link href="/css/tabs.css?1618704470" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1618704470" rel="stylesheet">
+    <link href="/css/nucleus.css?1618749858" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1618749858" rel="stylesheet">
+    <link href="/css/hybrid.css?1618749858" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1618749858" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1618749858" rel="stylesheet">
+    <link href="/css/auto-complete.css?1618749858" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1618749858" rel="stylesheet">
+    <link href="/css/theme.css?1618749858" rel="stylesheet">
+    <link href="/css/tabs.css?1618749858" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1618749858" rel="stylesheet">
     
     
 
-    <script src="/js/jquery-3.3.1.min.js?1618704470"></script>
+    <script src="/js/jquery-3.3.1.min.js?1618749858"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -56,14 +56,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1618704470"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1618704470"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1618749858"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1618749858"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/goodtimer.dev\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1618704470"></script>
+<script type="text/javascript" src="/js/search.js?1618749858"></script>
 
     
   </div>
@@ -421,7 +421,7 @@ dreams, providing a high-level API to easily manipulate countdowns. Here&rsquo;s
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">timer</span>.<span style="color:#a6e22e">pause</span>();         <span style="color:#75715e">// freezes timer at given time
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">timer</span>.<span style="color:#a6e22e">unpause</span>();       <span style="color:#75715e">// resumes timer
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">timer</span>.<span style="color:#a6e22e">reset</span>();         <span style="color:#75715e">// resests to initial value (in this case 5 minutes)
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">timer</span>.<span style="color:#a6e22e">toString</span>()       <span style="color:#75715e">// returns in UTC-like format (&#34;5:00.000&#34;)
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">timer</span>.<span style="color:#a6e22e">toString</span>();      <span style="color:#75715e">// returns in UTC-like format (&#34;5:00.000&#34;)
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// ~ 1 second later ~
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">timer</span>.<span style="color:#a6e22e">fmtTime</span>(<span style="color:#e6db74">&#34;%M minutes %s seconds&#34;</span>) <span style="color:#75715e">// -&gt; &#34;4 minutes 59 seconds&#34; (many ways to use!) 
@@ -432,12 +432,12 @@ dreams, providing a high-level API to easily manipulate countdowns. Here&rsquo;s
 <span style="color:#75715e">// or use the Time class and skip the controls
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> [<span style="color:#a6e22e">minute</span>, <span style="color:#a6e22e">second</span>] <span style="color:#f92672">=</span> [<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Time</span>(<span style="color:#e6db74">&#39;1m&#39;</span>), <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Time</span>(<span style="color:#e6db74">&#39;1s&#39;</span>)];
 
-<span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">gt</span>(<span style="color:#a6e22e">second</span>)        <span style="color:#75715e">// -&gt; true
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">second</span>.<span style="color:#a6e22e">equals</span>(<span style="color:#e6db74">&#39;:01&#39;</span>)     <span style="color:#75715e">// -&gt; true
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">equals</span>(<span style="color:#a6e22e">second</span>)    <span style="color:#75715e">// -&gt; false
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">second</span>.<span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">minute</span>)       <span style="color:#75715e">// set to new value
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">equals</span>(<span style="color:#a6e22e">second</span>)    <span style="color:#75715e">// -&gt; true
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">toString</span>()        <span style="color:#75715e">// -&gt; &#34;1:00.000&#34;
+<span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">gt</span>(<span style="color:#a6e22e">second</span>);       <span style="color:#75715e">// -&gt; true
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">second</span>.<span style="color:#a6e22e">equals</span>(<span style="color:#e6db74">&#39;:01&#39;</span>);    <span style="color:#75715e">// -&gt; true
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">equals</span>(<span style="color:#a6e22e">second</span>);   <span style="color:#75715e">// -&gt; false
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">second</span>.<span style="color:#a6e22e">set</span>(<span style="color:#a6e22e">minute</span>);      <span style="color:#75715e">// set to new value
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">equals</span>(<span style="color:#a6e22e">second</span>);   <span style="color:#75715e">// -&gt; true
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">minute</span>.<span style="color:#a6e22e">toString</span>();       <span style="color:#75715e">// -&gt; &#34;1:00.000&#34;
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">// `timeExpressions` are passed to Time or Timer, and can be an
 </span><span style="color:#75715e">// object, number, array, or string (in multiple formats)
@@ -665,19 +665,19 @@ dreams, providing a high-level API to easily manipulate countdowns. Here&rsquo;s
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1618704471"></script>
-    <script src="/js/perfect-scrollbar.min.js?1618704471"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1618704471"></script>
-    <script src="/js/jquery.sticky.js?1618704471"></script>
-    <script src="/js/featherlight.min.js?1618704471"></script>
-    <script src="/js/highlight.pack.js?1618704471"></script>
+    <script src="/js/clipboard.min.js?1618749858"></script>
+    <script src="/js/perfect-scrollbar.min.js?1618749858"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1618749858"></script>
+    <script src="/js/jquery.sticky.js?1618749858"></script>
+    <script src="/js/featherlight.min.js?1618749858"></script>
+    <script src="/js/highlight.pack.js?1618749858"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1618704471"></script>
-    <script src="/js/learn.js?1618704471"></script>
-    <script src="/js/hugo-learn.js?1618704471"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1618749858"></script>
+    <script src="/js/learn.js?1618749858"></script>
+    <script src="/js/hugo-learn.js?1618749858"></script>
     
         
-            <script src="/mermaid/mermaid.js?1618704471"></script>
+            <script src="/mermaid/mermaid.js?1618749858"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
