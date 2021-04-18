@@ -4,7 +4,7 @@ name: build documentation
 on:
   push:
     branches:
-      - main
+      - xmain
     paths:
       - 'docslib/**'
 
