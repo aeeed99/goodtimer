@@ -1,5 +1,6 @@
-docs/** linguist-generated
+docs/* linguist-generated
 docslib/* linguist-documentation
 examples/* linguist-documentation
 assets/* linguist-vendored
 logo/* linguist-vendored
+*.html linguist-vendored
