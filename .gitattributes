@@ -4,3 +4,4 @@ examples/* linguist-documentation
 assets/* linguist-vendored
 logo/* linguist-vendored
 *.html linguist-vendored
+*.css linguist-vendored
