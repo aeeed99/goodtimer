@@ -8,6 +8,7 @@ baseURL = "https://goodtimer.dev/"
 home = [ "HTML", "RSS", "JSON"]
 
 [params]
+themeVariant = "green"
 showVisitedLinks = false
 disableInlineCopyToClipboard = true
 

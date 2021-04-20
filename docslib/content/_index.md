@@ -5,7 +5,7 @@
 ## {{< logo align="center">}}
 
 
-#### _{{< center "The JavaScript Timer of your Dreams" >}}_
+#### _{{< center "The Split-Second Precise JavaScript Timer" >}}_
 
 ---
 

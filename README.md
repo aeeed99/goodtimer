@@ -1,10 +1,7 @@
 <br/>
-<div id="top" align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?style=flat-square&color=8451A1"> <img src="https://img.shields.io/npm/dw/goodtimer?style=flat-square&color=4851A1"> <img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=8451A1&style=flat-square"></div>
-
-
-<h1 align="center">☾ Goodtimer ⭑</h1>
-
-<h5 align="center">The JavaScript Timer of your Dreams</h5>
+<div id="top" align="center"><img src="https://img.shields.io/npm/v/goodtimer.svg?style=flat-square&color=74B559"> <img src="https://img.shields.io/npm/dw/goodtimer?style=flat-square&color=2f6e59"> <img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/npm/goodtimer?color=74B559&style=flat-square"></div>
+<img src="./assets/logo.png" alt="logo">
+<h3 align="center"><em>The Split-Second Precise JavaScript Timer</em></h3>
 
 ---
 
