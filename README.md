@@ -99,7 +99,7 @@ Ready to jump in? See the [full Documentation site](https://goodtimer.dev) spec 
 
 ## :clap: Supporters
 
-[![Stargazers repo roster for goodtimer](https://reporoster.com/stars/nickpalenchar/goodtimer)](https://github.com/nickpalenchar/goodtimer/stargazers)
-[![Forkers repo roster for goodtimer](https://reporoster.com/forks/nickpalenchar/goodtimer)](https://github.com/nickpalenchar/goodtimer/network/members)
+[![Stargazers repo roster for goodtimer](https://reporoster.com/stars/aeeed99/goodtimer)](https://github.com/aeeed99/goodtimer/stargazers)
+[![Forkers repo roster for goodtimer](https://reporoster.com/forks/aeeed99/goodtimer)](https://github.com/aeeed99/goodtimer/network/members)
 
 ---
